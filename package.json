@@ -1,4 +1,5 @@
 {
+  "name": "companion-for-tsw",
   "private": true,
   "scripts": {
     "build": "nuxt build",
