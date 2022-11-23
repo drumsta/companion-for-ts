@@ -1,6 +1,5 @@
 {
     "recommendations": [
-        "github.vscode-pull-request-github",
         "vue.volar",
         "vue.vscode-typescript-vue-plugin"
     ]
