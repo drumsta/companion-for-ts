@@ -1,0 +1,13 @@
+# Nuxt Ignore File <https://nuxt.com/docs/guide/directory-structure/nuxtignore>
+
+## Ignore layout files whose name ends with -ignore.vue
+
+layouts/\*-ignore.vue
+
+## Ignore page inside ignore folder
+
+pages/ignore/\*.vue
+
+## Ignore route middleware files under ignore folder
+
+middleware/ignore/\*.js

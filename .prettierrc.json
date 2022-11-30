@@ -1,0 +1,10 @@
+{
+    "endOfLine": "crlf",
+    "proseWrap": "always",
+    "quoteProps": "consistent",
+    "singleAttributePerLine": true,
+    "singleQuote": true,
+    "tabWidth": 4,
+    "trailingComma": "all",
+    "vueIndentScriptAndStyle": true
+}

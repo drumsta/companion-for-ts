@@ -1,12 +1,51 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "npm",
-			"script": "dev",
-			"problemMatcher": [],
-			"label": "npm: dev",
-			"detail": "nuxt dev"
-		}
-	]
+    // https://code.visualstudio.com/docs/editor/tasks
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "npm: install",
+            "detail": "Install dependencies from package",
+            "type": "npm",
+            "script": "install",
+            "group": "none",
+            "problemMatcher": []
+        },
+        {
+            "label": "npm: update",
+            "detail": "Update dependencies from package",
+            "type": "npm",
+            "script": "update",
+            "group": "none",
+            "problemMatcher": []
+        },
+        {
+            "label": "npm: lint",
+            "detail": "eslint src",
+            "type": "npm",
+            "script": "lint",
+            "problemMatcher": []
+        },
+        {
+            "label": "npm: dev",
+            "detail": "Start the development server",
+            "type": "npm",
+            "script": "dev",
+            "problemMatcher": []
+        },
+        {
+            "label": "npm: build",
+            "detail": "Build the application for production",
+            "type": "npm",
+            "script": "build",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "detail": "Locally preview production build",
+            "script": "preview",
+            "problemMatcher": [],
+            "label": "npm: preview"
+        }
+    ]
 }
