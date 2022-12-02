@@ -7,7 +7,7 @@
     "css.validate": false,
     "less.validate": false,
     "scss.validate": false,
-    "stylelint.validate": ["css", "html", "less", "postcss", "scss", "vue"],
+    "stylelint.validate": ["css", "less", "postcss", "scss", "vue"],
 
     // https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
     "eslint.alwaysShowStatus": true,
