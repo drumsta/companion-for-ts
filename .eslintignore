@@ -419,3 +419,5 @@ dist
 fixtures
 jest.config.js
 .docusaurus
+
+package.json

@@ -1,11 +1,11 @@
 {
-    "extends": [
-        "stylelint-config-recommended",
-        "stylelint-config-standard",
-        "stylelint-config-recommended-vue",
-        "stylelint-config-standard-vue",
-        "stylelint-config-html/vue",
-        "stylelint-config-prettier"
-    ],
-    "defaultSeverity": "error"
+  "extends": [
+    "stylelint-config-recommended",
+    "stylelint-config-standard",
+    "stylelint-config-recommended-vue",
+    "stylelint-config-standard-vue",
+    "stylelint-config-html/vue",
+    "stylelint-config-prettier"
+  ],
+  "defaultSeverity": "error"
 }

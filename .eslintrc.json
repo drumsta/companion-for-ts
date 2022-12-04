@@ -1,39 +1,36 @@
 {
-    "extends": [
-        // https://eslint.org/docs/latest/user-guide/configuring/configuration-files#extending-configuration-files
-        "eslint:all",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/recommended-requiring-type-checking",
-        "plugin:@typescript-eslint/strict",
-        "plugin:@typescript-eslint/all",
-        // https://eslint.vuejs.org/user-guide
-        "plugin:vue/vue3-recommended",
-        "prettier"
-    ],
-    /*
-     * https://eslint.vuejs.org/user-guide/#how-to-use-a-custom-parser
-     * https://typescript-eslint.io/docs/linting/troubleshooting#i-am-running-into-errors-when-parsing-typescript-in-my-vue-files
-     */
-    "parser": "vue-eslint-parser",
-    "parserOptions": {
-        "ecmaVersion": "latest",
-        "extraFileExtensions": [".json", ".vue"],
-        "parser": "@typescript-eslint/parser",
-        "project": ["./tsconfig.eslint.json"],
-        "sourceType": "module"
-    },
-    "plugins": [
-        "@typescript-eslint",
-        // https://eslint.vuejs.org/user-guide/#why-doesn-t-it-work-on-vue-files
-        "vue"
-    ],
-    "reportUnusedDisableDirectives": true,
-    "root": true,
-    "rules": {
-        "@typescript-eslint/triple-slash-reference": [
-            "error",
-            { "path": "never", "types": "never", "lib": "never" }
-        ]
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    // https://eslint.org/docs/latest/user-guide/configuring/configuration-files#extending-configuration-files
+    "eslint:recommended",
+    // https://typescript-eslint.io/docs/linting/configs
+    "plugin:@typescript-eslint/recommended",
+    // https://eslint.vuejs.org/user-guide
+    "plugin:vue/vue3-recommended",
+    // https://github.com/nuxt/eslint-plugin-nuxt
+    "plugin:nuxt/recommended",
+    "prettier"
+  ],
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "extraFileExtensions": [".html", ".json", ".vue"],
+    "parser": "@typescript-eslint/parser",
+    "sourceType": "module",
+    "vueFeatures": {
+      "filter": false
     }
+  },
+  "plugins": [
+    "@typescript-eslint",
+    // https://eslint.vuejs.org/user-guide/#why-doesn-t-it-work-on-vue-files
+    "vue",
+    "nuxt"
+  ],
+  "reportUnusedDisableDirectives": true,
+  "root": true,
+  "rules": {}
 }

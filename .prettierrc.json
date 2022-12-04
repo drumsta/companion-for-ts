@@ -1,10 +1,13 @@
 {
-    "endOfLine": "crlf",
-    "proseWrap": "always",
-    "quoteProps": "consistent",
-    "singleAttributePerLine": false,
-    "singleQuote": true,
-    "tabWidth": 4,
-    "trailingComma": "all",
-    "vueIndentScriptAndStyle": true
+  "endOfLine": "lf",
+  "printWidth": 120,
+  "proseWrap": "always",
+  "quoteProps": "consistent",
+  "semi": true,
+  "singleAttributePerLine": false,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "useTabs": false,
+  "vueIndentScriptAndStyle": true
 }
