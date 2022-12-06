@@ -3,22 +3,6 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "npm: install",
-      "detail": "Install dependencies from package",
-      "type": "npm",
-      "script": "install",
-      "group": "none",
-      "problemMatcher": []
-    },
-    {
-      "label": "npm: update",
-      "detail": "Update dependencies from package",
-      "type": "npm",
-      "script": "update",
-      "group": "none",
-      "problemMatcher": []
-    },
-    {
       "label": "npm: lint",
       "detail": "eslint src",
       "type": "npm",

@@ -9,5 +9,8 @@
   "tabWidth": 2,
   "trailingComma": "all",
   "useTabs": false,
-  "vueIndentScriptAndStyle": true
+  "vueIndentScriptAndStyle": true,
+
+  "pluginSearchDirs": false,
+  "plugins": ["prettier-plugin-organize-imports", "prettier-plugin-organize-attributes", "prettier-plugin-tailwindcss"]
 }

@@ -1,0 +1,7 @@
+/*
+https://tailwindcss.com/docs/content-configuration
+https://github.com/tailwindlabs/tailwindcss/blob/master/stubs/defaultConfig.stub.js
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

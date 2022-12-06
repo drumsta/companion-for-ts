@@ -27,5 +27,13 @@
       "rule": "*",
       "severity": "error"
     }
-  ]
+  ],
+
+  // https://tailwindcss.nuxt.dev/tailwind/editor-support
+  "tailwindCSS.experimental.configFile": ".nuxt/tailwind.config.cjs",
+
+  "files.associations": {
+    // https://tailwindcss.nuxt.dev/tailwind/editor-support
+    "*.css": "tailwindcss"
+  }
 }
