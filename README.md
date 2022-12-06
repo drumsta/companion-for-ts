@@ -1,8 +1,8 @@
-# Nuxt 3 Minimal Starter
+# Companion for TS
+
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 ## Setup
-
-Make sure to install the dependencies:
 
 ```bash
 npm install
