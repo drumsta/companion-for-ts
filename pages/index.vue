@@ -1,5 +1,14 @@
 <template>
   <div>
-    <h1>Homepage</h1>
+    <h1 class="font-heading">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo, cupiditate.</h1>
+    <p class="font-paragraph">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, illo perferendis nihil vero temporibus
+      quidem adipisci aut reprehenderit quia, minima rem delectus iure, tenetur autem. Magnam error officiis amet cumque
+      eaque nihil, autem, consectetur minus aperiam facilis consequuntur quos distinctio atque velit dignissimos in
+      maxime? Harum, fuga ab? Consectetur earum mollitia autem eaque ipsum possimus velit ratione, temporibus a
+      assumenda voluptate deserunt maiores neque in voluptatem hic natus quo. Quaerat sit maxime praesentium asperiores
+      itaque consectetur, sed iusto excepturi facilis, accusamus, cumque porro? Quos fuga, hic quae temporibus esse
+      velit sapiente aspernatur, quas dolor, a ab consequatur provident. Est, incidunt?
+    </p>
   </div>
 </template>
