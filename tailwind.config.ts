@@ -6,12 +6,6 @@ import type { Config } from 'tailwindcss';
 export default <Partial<Config>>{
   darkMode: 'class',
   theme: {
-    extend: {
-      colors: {},
-      fonts: {
-        heading: 'Roboto',
-        paragraph: 'Time Roman',
-      },
-    },
+    extend: {},
   },
 };

@@ -20,7 +20,7 @@
 </script>
 
 <template>
-  <div class="min-h-screen bg-yellow-200 dark:bg-gray-800">
+  <div>
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
