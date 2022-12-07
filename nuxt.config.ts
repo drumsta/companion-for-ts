@@ -14,7 +14,7 @@ export default defineNuxtConfig({
       // https://langvad.dev/blog/how-to-work-with-meta-data-in-nuxt
       // https://stackoverflow.com/questions/71571875/nuxt-seo-meta-description
       meta: [{ name: 'description', content: 'Companion for TS' }],
-      bodyAttrs: { class: 'bg-yellow-200' },
+      bodyAttrs: { class: 'antialiased text-theme-text bg-theme-bg' },
       htmlAttrs: {},
     },
   },
@@ -24,7 +24,6 @@ export default defineNuxtConfig({
   devServer: {
     port: 3334,
   },
-
   modules: ['@nuxtjs/color-mode', '@nuxtjs/tailwindcss'],
   pages: true,
   typescript: {

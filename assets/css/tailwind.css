@@ -5,3 +5,15 @@ https://github.com/tailwindlabs/tailwindcss/blob/master/stubs/defaultConfig.stub
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --theme-text: theme(colors.neutral.500);
+  --theme-text-accent: theme(colors.slate.600);
+  --theme-bg: theme(colors.neutral.50);
+}
+
+.dark {
+  --theme-text: theme(colors.neutral.400);
+  --theme-text-accent: theme(colors.slate.300);
+  --theme-bg: theme(colors.neutral.900);
+}
