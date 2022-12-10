@@ -26,12 +26,12 @@
     "preview": "nuxt preview",
     "generate": "nuxt generate",
     "postinstall": "nuxt prepare",
-    "typecheck": "nuxi typecheck",
     "prettier": "prettier --check .",
     "prettier-write": "prettier --write .",
-    "lint": "eslint . --ext .ts,.tsx,.vue",
+    "lint-typecheck": "nuxi typecheck",
+    "lint-check": "eslint . --ext .ts,.tsx,.vue",
     "lint-fix": "eslint . --ext .ts,.tsx,.vue --fix",
-    "stylelint-check": "stylelint-config-prettier-check"
+    "style-config": "stylelint-config-prettier-check"
   },
   "devDependencies": {
     "@nuxtjs/color-mode": "^3.2.0",
