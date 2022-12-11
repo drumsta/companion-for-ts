@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1 class="font-heading">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo, cupiditate.</h1>
-    <p class="font-paragraph">
+    <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo, cupiditate.</h1>
+    <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, illo perferendis nihil vero temporibus
       quidem adipisci aut reprehenderit quia, minima rem delectus iure, tenetur autem. Magnam error officiis amet cumque
       eaque nihil, autem, consectetur minus aperiam facilis consequuntur quos distinctio atque velit dignissimos in

@@ -1,10 +1,10 @@
 {
   "recommendations": [
-    "bradlc.vscode-tailwindcss",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "stylelint.vscode-stylelint",
     "vue.volar",
-    "vue.vscode-typescript-vue-plugin"
+    "vue.vscode-typescript-vue-plugin",
+    "voorjaar.windicss-intellisense"
   ]
 }

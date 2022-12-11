@@ -4,12 +4,6 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
 
-  // https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint#extension-settings
-  "css.validate": false,
-  "less.validate": false,
-  "scss.validate": false,
-  "stylelint.validate": ["css", "less", "postcss", "scss", "vue"],
-
   // https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
   "eslint.alwaysShowStatus": true,
   "eslint.validate": [
@@ -29,11 +23,15 @@
     }
   ],
 
-  // https://tailwindcss.nuxt.dev/tailwind/editor-support
-  "tailwindCSS.experimental.configFile": ".nuxt/tailwind.config.cjs",
+  // https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint#extension-settings
+  "css.validate": false,
+  "stylelint.validate": ["css", "vue"],
 
-  "files.associations": {
-    // https://tailwindcss.nuxt.dev/tailwind/editor-support
-    "*.css": "tailwindcss"
-  }
+  // https://marketplace.visualstudio.com/items?itemName=voorjaar.windicss-intellisense
+  // https://windicss.org/editors/vscode.html
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "windicss.sortOnSave": true,
+  "windicss.enableCodeFolding": true
 }

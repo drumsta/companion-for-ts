@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import type { HeadAugmentations } from '@nuxt/schema';
-  import type { UseHeadInput } from '@unhead/vue';
+  import type { UseHeadInput } from '@vueuse/head';
 
   const colorMode = useColorMode();
 
@@ -20,9 +20,7 @@
 </script>
 
 <template>
-  <div>
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>

@@ -17,7 +17,7 @@
   - [x] EsLint, StyleLint, prettier.
   - [x] Strong typing - TypeScript.
 - Styling
-  - [x] Multi-theming, including dark theme - `@nuxtjs/color-mode` + `tailwindcss`.
+  - [x] Multi-theming, including dark theme - `@nuxtjs/color-mode` + `windicss`.
   - [x] Individual elements styling, styling in style section in SFC.
   - [UnoCSS](https://github.com/unocss/unocss) - The instant on-demand Atomic CSS engine.
 - Localization - i18n
