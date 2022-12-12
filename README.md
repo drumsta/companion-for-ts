@@ -20,7 +20,7 @@
   - [x] Multi-theming, including dark theme - `@nuxtjs/color-mode` + `windicss`.
   - [x] Individual elements styling, styling in style section in SFC.
   - [UnoCSS](https://github.com/unocss/unocss) - The instant on-demand Atomic CSS engine.
-- Localization - i18n
+- [x] Localization - i18n
 - State Management - Pinia
 - API & Data persistence
   - native vue calls vs axios.
