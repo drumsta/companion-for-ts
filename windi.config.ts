@@ -15,6 +15,8 @@ export default defineConfig({
         'theme-text': 'var(--theme-text)',
         'theme-text-accent': 'var(--theme-text-accent)',
         'theme-bg': 'var(--theme-bg)',
+        'theme-bg-subtle': 'var(--theme-bg-subtle)',
+        'theme-border-accent': 'var(--theme-border-accent)',
       },
     },
   },

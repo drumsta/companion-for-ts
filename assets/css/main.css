@@ -2,12 +2,16 @@
 
 :root {
   --theme-text: theme(colors.neutral.500);
-  --theme-text-accent: theme(colors.slate.600);
-  --theme-bg: theme(colors.neutral.50);
+  --theme-text-accent: theme(colors.lime.500);
+  --theme-bg: theme(colors.light.200);
+  --theme-bg-subtle: theme(colors.light.500);
+  --theme-border-accent: theme(colors.lime.500);
 }
 
 .dark {
   --theme-text: theme(colors.neutral.400);
-  --theme-text-accent: theme(colors.slate.300);
-  --theme-bg: theme(colors.neutral.900);
+  --theme-text-accent: theme(colors.lime.400);
+  --theme-bg: theme(colors.dark.800);
+  --theme-bg-subtle: theme(colors.dark.400);
+  --theme-border-accent: theme(colors.lime.400);
 }
