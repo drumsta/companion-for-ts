@@ -43,7 +43,7 @@ export default defineNuxtConfig({
       fallbackLocale: 'en',
     },
   },
-  modules: ['@nuxtjs/color-mode', 'nuxt-windicss', '@nuxtjs/i18n'],
+  modules: ['@nuxtjs/color-mode', '@nuxtjs/i18n', 'nuxt-windicss'],
   pages: true,
   typescript: {
     strict: true,
