@@ -23,7 +23,7 @@
         </NuxtLink>
       </li>
       <li>
-        <NuxtLink class="flex flex-col w-25 items-center hover:text-theme-text-accent" :to="localePath('contact')">
+        <NuxtLink class="flex flex-col w-25 items-center hover:text-theme-text-accent" :to="localePath('about')">
           <svg class="sm:(h-6) <sm:(h-6) md:(h-9) lg:(h-12)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path fill="currentColor" d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" />
           </svg>
