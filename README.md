@@ -15,6 +15,9 @@
   - Offline capabilities - data caching + storage, PWA
 - Coding standards & practices
   - [x] EsLint, StyleLint, prettier.
+    - [XO](https://github.com/import-js/eslint-plugin-import)
+      - [Unicorn](https://github.com/sindresorhus/eslint-plugin-unicorn)
+      - [Import](https://github.com/import-js/eslint-plugin-import)
   - [x] Strong typing - TypeScript.
 - Styling
   - [x] Multi-theming, including dark theme - `@nuxtjs/color-mode` + `windicss`.
@@ -27,3 +30,12 @@
   - Data storages available on client side.
 - Performance, Web standards - Lighthouse, [web.dev](https://web.dev/learn)
   - PostProcessing - PostCSS + minifization + compression
+- Other stuff
+  - Cookies
+    - [Nuxt Cookie Control](https://gitlab.com/broj42/nuxt-cookie-control)
+    - [Nuxt Cookie Control](https://github.com/econic/nuxt-cookie-consent)
+
+## Other
+
+- [StandWithUkraine](http://stand-with-ukraine.pp.ua/)
+  - [Example](https://github.com/avajs/ava)

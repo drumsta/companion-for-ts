@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // https://nuxt.com/docs/getting-started/seo-meta
 import type { NuxtConfig } from '@nuxt/schema';
+import { quasar, QuasarPluginOpts } from '@quasar/vite-plugin';
 
 // https://nuxt.com/docs/guide/directory-structure/components#dynamic-components
 export default defineNuxtConfig({
@@ -15,6 +16,9 @@ export default defineNuxtConfig({
       meta: [{ name: 'description', content: 'Companion for TS' }],
       bodyAttrs: { class: 'antialiased text-theme-text bg-theme-bg' },
     },
+  },
+  build: {
+    transpile: ['quasar'],
   },
   colorMode: {
     classSuffix: '',
@@ -46,12 +50,22 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/color-mode', '@nuxtjs/i18n', 'nuxt-windicss'],
   pages: true,
   typescript: {
+    shim: false,
     strict: true,
   },
   vite: {
     build: {
       minify: 'esbuild',
     },
+    define: {
+      'process.env.DEBUG': false,
+    },
+    plugins: [
+      quasar({
+        autoImportComponentCase: 'combined',
+        sassVariables: false,
+      } as QuasarPluginOpts),
+    ],
   },
   windicss: {
     analyze: true,

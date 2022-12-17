@@ -6,7 +6,7 @@ export default defineConfig({
   attributify: true,
   darkMode: 'class',
   extract: {
-    include: ['./*.{ts,vue}', './components/*.{ts,vue}', './layouts/*.{ts,vue}', './pages/*.{ts,vue}'],
+    include: ['./*.{ts,vue}', './components/**/*.{ts,vue}', './layouts/**/*.{ts,vue}', './pages/**/*.{ts,vue}'],
   },
   shortcuts: {},
   theme: {

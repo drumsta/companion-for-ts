@@ -12,5 +12,27 @@
   "vueIndentScriptAndStyle": true,
 
   "pluginSearchDirs": false,
-  "plugins": ["prettier-plugin-organize-imports", "prettier-plugin-organize-attributes"]
+  "plugins": ["prettier-plugin-organize-imports", "prettier-plugin-organize-attributes"],
+
+  "helpForAttributeGroups": [
+    "https://github.com/NiklasPor/prettier-plugin-organize-attributes",
+    "https://github.com/NiklasPor/prettier-plugin-organize-attributes/blob/main/src/presets.ts",
+    "https://codeguide.co/"
+  ],
+  "attributeGroups": [
+    "$VUE_ATTRIBUTE",
+    "$CLASS",
+    "$ID",
+    "$NAME",
+    "$DATA",
+    "$SRC",
+    "$FOR",
+    "$TYPE",
+    "$HREF",
+    "$VALUE",
+    "$TITLE",
+    "$ALT",
+    "$ROLE",
+    "$ARIA"
+  ]
 }
