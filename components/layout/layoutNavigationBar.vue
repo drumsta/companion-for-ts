@@ -1,5 +1,7 @@
 <script setup lang="ts">
-  const localePath = useLocalePath();
+  import type { LocalePathFunction } from 'vue-i18n-routing';
+
+  const localePath: LocalePathFunction = useLocalePath();
 </script>
 
 <template>

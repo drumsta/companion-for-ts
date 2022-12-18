@@ -1,10 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // https://nuxt.com/docs/getting-started/seo-meta
 import type { NuxtConfig } from '@nuxt/schema';
-import { quasar, QuasarPluginOpts } from '@quasar/vite-plugin';
 
-// https://nuxt.com/docs/guide/directory-structure/components#dynamic-components
-export default defineNuxtConfig({
+const nuxtConfig: NuxtConfig = {
   app: {
     head: {
       charset: 'utf-8',
@@ -18,7 +16,7 @@ export default defineNuxtConfig({
     },
   },
   build: {
-    transpile: ['quasar'],
+    transpile: ['primevue'],
   },
   colorMode: {
     classSuffix: '',
@@ -47,7 +45,7 @@ export default defineNuxtConfig({
       fallbackLocale: 'en',
     },
   },
-  modules: ['@nuxtjs/color-mode', '@nuxtjs/i18n', 'nuxt-windicss'],
+  modules: ['@nuxtjs/color-mode', '@nuxtjs/i18n', '@pinia/nuxt', '@vueuse/nuxt', 'nuxt-windicss'],
   pages: true,
   typescript: {
     shim: false,
@@ -57,17 +55,11 @@ export default defineNuxtConfig({
     build: {
       minify: 'esbuild',
     },
-    define: {
-      'process.env.DEBUG': false,
-    },
-    plugins: [
-      quasar({
-        autoImportComponentCase: 'combined',
-        sassVariables: false,
-      } as QuasarPluginOpts),
-    ],
   },
   windicss: {
     analyze: true,
   },
-} as NuxtConfig);
+};
+
+// https://nuxt.com/docs/guide/directory-structure/components#dynamic-components
+export default defineNuxtConfig(nuxtConfig);

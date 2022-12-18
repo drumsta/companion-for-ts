@@ -1,10 +1,11 @@
 <script setup lang="ts">
   import type { HeadAugmentations } from '@nuxt/schema';
+  import type { ColorModeInstance } from '@nuxtjs/color-mode/dist/runtime/types';
   import type { UseHeadInput } from '@vueuse/head';
 
-  const colorMode = useColorMode();
+  const colorMode: ColorModeInstance = useColorMode();
 
-  useHead({
+  const useHeadInput: UseHeadInput<HeadAugmentations> = {
     link: [
       {
         rel: 'icon',
@@ -16,7 +17,9 @@
         ),
       },
     ],
-  } as UseHeadInput<HeadAugmentations>);
+  };
+
+  useHead(useHeadInput);
 </script>
 
 <template>

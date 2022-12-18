@@ -1,5 +1,3 @@
 <template>
-  <div>
-    <SpeedLimitSelector />
-  </div>
+  <LazySpeedLimitSelector />
 </template>
