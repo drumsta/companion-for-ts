@@ -21,7 +21,7 @@ const nuxtConfig: NuxtConfig = {
   colorMode: {
     classSuffix: '',
   },
-  css: ['@/assets/css/main.css'],
+  css: ['@/assets/css/theme.css', '@/assets/css/components.css'],
   i18n: {
     locales: [
       {

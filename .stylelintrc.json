@@ -7,5 +7,8 @@
     "stylelint-config-html/vue",
     "stylelint-config-prettier"
   ],
-  "defaultSeverity": "error"
+  "defaultSeverity": "error",
+  "rules": {
+    "function-no-unknown": [true, { "ignoreFunctions": ["theme"] }]
+  }
 }

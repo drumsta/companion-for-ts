@@ -1,5 +1,3 @@
-/* stylelint-disable function-no-unknown */
-
 :root {
   --theme-text: theme(colors.neutral.700);
   --theme-text-subtle: theme(colors.neutral.500);
