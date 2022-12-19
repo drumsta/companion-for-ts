@@ -1,0 +1,13 @@
+<template>
+  <Button />
+</template>
+
+<style>
+  .p-button {
+    color: var(--theme-text-accent);
+  }
+
+  .p-button-label {
+    font-weight: 700;
+  }
+</style>

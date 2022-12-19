@@ -1,3 +1,3 @@
 <template>
-  <LazySpeedLimitSelector />
+  <SpeedLimitSelector />
 </template>

@@ -16,5 +16,5 @@
     value-color="var(--theme-bg-positive)"
     text-color="var(--theme-text-accent)"
   />
-  <Button label="-5" />
+  <VisualsButton label="-5" />
 </template>
