@@ -2,35 +2,30 @@
   --theme-text: theme(colors.neutral.700);
   --theme-text-subtle: theme(colors.neutral.500);
   --theme-text-accent: theme(colors.lime.500);
-  --theme-text-positive: theme(colors.emerald.500);
-  --theme-text-negative: theme(colors.red.500);
-  --theme-text-info: theme(colors.sky.500);
-  --theme-text-warning: theme(colors.orange.500);
   --theme-bg: theme(colors.light.200);
   --theme-bg-subtle: theme(colors.light.500);
   --theme-bg-accent: theme(colors.light.800);
   --theme-border: theme(colors.dark.500);
-
-  /* --theme-border-subtle: theme(colors.neutral.400); */
   --theme-border-subtle: theme(colors.light.900);
   --theme-border-accent: theme(colors.lime.500);
+  --theme-primary: #0d6efd;
+  --theme-secondary: #6c757d;
+  --theme-accent: theme(colors.lime.500);
+  --theme-positive: #21ba45;
+  --theme-negative: #dc3545;
+  --theme-info: #0dcaf0;
+  --theme-warning: #ffc107;
+  --theme-light: theme(colors.light.200);
+  --theme-dark: theme(colors.dark.800);
 }
 
 .dark {
   --theme-text: theme(colors.neutral.300);
   --theme-text-subtle: theme(colors.neutral.500);
   --theme-text-accent: theme(colors.lime.400);
-  --theme-text-positive: theme(colors.emerald.400);
-  --theme-text-negative: theme(colors.red.400);
-  --theme-text-info: theme(colors.sky.400);
-  --theme-text-warning: theme(colors.orange.400);
   --theme-bg: theme(colors.dark.800);
   --theme-bg-subtle: theme(colors.dark.500);
   --theme-bg-accent: theme(colors.dark.200);
-  --theme-bg-positive: theme(colors.emerald.600);
-  --theme-bg-negative: theme(colors.red.600);
-  --theme-bg-info: theme(colors.sky.600);
-  --theme-bg-warning: theme(colors.orange.600);
   --theme-border: theme(colors.dark.200);
   --theme-border-subtle: theme(colors.dark.400);
   --theme-border-accent: theme(colors.lime.400);

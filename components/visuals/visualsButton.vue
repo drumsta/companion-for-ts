@@ -1,3 +1,0 @@
-<template>
-  <Button clas="" />
-</template>
