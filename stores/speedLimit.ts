@@ -11,7 +11,7 @@ interface SpeedLimitStore {
 
 function setupStore(): SpeedLimitStore {
   const speedLimit: Ref<number> = useLocalStorage('app/speed-limit', 50);
-  const maxSpeed: Ref<number> = useLocalStorage('app/speed-max', 100);
+  const maxSpeed: Ref<number> = useLocalStorage('app/speed-max', 120);
 
   function change(amount: number): void {
     speedLimit.value += amount;
