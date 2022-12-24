@@ -15,13 +15,10 @@ const nuxtConfig: NuxtConfig = {
       bodyAttrs: { class: 'antialiased text-theme-text bg-theme-bg' },
     },
   },
-  build: {
-    transpile: ['primevue'],
-  },
   colorMode: {
     classSuffix: '',
   },
-  css: ['@/assets/css/theme.css', '@/assets/css/components.css'],
+  css: ['@/assets/css/theme.css'],
   i18n: {
     locales: [
       {

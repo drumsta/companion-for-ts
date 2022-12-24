@@ -21,8 +21,9 @@
   ],
   "attributeGroups": [
     "$VUE_ATTRIBUTE",
-    "$CLASS",
     "$ID",
+    "^ref$",
+    "$CLASS",
     "$NAME",
     "$DATA",
     "$SRC",

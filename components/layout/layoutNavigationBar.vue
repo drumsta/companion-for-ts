@@ -1,9 +1,3 @@
-<script setup lang="ts">
-  import type { LocalePathFunction } from 'vue-i18n-routing';
-
-  const localePath: LocalePathFunction = useLocalePath();
-</script>
-
 <template>
   <nav
     class="bg-theme-bg-subtle flex inset-x-0 bottom-0 fixed sm:(h-12 text-xs) <sm:(h-12 text-xs) md:(h-16 text-sm) lg:(h-20 text-base) "
@@ -21,7 +15,7 @@
               d="M19 14c-1.654 0-3 1.346-3 3c0 3.188 3 5 3 5s3-1.813 3-5c0-1.654-1.346-3-3-3zm0 4.5a1.5 1.5 0 1 1 .001-3.001A1.5 1.5 0 0 1 19 18.5z"
             />
           </svg>
-          <span>Start</span>
+          <span>Go</span>
         </NuxtLink>
       </li>
       <li>
@@ -35,6 +29,12 @@
     </ul>
   </nav>
 </template>
+
+<script setup lang="ts">
+  import type { LocalePathFunction } from 'vue-i18n-routing';
+
+  const localePath: LocalePathFunction = useLocalePath();
+</script>
 
 <style scoped>
   .router-link-exact-active {

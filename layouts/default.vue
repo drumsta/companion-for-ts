@@ -1,7 +1,6 @@
-<script setup lang="ts"></script>
-
 <template>
   <div>
+    <br />
     <slot />
   </div>
   <LayoutNavigationBar />

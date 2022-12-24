@@ -11,6 +11,9 @@ const windiConfig: FullConfig = {
   shortcuts: {},
   theme: {
     extend: {
+      cursor: {
+        grab: 'grab',
+      },
       colors: {
         'theme-text': 'var(--theme-text)',
         'theme-text-subtle': 'var(--theme-text-subtle)',
