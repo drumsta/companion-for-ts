@@ -23,13 +23,27 @@
       text-class="fill-theme-text"
     />
     <br />
-    <div class="flex h-16 justify-center">
-      <PButton class="bg-theme-negative text-theme-light ml-0 w-16" @click="speedLimitStore.change(-25)">-25</PButton>
-      <PButton class="bg-theme-negative text-theme-light w-16" @click="speedLimitStore.change(-10)">-10</PButton>
-      <PButton class="bg-theme-negative text-theme-light w-16" @click="speedLimitStore.change(-5)">-5</PButton>
-      <PButton class="bg-theme-positive text-theme-light w-16" @click="speedLimitStore.change(5)">5</PButton>
-      <PButton class="bg-theme-positive text-theme-light w-16" @click="speedLimitStore.change(10)">10</PButton>
-      <PButton class="bg-theme-positive text-theme-light w-16" @click="speedLimitStore.change(25)">25</PButton>
+    <div class="flex h-14 justify-center">
+      <PButton class="bg-theme-negative text-theme-light w-14 hover:(opacity-100)" @click="speedLimitStore.change(-25)"
+        >-25</PButton
+      >
+      <PButton class="bg-theme-negative text-theme-light w-14 hover:(opacity-100)" @click="speedLimitStore.change(-10)"
+        >-10</PButton
+      >
+      <PButton class="bg-theme-negative text-theme-light w-14 hover:(opacity-100)" @click="speedLimitStore.change(-5)"
+        >-5</PButton
+      >
+      <PButton class="bg-theme-positive text-theme-light w-14 hover:(opacity-100)" @click="speedLimitStore.change(5)"
+        >5</PButton
+      >
+      <PButton class="bg-theme-positive text-theme-light w-14 hover:(opacity-100)" @click="speedLimitStore.change(10)"
+        >10</PButton
+      >
+      <PButton
+        class="bg-theme-positive text-theme-light mr-2 w-14 hover:(opacity-100)"
+        @click="speedLimitStore.change(25)"
+        >25</PButton
+      >
     </div>
   </div>
 </template>
