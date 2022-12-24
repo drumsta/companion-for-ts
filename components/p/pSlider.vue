@@ -18,13 +18,13 @@
 <script setup lang="ts">
   export interface Props {
     modelValue: number;
-    min: number;
-    max: number;
-    step: number;
-    disabled: boolean;
-    containerClass: string;
-    rangeClass: string;
-    handleClass: string;
+    min?: number;
+    max?: number;
+    step?: number;
+    disabled?: boolean;
+    containerClass?: string;
+    rangeClass?: string;
+    handleClass?: string;
   }
 
   export interface Events {

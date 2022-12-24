@@ -15,6 +15,9 @@ const nuxtConfig: NuxtConfig = {
       bodyAttrs: { class: 'antialiased text-theme-text bg-theme-bg' },
     },
   },
+  build: {
+    analyze: true,
+  },
   colorMode: {
     classSuffix: '',
   },

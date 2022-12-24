@@ -3,8 +3,8 @@
     <svg
       role="slider"
       viewBox="0 0 100 100"
-      :width="size"
-      :height="size"
+      :width="props.size"
+      :height="props.size"
       @click="onClick($event)"
       @keydown="onKeyDown($event)"
       @mousedown="onMouseDown($event)"
@@ -12,9 +12,16 @@
       @touchstart="onTouchStart($event)"
       @touchend="onTouchEnd($event)"
     >
-      <path class="fill-none" :class="props.rangeClass" :d="rangePath()" :stroke-width="strokeWidth"></path>
-      <path class="fill-none" :class="props.valueClass" :d="valuePath()" :stroke-width="strokeWidth"></path>
-      <text v-if="showValue" class="text-center text-xl" :class="props.textClass" :x="50" :y="57" text-anchor="middle">
+      <path class="fill-none" :class="props.rangeClass" :d="rangePath()" :stroke-width="props.strokeWidth"></path>
+      <path class="fill-none" :class="props.valueClass" :d="valuePath()" :stroke-width="props.strokeWidth"></path>
+      <text
+        v-if="props.showValue"
+        class="text-center text-xl"
+        :class="props.textClass"
+        :x="50"
+        :y="57"
+        text-anchor="middle"
+      >
         {{ valueToDisplay() }}
       </text>
     </svg>
@@ -24,19 +31,19 @@
 <script setup lang="ts">
   export interface Props {
     modelValue: number;
-    size: number;
-    min: number;
-    max: number;
-    step: number;
-    disabled: boolean;
-    readonly: boolean;
-    strokeWidth: number;
-    showValue: boolean;
-    valueTemplate: string;
-    containerClass: string;
-    rangeClass: string;
-    valueClass: string;
-    textClass: string;
+    size?: number;
+    min?: number;
+    max?: number;
+    step?: number;
+    disabled?: boolean;
+    readonly?: boolean;
+    strokeWidth?: number;
+    showValue?: boolean;
+    valueTemplate?: string;
+    containerClass?: string;
+    rangeClass?: string;
+    valueClass?: string;
+    textClass?: string;
   }
 
   export interface Events {
