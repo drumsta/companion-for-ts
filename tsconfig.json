@@ -17,6 +17,7 @@
     "extendedDiagnostics": true,
     "forceConsistentCasingInFileNames": true,
     "generateCpuProfile": "profile.cpuprofile",
+    "importHelpers": true,
     "importsNotUsedAsValues": "error",
     "isolatedModules": true,
     "noFallthroughCasesInSwitch": true,

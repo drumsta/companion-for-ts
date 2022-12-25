@@ -4,8 +4,12 @@
   import type { UseHeadInput } from '@vueuse/head';
 
   const colorMode: ColorModeInstance = useColorMode();
+  const i18nHead = useLocaleHead({ addSeoAttributes: true });
 
   const useHeadInput: UseHeadInput<HeadAugmentations> = {
+    htmlAttrs: {
+      ...i18nHead.value.htmlAttrs,
+    },
     link: [
       {
         rel: 'icon',

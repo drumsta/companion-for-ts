@@ -5,6 +5,12 @@
       viewBox="0 0 100 100"
       :width="props.size"
       :height="props.size"
+      :tabindex="props.disabled ? -1 : props.tabindex"
+      :aria-valuemin="props.min"
+      :aria-valuemax="props.max"
+      :aria-valuenow="props.modelValue"
+      :aria-labelledby="props.ariaLabelledby"
+      :aria-label="props.ariaLabel"
       @click="onClick($event)"
       @keydown="onKeyDown($event)"
       @mousedown="onMouseDown($event)"
@@ -36,7 +42,6 @@
     max?: number;
     step?: number;
     disabled?: boolean;
-    readonly?: boolean;
     strokeWidth?: number;
     showValue?: boolean;
     valueTemplate?: string;
@@ -44,6 +49,9 @@
     rangeClass?: string;
     valueClass?: string;
     textClass?: string;
+    tabindex?: number;
+    ariaLabelledby?: string;
+    ariaLabel?: string;
   }
 
   export interface Events {
@@ -58,7 +66,6 @@
     max: 100,
     step: 1,
     disabled: false,
-    readonly: false,
     strokeWidth: 14,
     showValue: true,
     valueTemplate: '{value}',
@@ -66,6 +73,9 @@
     rangeClass: '',
     valueClass: '',
     textClass: '',
+    tabindex: 0,
+    ariaLabelledby: '',
+    ariaLabel: '',
   });
 
   const emit = defineEmits<Events>();
@@ -97,9 +107,9 @@
   function zeroRadians(): number {
     if (props.min > 0 && props.max > 0) {
       return mapRange(props.min, props.min, props.max, minRadians, maxRadians);
-    } else {
-      return mapRange(0, props.min, props.max, minRadians, maxRadians);
     }
+
+    return mapRange(0, props.min, props.max, minRadians, maxRadians);
   }
 
   function valueRadians(): number {
@@ -130,15 +140,16 @@
     return valueRadians() > zeroRadians() ? 0 : 1;
   }
 
-  function updateValue(offsetX: number, offsetY: number): void {
-    let dx: number = offsetX - props.size / 2;
-    let dy: number = props.size / 2 - offsetY;
-    let angle: number = Math.atan2(dy, dx);
-    let start: number = -Math.PI / 2 - Math.PI / 6;
-    updateModel(angle, start);
+  function mapRange(x: number, inMin: number, inMax: number, outMin: number, outMax: number): number {
+    return ((x - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
   }
 
-  function updateModel(angle: number, start: number): void {
+  function updateValue(offsetX: number, offsetY: number): void {
+    const dx: number = offsetX - props.size / 2;
+    const dy: number = props.size / 2 - offsetY;
+    const angle: number = Math.atan2(dy, dx);
+    const start: number = -Math.PI / 2 - Math.PI / 6;
+
     let mappedValue: number;
 
     if (angle > maxRadians) {
@@ -149,122 +160,137 @@
       return;
     }
 
-    let newValue: number = Math.round((mappedValue - props.min) / props.step) * props.step + props.min;
+    const newValue: number = Math.round((mappedValue - props.min) / props.step) * props.step + props.min;
+    updateModel(newValue);
+  }
+
+  function updateModel(value: number): void {
+    let newValue: number = value;
+
+    if (newValue < props.min) {
+      newValue = props.min;
+    }
+
+    if (newValue > props.max) {
+      newValue = props.max;
+    }
 
     emit('update:modelValue', newValue);
     emit('change', newValue);
   }
 
-  function updateModelValue(newValue: number): void {
-    if (newValue > props.max) {
-      emit('update:modelValue', props.max);
-    } else if (newValue < props.min) {
-      emit('update:modelValue', props.min);
-    } else {
-      emit('update:modelValue', newValue);
-    }
-  }
-
-  function mapRange(x: number, inMin: number, inMax: number, outMin: number, outMax: number): number {
-    return ((x - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
-  }
-
   function onClick(event: MouseEvent): void {
-    if (!props.disabled && !props.readonly) {
-      updateValue(event.offsetX, event.offsetY);
+    if (props.disabled) {
+      return;
     }
+
+    updateValue(event.offsetX, event.offsetY);
   }
 
   function onMouseDown(event: MouseEvent): void {
-    if (!props.disabled && !props.readonly) {
-      window.addEventListener('mousemove', onMouseMove);
-      window.addEventListener('mouseup', onMouseUp);
-      event.preventDefault();
+    if (props.disabled) {
+      return;
     }
+
+    document.addEventListener('mousemove', onMouseMove, { passive: true });
+    document.addEventListener('mouseup', onMouseUp, { passive: true });
+    event.preventDefault();
   }
 
   function onMouseMove(event: MouseEvent): void {
-    if (!props.disabled && !props.readonly) {
-      updateValue(event.offsetX, event.offsetY);
-      event.preventDefault();
+    if (props.disabled) {
+      return;
     }
+
+    updateValue(event.offsetX, event.offsetY);
+    event.preventDefault();
   }
 
   function onMouseUp(event: MouseEvent) {
-    if (!props.disabled && !props.readonly) {
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', onMouseUp);
-      event.preventDefault();
+    if (props.disabled) {
+      return;
     }
+
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+    event.preventDefault();
   }
 
   function onTouchStart(event: TouchEvent) {
-    if (!props.disabled && !props.readonly) {
-      window.addEventListener('touchmove', onTouchMove);
-      window.addEventListener('touchend', onTouchEnd);
-      event.preventDefault();
+    if (props.disabled) {
+      return;
     }
+
+    document.addEventListener('touchmove', onTouchMove, { passive: true });
+    document.addEventListener('touchend', onTouchEnd, { passive: true });
+    event.preventDefault();
   }
 
   function onTouchMove(event: TouchEvent) {
-    if (!props.disabled && !props.readonly && event.touches.length == 1) {
-      const rect: DOMRect | undefined = container.value?.getBoundingClientRect();
-      const touch = event.targetTouches[0];
-
-      if (rect === undefined || touch === undefined) {
-        return;
-      }
-
-      const offsetX = touch.clientX - rect.left;
-      const offsetY = touch.clientY - rect.top;
-      updateValue(offsetX, offsetY);
+    if (props.disabled || event.touches.length != 1) {
+      return;
     }
+
+    const rect: DOMRect | undefined = container.value?.getBoundingClientRect();
+    const touch = event.targetTouches[0];
+
+    if (rect === undefined || touch === undefined) {
+      return;
+    }
+
+    const offsetX = touch.clientX - rect.left;
+    const offsetY = touch.clientY - rect.top;
+    updateValue(offsetX, offsetY);
+    event.preventDefault();
   }
 
   function onTouchEnd(event: TouchEvent) {
-    if (!props.disabled && !props.readonly) {
-      window.removeEventListener('touchmove', onTouchMove);
-      window.removeEventListener('touchend', onTouchEnd);
-      event.preventDefault();
+    if (props.disabled) {
+      return;
     }
+
+    document.removeEventListener('touchmove', onTouchMove);
+    document.removeEventListener('touchend', onTouchEnd);
+    event.preventDefault();
   }
 
   function onKeyDown(event: KeyboardEvent): void {
-    if (!props.disabled && !props.readonly) {
-      switch (event.code) {
-        case 'ArrowRight':
-        case 'ArrowUp': {
-          event.preventDefault();
-          updateModelValue(props.modelValue + 1);
-          break;
-        }
-        case 'ArrowLeft':
-        case 'ArrowDown': {
-          event.preventDefault();
-          updateModelValue(props.modelValue - 1);
-          break;
-        }
-        case 'Home': {
-          event.preventDefault();
-          emit('update:modelValue', props.min);
-          break;
-        }
-        case 'End': {
-          event.preventDefault();
-          emit('update:modelValue', props.max);
-          break;
-        }
-        case 'PageUp': {
-          event.preventDefault();
-          updateModelValue(props.modelValue + 10);
-          break;
-        }
-        case 'PageDown': {
-          event.preventDefault();
-          updateModelValue(props.modelValue - 10);
-          break;
-        }
+    if (props.disabled) {
+      return;
+    }
+
+    switch (event.code) {
+      case 'ArrowLeft':
+      case 'ArrowDown': {
+        updateModel(props.modelValue - props.step);
+        break;
+      }
+      case 'ArrowRight':
+      case 'ArrowUp': {
+        updateModel(props.modelValue + props.step);
+        break;
+      }
+      case 'PageDown': {
+        updateModel(props.modelValue - props.step * 10);
+        break;
+      }
+      case 'PageUp': {
+        updateModel(props.modelValue + props.step * 10);
+        break;
+      }
+      case 'Home': {
+        updateModel(props.min);
+        break;
+      }
+      case 'End': {
+        updateModel(props.max);
+        break;
+      }
+      default: {
+        return;
       }
     }
+
+    event.preventDefault();
   }
 </script>

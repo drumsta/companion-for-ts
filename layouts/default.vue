@@ -1,7 +1,4 @@
 <template>
-  <div>
-    <br />
-    <slot />
-  </div>
+  <slot />
   <LayoutNavigationBar />
 </template>

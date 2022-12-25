@@ -4,13 +4,20 @@
     <span
       class="cursor-grab border-2 rounded-1/2 h-6 -mt-3 -ml-3 top-1/2 w-6 absolute touch-none block"
       role="slider"
+      aria-orientation="horizontal"
       :class="props.handleClass"
       :style="handleStyle()"
-      @touchstart="onDragStart($event)"
-      @touchmove="onDrag($event)"
-      @touchend="onDragEnd($event)"
-      @mousedown="onMouseDown($event)"
+      :tabindex="props.disabled ? -1 : props.tabindex"
+      :aria-valuemin="props.min"
+      :aria-valuemax="props.max"
+      :aria-valuenow="props.modelValue"
+      :aria-labelledby="props.ariaLabelledby"
+      :aria-label="props.ariaLabel"
       @keydown="onKeyDown($event)"
+      @mousedown="onMouseDown($event)"
+      @mouseup="onMouseUp($event)"
+      @touchstart="onTouchStart($event)"
+      @touchend="onTouchEnd($event)"
     />
   </div>
 </template>
@@ -25,6 +32,9 @@
     containerClass?: string;
     rangeClass?: string;
     handleClass?: string;
+    tabindex?: number;
+    ariaLabelledby?: string;
+    ariaLabel?: string;
   }
 
   export interface Events {
@@ -41,6 +51,9 @@
     containerClass: '',
     rangeClass: '',
     handleClass: '',
+    tabindex: 0,
+    ariaLabelledby: '',
+    ariaLabel: '',
   });
 
   const emit = defineEmits<Events>();
@@ -49,7 +62,14 @@
 
   let initX: number | undefined;
   let barWidth: number | undefined;
-  let dragging = false;
+
+  function rangeStyle(): { width: string } {
+    return { width: handlePosition() + '%' };
+  }
+
+  function handleStyle(): { left: string } {
+    return { left: handlePosition() + '%' };
+  }
 
   function handlePosition(): number {
     if (props.modelValue < props.min) {
@@ -63,43 +83,22 @@
     return ((props.modelValue - props.min) * 100) / (props.max - props.min);
   }
 
-  function rangeStyle(): { width: string } {
-    return { width: handlePosition() + '%' };
-  }
-
-  function handleStyle(): { left: string } {
-    return { left: handlePosition() + '%' };
-  }
-
-  const onBeforeUnmountHandler = () => {
-    unbindDragListeners();
-  };
-
-  onBeforeUnmount(onBeforeUnmountHandler);
-
-  function setValue(event: MouseEvent | TouchEvent): void {
-    let handleValue: number;
-    let pageX: number | undefined = event instanceof TouchEvent ? event.touches[0]?.pageX : event.pageX;
-
-    if (pageX === undefined || initX === undefined || barWidth === undefined) {
+  function updateValue(pageX: number): void {
+    if (initX === undefined || barWidth === undefined) {
       return;
     }
 
-    handleValue = ((pageX - initX) * 100) / barWidth;
-
+    const handleValue: number = ((pageX - initX) * 100) / barWidth;
+    const oldValue: number = props.modelValue;
     let newValue: number = (props.max - props.min) * (handleValue / 100) + props.min;
+    const diff: number = newValue - oldValue;
 
-    if (props.step != 0) {
-      const oldValue: number = props.modelValue;
-      const diff: number = newValue - oldValue;
+    if (diff < 0) {
+      newValue = oldValue + Math.ceil(newValue / props.step - oldValue / props.step) * props.step;
+    }
 
-      if (diff < 0) {
-        newValue = oldValue + Math.ceil(newValue / props.step - oldValue / props.step) * props.step;
-      } else if (diff > 0) {
-        newValue = oldValue + Math.floor(newValue / props.step - oldValue / props.step) * props.step;
-      }
-    } else {
-      newValue = Math.floor(newValue);
+    if (diff > 0) {
+      newValue = oldValue + Math.floor(newValue / props.step - oldValue / props.step) * props.step;
     }
 
     updateModel(newValue);
@@ -107,18 +106,17 @@
 
   function updateModel(value: number): void {
     let newValue: number = parseFloat(value.toFixed(10));
-    let modelValue: number;
 
     if (newValue < props.min) {
       newValue = props.min;
-    } else if (newValue > props.max) {
+    }
+
+    if (newValue > props.max) {
       newValue = props.max;
     }
 
-    modelValue = newValue;
-
-    emit('update:modelValue', modelValue);
-    emit('change', modelValue);
+    emit('update:modelValue', newValue);
+    emit('change', newValue);
   }
 
   function onClick(event: MouseEvent): void {
@@ -127,107 +125,112 @@
     }
 
     updateDomData();
-    setValue(event);
+    updateValue(event.pageX);
   }
 
-  function onDragStart(event: TouchEvent | MouseEvent): void {
+  function onMouseDown(event: MouseEvent): void {
     if (props.disabled) {
       return;
     }
 
-    dragging = true;
     updateDomData();
+    document.addEventListener('mousemove', onMouseMove, { passive: true });
+    document.addEventListener('mouseup', onMouseUp, { passive: true });
     event.preventDefault();
   }
 
-  function onDrag(event: TouchEvent | MouseEvent): void {
-    if (dragging) {
-      setValue(event);
-      event.preventDefault();
+  function onMouseMove(event: MouseEvent): void {
+    if (props.disabled) {
+      return;
     }
+
+    updateValue(event.pageX);
+    event.preventDefault();
   }
 
-  function onDragEnd(_event: TouchEvent | MouseEvent): void {
-    if (dragging) {
-      dragging = false;
+  function onMouseUp(event: MouseEvent) {
+    if (props.disabled) {
+      return;
     }
+
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+    event.preventDefault();
   }
 
-  function onMouseDown(event: MouseEvent): void {
-    bindDragListeners();
-    onDragStart(event);
+  function onTouchStart(event: TouchEvent): void {
+    if (props.disabled) {
+      return;
+    }
+
+    updateDomData();
+    document.addEventListener('touchmove', onTouchMove, { passive: true });
+    document.addEventListener('touchend', onTouchEnd, { passive: true });
+    event.preventDefault();
   }
 
-  function bindDragListeners(): void {
-    document.addEventListener('mousemove', onDrag);
-    document.addEventListener('mouseup', onDragEnd);
+  function onTouchMove(event: TouchEvent): void {
+    if (props.disabled || event.touches.length != 1) {
+      return;
+    }
+
+    const touch = event.targetTouches[0];
+
+    if (touch === undefined) {
+      return;
+    }
+
+    updateValue(touch.pageX);
+    event.preventDefault();
   }
 
-  function unbindDragListeners(): void {
-    document.removeEventListener('mousemove', onDrag);
-    document.removeEventListener('mouseup', onDragEnd);
+  function onTouchEnd(event: TouchEvent): void {
+    if (props.disabled) {
+      return;
+    }
+
+    document.removeEventListener('touchmove', onTouchMove);
+    document.removeEventListener('touchend', onTouchEnd);
+    event.preventDefault();
   }
 
   function onKeyDown(event: KeyboardEvent): void {
+    if (props.disabled) {
+      return;
+    }
+
     switch (event.code) {
       case 'ArrowDown':
-      case 'ArrowLeft':
-        decrementValue(event);
-        event.preventDefault();
+      case 'ArrowLeft': {
+        updateModel(props.modelValue - props.step);
         break;
+      }
       case 'ArrowUp':
-      case 'ArrowRight':
-        incrementValue(event);
-        event.preventDefault();
+      case 'ArrowRight': {
+        updateModel(props.modelValue + props.step);
         break;
-      case 'PageDown':
-        decrementValue(event, true);
-        event.preventDefault();
+      }
+      case 'PageDown': {
+        updateModel(props.modelValue - props.step * 10);
         break;
-      case 'PageUp':
-        incrementValue(event, true);
-        event.preventDefault();
+      }
+      case 'PageUp': {
+        updateModel(props.modelValue + props.step * 10);
         break;
-      case 'Home':
+      }
+      case 'Home': {
         updateModel(props.min);
-        event.preventDefault();
         break;
-      case 'End':
+      }
+      case 'End': {
         updateModel(props.max);
-        event.preventDefault();
         break;
-      default:
-        break;
-    }
-  }
-
-  function decrementValue(event: Event, pageKey = false) {
-    let newValue: number;
-
-    if (props.step != 0) {
-      newValue = props.modelValue - props.step;
-    } else if (props.step === 0 && pageKey) {
-      newValue = props.modelValue - 10;
-    } else {
-      newValue = props.modelValue - 1;
+      }
+      default: {
+        return;
+      }
     }
 
-    updateModel(newValue);
-    event.preventDefault();
-  }
-
-  function incrementValue(event: Event, pageKey = false) {
-    let newValue: number;
-
-    if (props.step != 0) {
-      newValue = props.modelValue + props.step;
-    } else if (props.step === 0 && pageKey) {
-      newValue = props.modelValue + 10;
-    } else {
-      newValue = props.modelValue + 1;
-    }
-
-    updateModel(newValue);
     event.preventDefault();
   }
 

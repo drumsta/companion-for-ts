@@ -11,12 +11,16 @@ const nuxtConfig: NuxtConfig = {
       // https://midstride.com/seo-for-nuxt-meta-tags
       // https://langvad.dev/blog/how-to-work-with-meta-data-in-nuxt
       // https://stackoverflow.com/questions/71571875/nuxt-seo-meta-description
-      meta: [{ name: 'description', content: 'Companion for TS' }],
-      bodyAttrs: { class: 'antialiased text-theme-text bg-theme-bg' },
+      meta: [
+        {
+          name: 'description',
+          content: 'Companion for TS',
+        },
+      ],
+      bodyAttrs: {
+        class: 'antialiased text-theme-text bg-theme-bg',
+      },
     },
-  },
-  build: {
-    analyze: true,
   },
   colorMode: {
     classSuffix: '',
@@ -26,7 +30,7 @@ const nuxtConfig: NuxtConfig = {
     locales: [
       {
         code: 'en',
-        iso: 'en-US',
+        iso: 'en',
         name: 'English',
         file: 'en.json',
       },
@@ -46,6 +50,13 @@ const nuxtConfig: NuxtConfig = {
     },
   },
   modules: ['@nuxtjs/color-mode', '@nuxtjs/i18n', '@pinia/nuxt', '@vueuse/nuxt', 'nuxt-windicss'],
+  // https://github.com/nuxt/framework/issues/7197
+  nitro: {
+    compressPublicAssets: true,
+    prerender: {
+      crawlLinks: true,
+    },
+  },
   pages: true,
   typescript: {
     shim: false,

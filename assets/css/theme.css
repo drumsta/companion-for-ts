@@ -11,8 +11,8 @@
   --theme-primary: theme(colors.blue.600);
   --theme-secondary: theme(colors.neutral.500);
   --theme-accent: theme(colors.lime.500);
-  --theme-positive: theme(colors.green.600);
-  --theme-negative: theme(colors.red.600);
+  --theme-positive: theme(colors.green.800);
+  --theme-negative: theme(colors.red.800);
   --theme-info: theme(colors.cyan.400);
   --theme-warning: theme(colors.yellow.400);
   --theme-light: theme(colors.light.200);
