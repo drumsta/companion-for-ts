@@ -25,10 +25,20 @@
         class="text-center text-xl"
         :class="props.textClass"
         :x="50"
-        :y="57"
+        :y="props.showValue2 ? 47 : 57"
         text-anchor="middle"
       >
-        {{ valueToDisplay() }}
+        {{ valueToDisplay(props.valueTemplate) }}
+      </text>
+      <text
+        v-if="props.showValue2"
+        class="text-center text-xl"
+        :class="props.textClass"
+        :x="50"
+        :y="65"
+        text-anchor="middle"
+      >
+        {{ valueToDisplay(props.valueTemplate2) }}
       </text>
     </svg>
   </div>
@@ -44,7 +54,9 @@
     disabled?: boolean;
     strokeWidth?: number;
     showValue?: boolean;
+    showValue2?: boolean;
     valueTemplate?: string;
+    valueTemplate2?: string;
     containerClass?: string;
     rangeClass?: string;
     valueClass?: string;
@@ -52,11 +64,6 @@
     tabindex?: number;
     ariaLabelledby?: string;
     ariaLabel?: string;
-  }
-
-  export interface Events {
-    (event: 'update:modelValue', modelValue: number): void;
-    (event: 'change', modelValue: number): void;
   }
 
   const props = withDefaults(defineProps<Props>(), {
@@ -68,7 +75,9 @@
     disabled: false,
     strokeWidth: 14,
     showValue: true,
+    showValue2: false,
     valueTemplate: '{value}',
+    valueTemplate2: '',
     containerClass: '',
     rangeClass: '',
     valueClass: '',
@@ -78,93 +87,74 @@
     ariaLabel: '',
   });
 
-  const emit = defineEmits<Events>();
+  const emit = defineEmits<(event: 'change' | 'update:modelValue', modelValue: number) => void>();
 
   const container = ref<HTMLElement | null>(null);
-
+  const three = 3;
+  const four = 4;
   const radius = 40;
   const midX = 50;
   const midY = 50;
-  const minRadians: number = (4 * Math.PI) / 3;
-  const maxRadians: number = -Math.PI / 3;
+  const minRadians: number = (four * Math.PI) / three;
+  const maxRadians: number = -Math.PI / three;
   const minX: number = midX + Math.cos(minRadians) * radius;
   const minY: number = midY - Math.sin(minRadians) * radius;
   const maxX: number = midX + Math.cos(maxRadians) * radius;
   const maxY: number = midY - Math.sin(maxRadians) * radius;
 
-  function valueToDisplay(): string {
-    return props.valueTemplate.replace(/{value}/g, props.modelValue.toString());
-  }
+  const valueToDisplay = function valueToDisplay(valueTemplate: string): string {
+    return valueTemplate.replace('{value}', props.modelValue.toString());
+  };
 
-  function rangePath(): string {
+  const rangePath = function rangePath(): string {
     return `M ${minX} ${minY} A ${radius} ${radius} 0 1 1 ${maxX} ${maxY}`;
-  }
+  };
 
-  function valuePath(): string {
-    return `M ${zeroX()} ${zeroY()} A ${radius} ${radius} 0 ${largeArc()} ${sweep()} ${valueX()} ${valueY()}`;
-  }
+  const mapRange = function mapRange(x: number, inMin: number, inMax: number, outMin: number, outMax: number): number {
+    return ((x - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
+  };
 
-  function zeroRadians(): number {
+  const zeroRadians = function zeroRadians(): number {
     if (props.min > 0 && props.max > 0) {
       return mapRange(props.min, props.min, props.max, minRadians, maxRadians);
     }
 
     return mapRange(0, props.min, props.max, minRadians, maxRadians);
-  }
+  };
 
-  function valueRadians(): number {
+  const valueRadians = function valueRadians(): number {
     return mapRange(props.modelValue, props.min, props.max, minRadians, maxRadians);
-  }
+  };
 
-  function zeroX(): number {
+  const zeroX = function zeroX(): number {
     return midX + Math.cos(zeroRadians()) * radius;
-  }
+  };
 
-  function zeroY(): number {
+  const zeroY = function zeroY(): number {
     return midY - Math.sin(zeroRadians()) * radius;
-  }
+  };
 
-  function valueX(): number {
-    return midX + Math.cos(valueRadians()) * radius;
-  }
-
-  function valueY(): number {
-    return midY - Math.sin(valueRadians()) * radius;
-  }
-
-  function largeArc(): 0 | 1 {
+  const largeArc = function largeArc(): 0 | 1 {
     return Math.abs(zeroRadians() - valueRadians()) < Math.PI ? 0 : 1;
-  }
+  };
 
-  function sweep(): 0 | 1 {
+  const sweep = function sweep(): 0 | 1 {
     return valueRadians() > zeroRadians() ? 0 : 1;
-  }
+  };
 
-  function mapRange(x: number, inMin: number, inMax: number, outMin: number, outMax: number): number {
-    return ((x - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
-  }
+  const valueX = function valueX(): number {
+    return midX + Math.cos(valueRadians()) * radius;
+  };
 
-  function updateValue(offsetX: number, offsetY: number): void {
-    const dx: number = offsetX - props.size / 2;
-    const dy: number = props.size / 2 - offsetY;
-    const angle: number = Math.atan2(dy, dx);
-    const start: number = -Math.PI / 2 - Math.PI / 6;
+  const valueY = function valueY(): number {
+    return midY - Math.sin(valueRadians()) * radius;
+  };
 
-    let mappedValue: number;
+  const valuePath = function valuePath(): string {
+    return `M ${zeroX()} ${zeroY()} A ${radius} ${radius} 0 ${largeArc()} ${sweep()} ${valueX()} ${valueY()}`;
+  };
 
-    if (angle > maxRadians) {
-      mappedValue = mapRange(angle, minRadians, maxRadians, props.min, props.max);
-    } else if (angle < start) {
-      mappedValue = mapRange(angle + 2 * Math.PI, minRadians, maxRadians, props.min, props.max);
-    } else {
-      return;
-    }
-
-    const newValue: number = Math.round((mappedValue - props.min) / props.step) * props.step + props.min;
-    updateModel(newValue);
-  }
-
-  function updateModel(value: number): void {
+  const updateModel = function updateModel(value: number): void {
     let newValue: number = value;
 
     if (newValue < props.min) {
@@ -177,36 +167,44 @@
 
     emit('update:modelValue', newValue);
     emit('change', newValue);
-  }
+  };
 
-  function onClick(event: MouseEvent): void {
+  const updateValue = function updateValue(offsetX: number, offsetY: number): void {
+    const dx: number = offsetX - props.size / 2;
+    const dy: number = props.size / 2 - offsetY;
+    const angle: number = Math.atan2(dy, dx);
+    const start: number = -Math.PI / 2 - Math.PI / 6;
+    let mappedValue = 0;
+
+    if (angle > maxRadians) {
+      mappedValue = mapRange(angle, minRadians, maxRadians, props.min, props.max);
+    } else if (angle < start) {
+      mappedValue = mapRange(angle + 2 * Math.PI, minRadians, maxRadians, props.min, props.max);
+    } else {
+      return;
+    }
+
+    updateModel(Math.round((mappedValue - props.min) / props.step) * props.step + props.min);
+  };
+
+  const onClick = function onClick(event: MouseEvent): void {
     if (props.disabled) {
       return;
     }
 
     updateValue(event.offsetX, event.offsetY);
-  }
+  };
 
-  function onMouseDown(event: MouseEvent): void {
-    if (props.disabled) {
-      return;
-    }
-
-    document.addEventListener('mousemove', onMouseMove, { passive: true });
-    document.addEventListener('mouseup', onMouseUp, { passive: true });
-    event.preventDefault();
-  }
-
-  function onMouseMove(event: MouseEvent): void {
+  const onMouseMove = function onMouseMove(event: MouseEvent): void {
     if (props.disabled) {
       return;
     }
 
     updateValue(event.offsetX, event.offsetY);
     event.preventDefault();
-  }
+  };
 
-  function onMouseUp(event: MouseEvent) {
+  const onMouseUp = function onMouseUp(event: MouseEvent): void {
     if (props.disabled) {
       return;
     }
@@ -214,27 +212,27 @@
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
     event.preventDefault();
-  }
+  };
 
-  function onTouchStart(event: TouchEvent) {
+  const onMouseDown = function onMouseDown(event: MouseEvent): void {
     if (props.disabled) {
       return;
     }
 
-    document.addEventListener('touchmove', onTouchMove, { passive: true });
-    document.addEventListener('touchend', onTouchEnd, { passive: true });
+    document.addEventListener('mousemove', onMouseMove, { passive: true });
+    document.addEventListener('mouseup', onMouseUp, { passive: true });
     event.preventDefault();
-  }
+  };
 
-  function onTouchMove(event: TouchEvent) {
-    if (props.disabled || event.touches.length != 1) {
+  const onTouchMove = function onTouchMove(event: TouchEvent): void {
+    if (props.disabled || event.touches.length !== 1) {
       return;
     }
 
     const rect: DOMRect | undefined = container.value?.getBoundingClientRect();
-    const touch = event.targetTouches[0];
+    const [touch] = event.targetTouches;
 
-    if (rect === undefined || touch === undefined) {
+    if (typeof rect === 'undefined' || typeof touch === 'undefined') {
       return;
     }
 
@@ -242,9 +240,9 @@
     const offsetY = touch.clientY - rect.top;
     updateValue(offsetX, offsetY);
     event.preventDefault();
-  }
+  };
 
-  function onTouchEnd(event: TouchEvent) {
+  const onTouchEnd = function onTouchEnd(event: TouchEvent): void {
     if (props.disabled) {
       return;
     }
@@ -252,9 +250,19 @@
     document.removeEventListener('touchmove', onTouchMove);
     document.removeEventListener('touchend', onTouchEnd);
     event.preventDefault();
-  }
+  };
 
-  function onKeyDown(event: KeyboardEvent): void {
+  const onTouchStart = function onTouchStart(event: TouchEvent): void {
+    if (props.disabled) {
+      return;
+    }
+
+    document.addEventListener('touchmove', onTouchMove, { passive: true });
+    document.addEventListener('touchend', onTouchEnd, { passive: true });
+    event.preventDefault();
+  };
+
+  const onKeyDown = function onKeyDown(event: KeyboardEvent): void {
     if (props.disabled) {
       return;
     }
@@ -292,5 +300,5 @@
     }
 
     event.preventDefault();
-  }
+  };
 </script>

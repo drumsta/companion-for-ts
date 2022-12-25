@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col justify-center items-center">
-    <h2 id="maxSpeed">Max Speed: {{ speedLimitStore.maxSpeed }}</h2>
+    <h2 id="maxSpeed">{{ t('components.speed-limit-selector.max-speed', { maxSpeed: speedLimitStore.maxSpeed }) }}</h2>
     <br />
     <PSlider
       v-model="speedLimitStore.maxSpeed"
@@ -16,12 +16,14 @@
     <br />
     <PKnob
       v-model="speedLimitStore.speedLimit"
-      aria-label="Current Speed"
+      :aria-label="t('components.speed-limit-selector.current-speed')"
       :tabindex="0"
       :min="0"
       :max="speedLimitStore.maxSpeed"
       :step="5"
       :size="300"
+      :show-value2="true"
+      value-template2="kmh"
       range-class="stroke-theme-negative"
       value-class="stroke-theme-positive"
       text-class="fill-theme-text"
@@ -30,8 +32,8 @@
     <div
       class="flex h-14 justify-center"
       role="spinbutton"
-      aria-label="Current Speed"
       aria-valuemin="0"
+      :aria-label="t('components.speed-limit-selector.current-speed')"
       tabindex="0"
       :aria-valuenow="speedLimitStore.speedLimit"
       :aria-valuemax="speedLimitStore.maxSpeed"
@@ -77,7 +79,10 @@
 </template>
 
 <script setup lang="ts">
+  import { useI18n } from 'vue-i18n';
   import { useSpeedLimitStore } from '@/stores/speedLimit';
+
+  const { t } = useI18n();
 
   const speedLimitStore = useSpeedLimitStore();
   watch(toRef(speedLimitStore, 'maxSpeed'), speedLimitStore.onMaxSpeedChanged);

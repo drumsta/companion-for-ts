@@ -37,11 +37,6 @@
     ariaLabel?: string;
   }
 
-  export interface Events {
-    (event: 'update:modelValue', modelValue: number): void;
-    (event: 'change', modelValue: number): void;
-  }
-
   const props = withDefaults(defineProps<Props>(), {
     modelValue: 0,
     min: 0,
@@ -56,22 +51,14 @@
     ariaLabel: '',
   });
 
-  const emit = defineEmits<Events>();
+  const emit = defineEmits<(event: 'change' | 'update:modelValue', modelValue: number) => void>();
 
   const container = ref<HTMLElement | null>(null);
 
-  let initX: number | undefined;
-  let barWidth: number | undefined;
+  let initX = 0;
+  let barWidth = 1;
 
-  function rangeStyle(): { width: string } {
-    return { width: handlePosition() + '%' };
-  }
-
-  function handleStyle(): { left: string } {
-    return { left: handlePosition() + '%' };
-  }
-
-  function handlePosition(): number {
+  const handlePosition = function handlePosition(): number {
     if (props.modelValue < props.min) {
       return 0;
     }
@@ -81,13 +68,32 @@
     }
 
     return ((props.modelValue - props.min) * 100) / (props.max - props.min);
-  }
+  };
 
-  function updateValue(pageX: number): void {
-    if (initX === undefined || barWidth === undefined) {
-      return;
+  const rangeStyle = function rangeStyle(): { width: string } {
+    return { width: `${handlePosition().toString()}%` };
+  };
+
+  const handleStyle = function handleStyle(): { left: string } {
+    return { left: `${handlePosition().toString()}%` };
+  };
+
+  const updateModel = function updateModel(value: number): void {
+    let newValue: number = parseFloat(value.toFixed(10));
+
+    if (newValue < props.min) {
+      newValue = props.min;
     }
 
+    if (newValue > props.max) {
+      newValue = props.max;
+    }
+
+    emit('update:modelValue', newValue);
+    emit('change', newValue);
+  };
+
+  const updateValue = function updateValue(pageX: number): void {
     const handleValue: number = ((pageX - initX) * 100) / barWidth;
     const oldValue: number = props.modelValue;
     let newValue: number = (props.max - props.min) * (handleValue / 100) + props.min;
@@ -102,33 +108,54 @@
     }
 
     updateModel(newValue);
-  }
+  };
 
-  function updateModel(value: number): void {
-    let newValue: number = parseFloat(value.toFixed(10));
+  const getWindowScrollLeft = function getWindowScrollLeft(): number {
+    const doc: HTMLElement = document.documentElement;
 
-    if (newValue < props.min) {
-      newValue = props.min;
+    return (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
+  };
+
+  const updateDomData = function updateDomData(): void {
+    const rect: DOMRect | undefined = container.value?.getBoundingClientRect();
+
+    if (typeof rect === 'undefined') {
+      return;
     }
 
-    if (newValue > props.max) {
-      newValue = props.max;
-    }
+    initX = rect.left + getWindowScrollLeft();
+    barWidth = container.value?.offsetWidth ?? 1;
+  };
 
-    emit('update:modelValue', newValue);
-    emit('change', newValue);
-  }
-
-  function onClick(event: MouseEvent): void {
+  const onClick = function onClick(event: MouseEvent): void {
     if (props.disabled) {
       return;
     }
 
     updateDomData();
     updateValue(event.pageX);
-  }
+  };
 
-  function onMouseDown(event: MouseEvent): void {
+  const onMouseMove = function onMouseMove(event: MouseEvent): void {
+    if (props.disabled) {
+      return;
+    }
+
+    updateValue(event.pageX);
+    event.preventDefault();
+  };
+
+  const onMouseUp = function onMouseUp(event: MouseEvent): void {
+    if (props.disabled) {
+      return;
+    }
+
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+    event.preventDefault();
+  };
+
+  const onMouseDown = function onMouseDown(event: MouseEvent): void {
     if (props.disabled) {
       return;
     }
@@ -137,28 +164,34 @@
     document.addEventListener('mousemove', onMouseMove, { passive: true });
     document.addEventListener('mouseup', onMouseUp, { passive: true });
     event.preventDefault();
-  }
+  };
 
-  function onMouseMove(event: MouseEvent): void {
+  const onTouchMove = function onTouchMove(event: TouchEvent): void {
+    if (props.disabled || event.touches.length !== 1) {
+      return;
+    }
+
+    const [touch] = event.targetTouches;
+
+    if (typeof touch === 'undefined') {
+      return;
+    }
+
+    updateValue(touch.pageX);
+    event.preventDefault();
+  };
+
+  const onTouchEnd = function onTouchEnd(event: TouchEvent): void {
     if (props.disabled) {
       return;
     }
 
-    updateValue(event.pageX);
+    document.removeEventListener('touchmove', onTouchMove);
+    document.removeEventListener('touchend', onTouchEnd);
     event.preventDefault();
-  }
+  };
 
-  function onMouseUp(event: MouseEvent) {
-    if (props.disabled) {
-      return;
-    }
-
-    document.removeEventListener('mousemove', onMouseMove);
-    document.removeEventListener('mouseup', onMouseUp);
-    event.preventDefault();
-  }
-
-  function onTouchStart(event: TouchEvent): void {
+  const onTouchStart = function onTouchStart(event: TouchEvent): void {
     if (props.disabled) {
       return;
     }
@@ -167,34 +200,9 @@
     document.addEventListener('touchmove', onTouchMove, { passive: true });
     document.addEventListener('touchend', onTouchEnd, { passive: true });
     event.preventDefault();
-  }
+  };
 
-  function onTouchMove(event: TouchEvent): void {
-    if (props.disabled || event.touches.length != 1) {
-      return;
-    }
-
-    const touch = event.targetTouches[0];
-
-    if (touch === undefined) {
-      return;
-    }
-
-    updateValue(touch.pageX);
-    event.preventDefault();
-  }
-
-  function onTouchEnd(event: TouchEvent): void {
-    if (props.disabled) {
-      return;
-    }
-
-    document.removeEventListener('touchmove', onTouchMove);
-    document.removeEventListener('touchend', onTouchEnd);
-    event.preventDefault();
-  }
-
-  function onKeyDown(event: KeyboardEvent): void {
+  const onKeyDown = function onKeyDown(event: KeyboardEvent): void {
     if (props.disabled) {
       return;
     }
@@ -232,22 +240,5 @@
     }
 
     event.preventDefault();
-  }
-
-  function updateDomData(): void {
-    const rect: DOMRect | undefined = container.value?.getBoundingClientRect();
-
-    if (rect === undefined) {
-      return;
-    }
-
-    initX = rect.left + getWindowScrollLeft();
-    barWidth = container.value?.offsetWidth;
-  }
-
-  function getWindowScrollLeft(): number {
-    const doc: HTMLElement = document.documentElement;
-
-    return (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
-  }
+  };
 </script>

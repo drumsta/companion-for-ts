@@ -9,11 +9,11 @@ interface SpeedLimitStore {
   onMaxSpeedChanged: () => void;
 }
 
-function setupStore(): SpeedLimitStore {
+const setupStore = function setupStore(): SpeedLimitStore {
   const speedLimit: Ref<number> = useLocalStorage('app/speed-limit', 50);
   const maxSpeed: Ref<number> = useLocalStorage('app/speed-max', 120);
 
-  function change(amount: number): void {
+  const change = function change(amount: number): void {
     speedLimit.value += amount;
 
     if (speedLimit.value < 0) {
@@ -23,13 +23,13 @@ function setupStore(): SpeedLimitStore {
     if (speedLimit.value > maxSpeed.value) {
       speedLimit.value = maxSpeed.value;
     }
-  }
+  };
 
-  function onMaxSpeedChanged(): void {
+  const onMaxSpeedChanged = function onMaxSpeedChanged(): void {
     if (maxSpeed.value < speedLimit.value) {
       speedLimit.value = maxSpeed.value;
     }
-  }
+  };
 
   const store: SpeedLimitStore = {
     speedLimit: skipHydrate(speedLimit),
@@ -39,6 +39,6 @@ function setupStore(): SpeedLimitStore {
   };
 
   return store;
-}
+};
 
 export const useSpeedLimitStore = defineStore('speedLimit', setupStore);

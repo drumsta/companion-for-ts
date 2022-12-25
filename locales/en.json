@@ -1,8 +1,22 @@
 {
-  "components": {},
+  "lorem-ipsum": "Lorem ipsum dolor sit amet consectetur adipisicing elit illo cupiditate.",
+  "app": {
+    "title": "Companion for TS",
+    "description": "Play your favourite Train Simulator with a little help from Companion for TS."
+  },
+  "components": {
+    "speed-limit-selector": {
+      "max-speed": "Max Speed: {maxSpeed}",
+      "current-speed": "Current Speed"
+    }
+  },
   "pages": {
     "index": {
-      "lorem-ipsum-dolor-sit-amet-consectetur-adipisicing-elit-illo-cupiditate": "Lorem ipsum dolor sit amet consectetur adipisicing elit illo cupiditate."
+      "title": "Go! - @:app.title",
+      "header": "Drive a Train"
+    },
+    "about": {
+      "title": "About - @:app.title"
     }
   }
 }

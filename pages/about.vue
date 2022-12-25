@@ -1,13 +1,16 @@
 <template>
-  <div>
-    <h1>{{ $t('pages.index.lorem-ipsum-dolor-sit-amet-consectetur-adipisicing-elit-illo-cupiditate') }}</h1>
-  </div>
+  <main class="flex flex-col justify-center items-center">
+    <h1>{{ $t('lorem-ipsum') }}</h1>
+  </main>
 </template>
 
 <script setup lang="ts">
-  import type { PageMeta } from 'nuxt/dist/pages/runtime/composables';
+  import { useI18n } from 'vue-i18n';
 
-  definePageMeta({
-    layout: 'default',
-  } as PageMeta);
+  const { t } = useI18n();
+
+  useHead({
+    title: t('pages.about.title'),
+    meta: [{ name: 'og:og:title', content: t('pages.about.title') }],
+  });
 </script>

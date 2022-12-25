@@ -1,22 +1,8 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
-// https://nuxt.com/docs/getting-started/seo-meta
-import type { NuxtConfig } from '@nuxt/schema';
-
-const nuxtConfig: NuxtConfig = {
+export default defineNuxtConfig({
   app: {
     head: {
       charset: 'utf-8',
-      title: 'Companion for TS',
       viewport: 'width=device-width, initial-scale=1.0',
-      // https://midstride.com/seo-for-nuxt-meta-tags
-      // https://langvad.dev/blog/how-to-work-with-meta-data-in-nuxt
-      // https://stackoverflow.com/questions/71571875/nuxt-seo-meta-description
-      meta: [
-        {
-          name: 'description',
-          content: 'Companion for TS',
-        },
-      ],
       bodyAttrs: {
         class: 'antialiased text-theme-text bg-theme-bg',
       },
@@ -27,6 +13,7 @@ const nuxtConfig: NuxtConfig = {
   },
   css: ['@/assets/css/theme.css'],
   i18n: {
+    baseUrl: 'http://localhost:3000',
     locales: [
       {
         code: 'en',
@@ -65,12 +52,14 @@ const nuxtConfig: NuxtConfig = {
   vite: {
     build: {
       minify: 'esbuild',
+      modulePreload: {
+        polyfill: false,
+      },
+      reportCompressedSize: true,
+      target: 'esnext',
     },
   },
   windicss: {
     analyze: true,
   },
-};
-
-// https://nuxt.com/docs/guide/directory-structure/components#dynamic-components
-export default defineNuxtConfig(nuxtConfig);
+});

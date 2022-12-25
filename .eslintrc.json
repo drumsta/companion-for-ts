@@ -5,9 +5,12 @@
   },
   "extends": [
     // https://eslint.org/docs/latest/user-guide/configuring/configuration-files#extending-configuration-files
-    "eslint:recommended",
+    "eslint:all",
     // https://typescript-eslint.io/docs/linting/configs
     "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:@typescript-eslint/strict",
+    "plugin:@typescript-eslint/all",
     // https://eslint.vuejs.org/user-guide
     "plugin:vue/vue3-recommended",
     // https://github.com/nuxt/eslint-plugin-nuxt
@@ -17,8 +20,9 @@
   "parser": "vue-eslint-parser",
   "parserOptions": {
     "ecmaVersion": "latest",
-    "extraFileExtensions": [".html", ".json", ".vue"],
+    "extraFileExtensions": [".vue"],
     "parser": "@typescript-eslint/parser",
+    "project": ["./tsconfig.json"],
     "sourceType": "module",
     "vueFeatures": {
       "filter": false
@@ -33,8 +37,31 @@
   "reportUnusedDisableDirectives": true,
   "root": true,
   "rules": {
+    // eslint:recommended
     "no-undef": "off",
+
+    // eslint:all
+    "id-length": "off",
+    "max-lines": "off",
+    "max-params": "off",
+    "max-statements": "off",
+    "no-ternary": "off",
+    "one-var": "off",
+    "sort-imports": "off",
+    "sort-keys": "off",
+
+    // plugin:@typescript-eslint/recommended
     "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+
+    // plugin:@typescript-eslint/recommended-requiring-type-checking
+    "@typescript-eslint/restrict-plus-operands": ["error", { "checkCompoundAssignments": true }],
+
+    // plugin:@typescript-eslint/all
+    "@typescript-eslint/naming-convention": "off",
+    "@typescript-eslint/no-magic-numbers": "off",
+    "@typescript-eslint/prefer-readonly-parameter-types": "off",
+
+    // plugin:vue/vue3-recommended
     "vue/multi-word-component-names": ["error", { "ignores": ["default", "index"] }]
   },
   "overrides": [

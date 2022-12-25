@@ -28,6 +28,7 @@
     "postinstall": "nuxt prepare",
     "prettier": "prettier --check .",
     "prettier-write": "prettier --write .",
+    "analyse": "nuxi analyze",
     "lint-typecheck": "nuxi typecheck",
     "lint-check": "eslint . --ext .ts,.tsx,.vue",
     "lint-fix": "eslint . --ext .ts,.tsx,.vue --fix",
@@ -38,7 +39,7 @@
     "@nuxtjs/i18n": "^8.0.0-beta.7",
     "@typescript-eslint/eslint-plugin": "^5.47.0",
     "@typescript-eslint/parser": "^5.47.0",
-    "@volar/vue-typescript": "^1.0.16",
+    "@volar/vue-typescript": "^1.0.17",
     "@vueuse/core": "^9.7.0",
     "@vueuse/nuxt": "^9.9.0",
     "eslint": "^8.30.0",
@@ -62,6 +63,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.6",
-    "pinia": "^2.0.28"
+    "pinia": "^2.0.28",
+    "tslib": "^2.4.1"
   }
 }
