@@ -5,6 +5,7 @@ import type { Ref } from 'vue';
 interface SpeedLimitStore {
   speedLimit: Ref<number>;
   maxSpeed: Ref<number>;
+  speedUnits: Ref<string>;
   change: (amount: number) => void;
   onMaxSpeedChanged: () => void;
 }
@@ -12,6 +13,7 @@ interface SpeedLimitStore {
 const setupStore = function setupStore(): SpeedLimitStore {
   const speedLimit: Ref<number> = useLocalStorage('app/speed-limit', 50);
   const maxSpeed: Ref<number> = useLocalStorage('app/speed-max', 120);
+  const speedUnits: Ref<string> = useLocalStorage('app/speed-units', 'km/h');
 
   const change = function change(amount: number): void {
     speedLimit.value += amount;
@@ -34,6 +36,7 @@ const setupStore = function setupStore(): SpeedLimitStore {
   const store: SpeedLimitStore = {
     speedLimit: skipHydrate(speedLimit),
     maxSpeed: skipHydrate(maxSpeed),
+    speedUnits: skipHydrate(speedUnits),
     change,
     onMaxSpeedChanged,
   };

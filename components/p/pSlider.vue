@@ -71,11 +71,11 @@
   };
 
   const rangeStyle = function rangeStyle(): { width: string } {
-    return { width: `${handlePosition().toString()}%` };
+    return { width: `${handlePosition()}%` };
   };
 
   const handleStyle = function handleStyle(): { left: string } {
-    return { left: `${handlePosition().toString()}%` };
+    return { left: `${handlePosition()}%` };
   };
 
   const updateModel = function updateModel(value: number): void {

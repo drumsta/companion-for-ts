@@ -23,6 +23,7 @@
     "$VUE_ATTRIBUTE",
     "$ID",
     "^ref$",
+    "^:key$",
     "$CLASS",
     "$NAME",
     "$DATA",

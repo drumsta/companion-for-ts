@@ -46,6 +46,7 @@
     "max-params": "off",
     "max-statements": "off",
     "no-ternary": "off",
+    "no-undefined": "off",
     "one-var": "off",
     "sort-imports": "off",
     "sort-keys": "off",
@@ -57,6 +58,7 @@
     "@typescript-eslint/restrict-plus-operands": ["error", { "checkCompoundAssignments": true }],
 
     // plugin:@typescript-eslint/all
+    "@typescript-eslint/init-declarations": "off",
     "@typescript-eslint/naming-convention": "off",
     "@typescript-eslint/no-magic-numbers": "off",
     "@typescript-eslint/prefer-readonly-parameter-types": "off",

@@ -7,7 +7,9 @@
   "components": {
     "speed-limit-selector": {
       "max-speed": "Max Speed: {maxSpeed}",
-      "current-speed": "Current Speed"
+      "current-speed": "Current Speed",
+      "kph": "km/h",
+      "mph": "mph"
     }
   },
   "pages": {

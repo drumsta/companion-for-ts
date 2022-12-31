@@ -1,6 +1,11 @@
 <template>
   <div class="flex flex-col justify-center items-center">
-    <h2 id="maxSpeed">{{ t('components.speed-limit-selector.max-speed', { maxSpeed: speedLimitStore.maxSpeed }) }}</h2>
+    <div class="flex flex-row items-center">
+      <h2 id="maxSpeed">
+        {{ t('components.speed-limit-selector.max-speed', { maxSpeed: speedLimitStore.maxSpeed }) }}
+      </h2>
+      <PSelectButton v-model="speedLimitStore.speedUnits" :options="speedUnits" button-class="" />
+    </div>
     <br />
     <PSlider
       v-model="speedLimitStore.maxSpeed"
@@ -23,7 +28,7 @@
       :step="5"
       :size="300"
       :show-value2="true"
-      value-template2="kmh"
+      :value-template2="speedUnits.find((unit) => unit.key === speedLimitStore.speedUnits)?.value ?? ''"
       range-class="stroke-theme-negative"
       value-class="stroke-theme-positive"
       text-class="fill-theme-text"
@@ -86,4 +91,9 @@
 
   const speedLimitStore = useSpeedLimitStore();
   watch(toRef(speedLimitStore, 'maxSpeed'), speedLimitStore.onMaxSpeedChanged);
+
+  const speedUnits = ref([
+    { key: 'km/h', value: t('components.speed-limit-selector.kph') },
+    { key: 'mph', value: t('components.speed-limit-selector.mph') },
+  ]);
 </script>
