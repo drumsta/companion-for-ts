@@ -4,7 +4,11 @@
       <h2 id="maxSpeed">
         {{ t('components.speed-limit-selector.max-speed', { maxSpeed: speedLimitStore.maxSpeed }) }}
       </h2>
-      <PSelectButton v-model="speedLimitStore.speedUnits" :options="speedUnits" button-class="" />
+      <PRadioButton
+        v-model="speedLimitStore.speedUnits"
+        :options="speedUnits"
+        :aria-label="t('components.speed-limit-selector.select-speed-units')"
+      />
     </div>
     <br />
     <PSlider
@@ -28,7 +32,9 @@
       :step="5"
       :size="300"
       :show-value2="true"
-      :value-template2="speedUnits.find((unit) => unit.key === speedLimitStore.speedUnits)?.value ?? ''"
+      :show-value3="true"
+      :value-template2="getActiveSpeedUnitValue() ?? ''"
+      :value-template3="`${normalizeSpeedValue(convertSpeedUnits())} ${getAlternateSpeedUnitValue()}`"
       range-class="stroke-theme-negative"
       value-class="stroke-theme-positive"
       text-class="fill-theme-text"
@@ -93,7 +99,72 @@
   watch(toRef(speedLimitStore, 'maxSpeed'), speedLimitStore.onMaxSpeedChanged);
 
   const speedUnits = ref([
-    { key: 'km/h', value: t('components.speed-limit-selector.kph') },
-    { key: 'mph', value: t('components.speed-limit-selector.mph') },
+    {
+      key: 'km/h',
+      value: t('components.speed-limit-selector.kph'),
+      label: t('components.speed-limit-selector.kilometres-per-hour'),
+    },
+    {
+      key: 'mph',
+      value: t('components.speed-limit-selector.mph'),
+      label: t('components.speed-limit-selector.miles-per-hour'),
+    },
   ]);
+
+  const getActiveSpeedUnitKey = function getActiveSpeedUnitKey(): string | undefined {
+    const speedUnitKey: string | undefined = speedUnits.value.find(
+      (unit) => unit.key === speedLimitStore.speedUnits,
+    )?.key;
+    return speedUnitKey;
+  };
+
+  const getActiveSpeedUnitValue = function getActiveSpeedUnitValue(): string | undefined {
+    const speedUnitValue: string | undefined = speedUnits.value.find(
+      (unit) => unit.key === speedLimitStore.speedUnits,
+    )?.value;
+    return speedUnitValue;
+  };
+
+  const getAlternateSpeedUnitValue = function getAlternateSpeedUnitValue(): string | undefined {
+    const speedUnitValue: string | undefined = speedUnits.value.find(
+      (unit) => unit.key !== speedLimitStore.speedUnits,
+    )?.value;
+    return speedUnitValue;
+  };
+
+  const convertSpeedUnits = function convertSpeedUnits(): number {
+    const activeSpeedUnitValue: string | undefined = getActiveSpeedUnitKey();
+
+    if (typeof activeSpeedUnitValue === 'undefined') {
+      return 0;
+    }
+
+    const mphToKmhFactor = 1.609344;
+
+    if (activeSpeedUnitValue === 'km/h') {
+      const mph: number = speedLimitStore.speedLimit / mphToKmhFactor;
+      return mph;
+    }
+
+    if (activeSpeedUnitValue === 'mph') {
+      const kmh: number = speedLimitStore.speedLimit * mphToKmhFactor;
+      return kmh;
+    }
+
+    return 0;
+  };
+
+  const normalizeSpeedValue = function normalizeSpeedValue(speed: number): string {
+    if (speed >= 10) {
+      const normalizedSpeed: string = speed.toFixed(0);
+      return normalizedSpeed;
+    }
+
+    if (speed < 10 && speed > 0) {
+      const normalizedSpeed: string = speed.toFixed(1);
+      return normalizedSpeed;
+    }
+
+    return speed.toString();
+  };
 </script>

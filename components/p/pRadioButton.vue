@@ -14,10 +14,14 @@
       role="radio"
       :class="
         (props.buttonClass,
-        isSelected(option) ? (props.checkedButtonClass === '' ? 'bg-theme-primary' : props.checkedButtonClass) : '')
+        isSelected(option)
+          ? props.checkedButtonClass === ''
+            ? 'bg-theme-primary text-theme-light'
+            : props.checkedButtonClass
+          : '')
       "
       :tabindex="getTabIndex(i)"
-      :aria-label="option.value"
+      :aria-label="option.label ?? option.value"
       :aria-checked="isSelected(option)"
       @click="onClick($event, option, i)"
       @keydown="onKeydown($event, option, i)"
@@ -34,7 +38,7 @@
 
   export interface Props {
     modelValue: string;
-    options: { key: string; value: string }[];
+    options: { key: string; value: string; label?: string }[];
     unselectable?: boolean;
     disabled?: boolean;
     containerClass?: string;

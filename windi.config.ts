@@ -14,6 +14,9 @@ const windiConfig: FullConfig = {
       cursor: {
         grab: 'grab',
       },
+      fontSize: {
+        xxs: '.5rem',
+      },
       colors: {
         'theme-text': 'var(--theme-text)',
         'theme-text-subtle': 'var(--theme-text-subtle)',

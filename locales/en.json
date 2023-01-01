@@ -8,6 +8,9 @@
     "speed-limit-selector": {
       "max-speed": "Max Speed: {maxSpeed}",
       "current-speed": "Current Speed",
+      "select-speed-units": "Select speed units",
+      "kilometres-per-hour": "Kilometres per hour",
+      "miles-per-hour": "Miles per hour",
       "kph": "km/h",
       "mph": "mph"
     }

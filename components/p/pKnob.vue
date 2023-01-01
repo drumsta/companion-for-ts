@@ -1,6 +1,7 @@
 <template>
   <div ref="container" :class="props.containerClass">
     <svg
+      class="cursor-grab"
       role="slider"
       viewBox="0 0 100 100"
       :width="props.size"
@@ -35,10 +36,20 @@
         class="text-center text-xl"
         :class="props.textClass"
         :x="50"
-        :y="65"
+        :y="68"
         text-anchor="middle"
       >
         {{ valueToDisplay(props.valueTemplate2) }}
+      </text>
+      <text
+        v-if="props.showValue3"
+        class="text-center text-xxs"
+        :class="props.textClass"
+        :x="50"
+        :y="89"
+        text-anchor="middle"
+      >
+        {{ valueToDisplay(props.valueTemplate3) }}
       </text>
     </svg>
   </div>
@@ -55,8 +66,10 @@
     strokeWidth?: number;
     showValue?: boolean;
     showValue2?: boolean;
+    showValue3?: boolean;
     valueTemplate?: string;
     valueTemplate2?: string;
+    valueTemplate3?: string;
     containerClass?: string;
     rangeClass?: string;
     valueClass?: string;
@@ -76,8 +89,10 @@
     strokeWidth: 14,
     showValue: true,
     showValue2: false,
+    showValue3: false,
     valueTemplate: '{value}',
     valueTemplate2: '',
+    valueTemplate3: '',
     containerClass: '',
     rangeClass: '',
     valueClass: '',
@@ -90,13 +105,11 @@
   const emit = defineEmits<(event: 'change' | 'update:modelValue', modelValue: number) => void>();
 
   const container = ref<HTMLElement | null>(null);
-  const three = 3;
-  const four = 4;
   const radius = 40;
   const midX = 50;
   const midY = 50;
-  const minRadians: number = (four * Math.PI) / three;
-  const maxRadians: number = -Math.PI / three;
+  const minRadians: number = (4 * Math.PI) / 3;
+  const maxRadians: number = -Math.PI / 3;
   const minX: number = midX + Math.cos(minRadians) * radius;
   const minY: number = midY - Math.sin(minRadians) * radius;
   const maxX: number = midX + Math.cos(maxRadians) * radius;
