@@ -2,6 +2,10 @@
   <main class="flex flex-col justify-center items-center">
     <h1>{{ t('pages.index.header') }}</h1>
     <SpeedLimitSelector />
+    <br />
+    <br />
+    <br />
+    <br />
   </main>
 </template>
 
