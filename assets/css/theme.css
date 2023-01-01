@@ -30,3 +30,23 @@
   --theme-border-subtle: theme(colors.dark.400);
   --theme-border-accent: theme(colors.blue.400);
 }
+
+h1 {
+  margin: 1rem 0;
+  font-size: 2.25em;
+}
+
+h2 {
+  margin: 1.75em 0 0.5em;
+  font-size: 1.75em;
+}
+
+h3 {
+  margin: 1.5em 0 0.5em;
+  font-size: 1.375em;
+}
+
+h4 {
+  margin: 1em 0;
+  font-size: 1.125em;
+}

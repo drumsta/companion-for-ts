@@ -1,20 +1,19 @@
 <template>
-  <div class="flex flex-col justify-center items-center">
+  <section class="flex flex-col justify-center items-center" :title="t('components.speed-limit-selector.title')">
     <div class="flex flex-row items-center">
-      <h2 id="maxSpeed">
+      <span id="maxSpeed">
         {{ t('components.speed-limit-selector.max-speed', { maxSpeed: speedLimitStore.maxSpeed }) }}
-      </h2>
+      </span>
       <PRadioButton
         v-model="speedLimitStore.speedUnits"
         :options="speedUnits"
         :aria-label="t('components.speed-limit-selector.select-speed-units')"
       />
     </div>
-    <br />
     <PSlider
       v-model="speedLimitStore.maxSpeed"
       aria-labelledby="maxSpeed"
-      container-class="bg-theme-secondary w-75"
+      container-class="bg-theme-secondary w-75 mt-6"
       range-class="bg-theme-primary"
       handle-class="bg-theme-bg border-theme-primary"
       :tabindex="0"
@@ -22,7 +21,6 @@
       :max="300"
       :step="10"
     />
-    <br />
     <PKnob
       v-model="speedLimitStore.speedLimit"
       :aria-label="t('components.speed-limit-selector.current-speed')"
@@ -35,13 +33,13 @@
       :show-value3="true"
       :value-template2="getActiveSpeedUnitValue() ?? ''"
       :value-template3="`${normalizeSpeedValue(convertSpeedUnits())} ${getAlternateSpeedUnitValue()}`"
+      container-class="mt-6"
       range-class="stroke-theme-negative"
       value-class="stroke-theme-positive"
       text-class="fill-theme-text"
     />
-    <br />
     <div
-      class="flex h-14 justify-center"
+      class="flex h-14 justify-center mt-6"
       role="spinbutton"
       aria-valuemin="0"
       :aria-label="t('components.speed-limit-selector.current-speed')"
@@ -86,7 +84,7 @@
         >+25</PButton
       >
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">

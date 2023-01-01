@@ -6,6 +6,7 @@
   },
   "components": {
     "speed-limit-selector": {
+      "title": "Speed limit selection component",
       "max-speed": "Max Speed: {maxSpeed}",
       "current-speed": "Current Speed",
       "select-speed-units": "Select speed units",
@@ -15,9 +16,14 @@
       "mph": "mph"
     }
   },
+  "layouts": {
+    "default": {
+      "navigation-target": "Site"
+    }
+  },
   "pages": {
     "index": {
-      "title": "Go! - @:app.title",
+      "title": "Drive - @:app.title",
       "header": "Drive a Train"
     },
     "about": {

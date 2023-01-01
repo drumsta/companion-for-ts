@@ -1,11 +1,9 @@
 <template>
-  <main class="flex flex-col justify-center items-center">
+  <header class="flex flex-col justify-center items-center">
     <h1>{{ t('pages.index.header') }}</h1>
-    <SpeedLimitSelector />
-    <br />
-    <br />
-    <br />
-    <br />
+  </header>
+  <main class="flex flex-col justify-center items-center">
+    <SpeedLimitSelector class="mb-24" />
   </main>
 </template>
 

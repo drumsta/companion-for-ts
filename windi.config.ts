@@ -1,14 +1,13 @@
 // https://windicss.org/guide/configuration.html
 import { defineConfig } from 'windicss/helpers';
-import type { FullConfig } from 'windicss/types/interfaces';
 
-const windiConfig: FullConfig = {
+export default defineConfig({
   attributify: true,
   darkMode: 'class',
   extract: {
     include: ['./*.{ts,vue}', './components/**/*.{ts,vue}', './layouts/**/*.{ts,vue}', './pages/**/*.{ts,vue}'],
   },
-  shortcuts: {},
+  preflight: true,
   theme: {
     extend: {
       cursor: {
@@ -42,6 +41,4 @@ const windiConfig: FullConfig = {
       },
     },
   },
-};
-
-export default defineConfig(windiConfig);
+});
