@@ -36,8 +36,6 @@ export default defineConfig({
         'theme-negative': 'var(--theme-negative)',
         'theme-info': 'var(--theme-info)',
         'theme-warning': 'var(--theme-warning)',
-        'theme-light': 'var(--theme-light)',
-        'theme-dark': 'var(--theme-dark)',
       },
     },
   },

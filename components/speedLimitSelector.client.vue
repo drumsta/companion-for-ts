@@ -39,7 +39,7 @@
       text-class="fill-theme-text"
     />
     <div
-      class="flex h-14 justify-center mt-6"
+      class="flex h-14 mt-6 justify-center"
       role="spinbutton"
       aria-valuemin="0"
       :aria-label="t('components.speed-limit-selector.current-speed')"
@@ -47,40 +47,22 @@
       :aria-valuenow="speedLimitStore.speedLimit"
       :aria-valuemax="speedLimitStore.maxSpeed"
     >
-      <PButton
-        class="bg-theme-negative text-theme-light w-14 hover:(opacity-100)"
-        type="button"
-        @click="speedLimitStore.change(-25)"
+      <PButton class="bg-theme-negative text-theme-text w-14" type="button" @click="speedLimitStore.change(-25)"
         >-25</PButton
       >
-      <PButton
-        class="bg-theme-negative text-theme-light w-14 hover:(opacity-100)"
-        type="button"
-        @click="speedLimitStore.change(-10)"
+      <PButton class="bg-theme-negative text-theme-text w-14" type="button" @click="speedLimitStore.change(-10)"
         >-10</PButton
       >
-      <PButton
-        class="bg-theme-negative text-theme-light w-14 hover:(opacity-100)"
-        type="button"
-        @click="speedLimitStore.change(-5)"
+      <PButton class="bg-theme-negative text-theme-text w-14" type="button" @click="speedLimitStore.change(-5)"
         >-5</PButton
       >
-      <PButton
-        class="bg-theme-positive text-theme-light w-14 hover:(opacity-100)"
-        type="button"
-        @click="speedLimitStore.change(5)"
+      <PButton class="bg-theme-positive text-theme-text w-14" type="button" @click="speedLimitStore.change(5)"
         >+5</PButton
       >
-      <PButton
-        class="bg-theme-positive text-theme-light w-14 hover:(opacity-100)"
-        type="button"
-        @click="speedLimitStore.change(10)"
+      <PButton class="bg-theme-positive text-theme-text w-14" type="button" @click="speedLimitStore.change(10)"
         >+10</PButton
       >
-      <PButton
-        class="bg-theme-positive text-theme-light mr-2 w-14 hover:(opacity-100)"
-        type="button"
-        @click="speedLimitStore.change(25)"
+      <PButton class="bg-theme-positive text-theme-text mr-2 w-14" type="button" @click="speedLimitStore.change(25)"
         >+25</PButton
       >
     </div>
@@ -100,12 +82,10 @@
     {
       key: 'km/h',
       value: t('components.speed-limit-selector.kph'),
-      label: t('components.speed-limit-selector.kilometres-per-hour'),
     },
     {
       key: 'mph',
       value: t('components.speed-limit-selector.mph'),
-      label: t('components.speed-limit-selector.miles-per-hour'),
     },
   ]);
 

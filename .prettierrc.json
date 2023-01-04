@@ -20,11 +20,12 @@
     "https://codeguide.co/"
   ],
   "attributeGroups": [
-    "$VUE_ATTRIBUTE",
     "$ID",
     "^ref$",
+    "^v-",
     "^:key$",
     "$CLASS",
+    "^:class$",
     "$NAME",
     "$DATA",
     "$SRC",

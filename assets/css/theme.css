@@ -8,15 +8,13 @@
   --theme-border: theme(colors.dark.500);
   --theme-border-subtle: theme(colors.light.900);
   --theme-border-accent: theme(colors.blue.500);
-  --theme-primary: theme(colors.blue.800);
-  --theme-secondary: theme(colors.neutral.500);
+  --theme-primary: theme(colors.blue.300);
+  --theme-secondary: theme(colors.neutral.300);
   --theme-accent: theme(colors.blue.500);
-  --theme-positive: theme(colors.green.800);
-  --theme-negative: theme(colors.red.800);
-  --theme-info: theme(colors.cyan.400);
-  --theme-warning: theme(colors.yellow.400);
-  --theme-light: theme(colors.light.200);
-  --theme-dark: theme(colors.dark.800);
+  --theme-positive: theme(colors.green.300);
+  --theme-negative: theme(colors.red.300);
+  --theme-info: theme(colors.cyan.300);
+  --theme-warning: theme(colors.yellow.300);
 }
 
 .dark {
@@ -29,6 +27,13 @@
   --theme-border: theme(colors.dark.200);
   --theme-border-subtle: theme(colors.dark.400);
   --theme-border-accent: theme(colors.blue.400);
+  --theme-primary: theme(colors.blue.800);
+  --theme-secondary: theme(colors.neutral.500);
+  --theme-accent: theme(colors.blue.500);
+  --theme-positive: theme(colors.green.800);
+  --theme-negative: theme(colors.red.800);
+  --theme-info: theme(colors.cyan.400);
+  --theme-warning: theme(colors.yellow.400);
 }
 
 h1 {

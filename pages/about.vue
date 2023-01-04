@@ -1,6 +1,6 @@
 <template>
   <main class="flex flex-col justify-center items-center">
-    <h1>{{ $t('lorem-ipsum') }}</h1>
+    <h1>{{ t('lorem-ipsum') }}</h1>
   </main>
 </template>
 

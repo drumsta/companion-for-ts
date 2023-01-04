@@ -52,5 +52,8 @@
       },
       ...(i18nHead.value.link ?? []),
     ],
+    bodyAttrs: {
+      class: 'antialiased text-theme-text bg-theme-bg',
+    },
   });
 </script>

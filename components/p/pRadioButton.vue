@@ -2,26 +2,22 @@
   <div
     ref="container"
     class="flex flex-row ml-2"
-    role="radiogroup"
     :class="props.containerClass"
+    role="radiogroup"
     :aria-labelledby="props.ariaLabelledby"
     :aria-label="props.ariaLabel"
   >
     <div
       v-for="(option, i) of props.options"
       :key="option.key"
-      class="bg-theme-bg-subtle border-theme-border rounded-md cursor-pointer border-1 m-0 text-theme-text py-1 px-4 justify-center items-center select-none inline-flex hover:(underline) focus:(underline z-1) first-of-type:(rounded-tr-none rounded-br-none) last-of-type:(rounded-tl-none rounded-bl-none) not-last:(border-r-0) not-first-of-type:not-last-of-type:(rounded-none)"
-      role="radio"
+      class="bg-theme-bg-subtle border-theme-border rounded-md cursor-pointer border-1 m-0 text-theme-text py-1 px-4 justify-center items-center select-none inline-flex hover:(underline) focus:(underline z-1) first-of-type:(rounded-tr-none rounded-br-none) last-of-type:(rounded-tl-none rounded-bl-none) not-last:(border-r-0) not-first-of-type:not-last-of-type:(rounded-none) "
       :class="
         (props.buttonClass,
-        isSelected(option)
-          ? props.checkedButtonClass === ''
-            ? 'bg-theme-primary text-theme-light'
-            : props.checkedButtonClass
-          : '')
+        isSelected(option) ? (props.checkedButtonClass === '' ? 'bg-theme-primary' : props.checkedButtonClass) : '')
       "
+      role="radio"
       :tabindex="getTabIndex(i)"
-      :aria-label="option.label ?? option.value"
+      :aria-label="option.value"
       :aria-checked="isSelected(option)"
       @click="onClick($event, option, i)"
       @keydown="onKeydown($event, option, i)"
@@ -38,7 +34,7 @@
 
   export interface Props {
     modelValue: string;
-    options: { key: string; value: string; label?: string }[];
+    options: { key: string; value: string }[];
     unselectable?: boolean;
     disabled?: boolean;
     containerClass?: string;

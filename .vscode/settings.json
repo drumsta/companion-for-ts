@@ -46,5 +46,8 @@
   "i18n-ally.namespace": true,
 
   "editor.guides.bracketPairs": true,
-  "editor.bracketPairColorization.independentColorPoolPerBracketType": true
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+  "[svg]": {
+    "editor.defaultFormatter": "jock.svg"
+  }
 }
