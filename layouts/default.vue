@@ -1,4 +1,5 @@
 <template>
+  <div class="text-xs">Companion for TS</div>
   <slot />
   <footer>
     <nav
