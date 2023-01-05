@@ -37,5 +37,5 @@ jobs:
         with:
           app-name: 'companionforts'
           slot-name: 'main'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_558A68FEE5A848818F3413998A47A2F0 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: .
