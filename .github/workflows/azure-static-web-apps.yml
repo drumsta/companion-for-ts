@@ -15,8 +15,12 @@ on:
 jobs:
   build-and-deploy:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    runs-on: ubuntu-latest
     name: Build and Deploy
+    runs-on: ubuntu-latest
+    environment:
+      name: 'Production'
+      url: https://www.companionforts.com
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -37,8 +41,8 @@ jobs:
 
   close-pull-request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    runs-on: ubuntu-latest
     name: Close Pull Request
+    runs-on: ubuntu-latest
     steps:
       - name: Close Pull Request
         id: closepullrequest
