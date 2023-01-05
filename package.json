@@ -29,6 +29,7 @@
     "preview": "nuxt preview",
     "generate": "nuxt generate",
     "postinstall": "nuxt prepare",
+    "start": "node .output/server/index.mjs",
     "prettier": "prettier --check .",
     "prettier-write": "prettier --write .",
     "analyse": "nuxi analyze",
