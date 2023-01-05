@@ -45,4 +45,3 @@ jobs:
           slot-name: 'main'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: .
-          startup-command: node .output/server/index.mjs
