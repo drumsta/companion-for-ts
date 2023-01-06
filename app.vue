@@ -26,7 +26,6 @@
      * https://stackoverflow.com/questions/71571875/nuxt-seo-meta-description
      */
     meta: [
-      { 'http-equiv': 'content-type', 'content': 'text/html; charset=UTF-8' },
       { name: 'application-name', content: t('app.title') },
       { name: 'description', content: t('app.description') },
       { name: 'keywords', content: 'Train Simulator, TS Classic, TSW3' },

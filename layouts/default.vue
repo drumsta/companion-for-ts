@@ -6,7 +6,7 @@
       class="bg-theme-bg-subtle flex h-20 text-base inset-x-0 bottom-0 fixed"
       :aria-label="t('layouts.default.navigation-target')"
     >
-      <ul class="flex flex-grow justify-around" role="list">
+      <ul class="flex flex-grow justify-around">
         <li>
           <NuxtLink
             class="flex flex-col w-25 items-center hover:(border-t-2) focus:(border-t-2)"
