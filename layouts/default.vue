@@ -1,5 +1,5 @@
 <template>
-  <div class="text-s">Companion for TS</div>
+  <div class="text-s">{{ t('app.title-short') }}</div>
   <slot />
   <footer>
     <nav

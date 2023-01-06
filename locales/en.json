@@ -1,7 +1,8 @@
 {
   "lorem-ipsum": "Lorem ipsum dolor sit amet consectetur adipisicing elit illo cupiditate.",
   "app": {
-    "title": "Companion for TS",
+    "title": "Companion for Train Simulator",
+    "title-short": "Companion for TS",
     "description": "Play your favourite Train Simulator with a little help and ❤️ from Companion for TS."
   },
   "components": {
