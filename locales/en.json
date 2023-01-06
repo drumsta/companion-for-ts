@@ -22,7 +22,7 @@
   },
   "pages": {
     "index": {
-      "title": "Drive - @:app.title",
+      "title": "@:app.title",
       "header": "Drive a Train"
     },
     "about": {
