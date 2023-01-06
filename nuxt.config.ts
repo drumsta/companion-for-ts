@@ -10,7 +10,7 @@ export default defineNuxtConfig({
   },
   css: ['@/assets/css/theme.css'],
   i18n: {
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'https://www.companionforts.com',
     locales: [
       {
         code: 'en',
