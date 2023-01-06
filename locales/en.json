@@ -2,7 +2,7 @@
   "lorem-ipsum": "Lorem ipsum dolor sit amet consectetur adipisicing elit illo cupiditate.",
   "app": {
     "title": "Companion for TS",
-    "description": "Play your favourite Train Simulator with a little help from Companion for TS."
+    "description": "Play your favourite Train Simulator with a little help and ❤️ from Companion for TS."
   },
   "components": {
     "speed-limit-selector": {
