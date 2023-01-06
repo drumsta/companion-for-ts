@@ -1,9 +1,10 @@
 # Companion for TS
 
-A simple helper to play a Train Simulator without showing actual or coming speed limit on the simulator screen or HUD.
+A simple helper to play Train Simulator.
 
 ![Screenshot of Companion for TS on a mobile devce](docs/screenshot-mobile.jpg)
 
 ## Highlights
 
-- Mobile-friendly - play Train Simulator on your PC, run Companion for TS on a mobile device beside.
+- Better immersiveness - hide speed limits in the game and track it on a mobile device beside.
+- Mobile-friendly - optimised for small screens and touch input.

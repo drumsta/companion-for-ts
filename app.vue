@@ -28,7 +28,7 @@
     meta: [
       { name: 'application-name', content: t('app.title') },
       { name: 'description', content: t('app.description') },
-      { name: 'keywords', content: 'Train Simulator, TS Classic, TSW3' },
+      { name: 'keywords', content: 'train simulator, trainsim, ts classic, tsw3, railworks, dovetails' },
       { name: 'author', content: 'https://github.com/drumsta/companion-for-ts' },
       { name: 'og:site_name', content: t('app.title') },
       { name: 'og:description', content: t('app.description') },
