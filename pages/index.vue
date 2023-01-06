@@ -14,6 +14,10 @@
 
   useHead({
     title: t('pages.index.title'),
-    meta: [{ name: 'og:og:title', content: t('pages.index.title') }],
+    meta: [
+      { name: 'description', content: t('pages.index.description') },
+      { name: 'og:title', content: t('pages.index.title') },
+      { name: 'og:description', content: t('pages.index.description') },
+    ],
   });
 </script>
