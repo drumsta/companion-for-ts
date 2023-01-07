@@ -1,9 +1,9 @@
-# Companion for TS
+# Companion for Train Simulator
 
 ![Status of deployment to Azure Static Web App](https://github.com/drumsta/companion-for-ts/actions/workflows/azure-static-web-apps.yml/badge.svg)
 ![Status of CodeQL Analysis](https://github.com/drumsta/companion-for-ts/actions/workflows/codeql.yml/badge.svg)
 
-A simple helper to play Train Simulator.
+A simple helper to play your beloved Train Simulator.
 
 ![Screenshot of Companion for TS on a mobile devce](docs/screenshot-mobile.jpg)
 
