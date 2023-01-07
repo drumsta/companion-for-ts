@@ -11,3 +11,7 @@ A simple helper to play Train Simulator.
 
 - Better immersiveness - hide speed limits in the game and track it on a mobile device beside.
 - Mobile-friendly - optimised for small screens and touch input.
+
+## Would like to express your gratitude?
+
+Hit the :star: **Star** button!
