@@ -47,5 +47,7 @@
   "sonarlint.connectedMode.project": {
     "connectionId": "drumsta",
     "projectKey": "drumsta_companion-for-ts"
-  }
+  },
+
+  "npm-intellisense.scanDevDependencies": true
 }

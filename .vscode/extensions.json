@@ -1,10 +1,12 @@
 {
   "recommendations": [
+    "christian-kohler.npm-intellisense",
     "davidanson.vscode-markdownlint",
     "dbaeumer.vscode-eslint",
     "editorconfig.editorconfig",
     "esbenp.prettier-vscode",
     "lokalise.i18n-ally",
+    "ms-vscode-remote.remote-containers",
     "stylelint.vscode-stylelint",
     "voorjaar.windicss-intellisense",
     "vue.vscode-typescript-vue-plugin",

@@ -1,6 +1,7 @@
 # Companion for TS
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=569506352&machine=basicLinux32gb&location=WestEurope)
+![Status of deployment to Azure Static Web App](https://github.com/drumsta/companion-for-ts/actions/workflows/azure-static-web-apps.yml/badge.svg)
+![Status of CodeQL Analysis](https://github.com/drumsta/companion-for-ts/actions/workflows/codeql.yml/badge.svg)
 
 A simple helper to play Train Simulator.
 
