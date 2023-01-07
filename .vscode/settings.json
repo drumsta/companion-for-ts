@@ -6,16 +6,7 @@
 
   // https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
   "eslint.alwaysShowStatus": true,
-  "eslint.validate": [
-    "html",
-    "javascript",
-    "javascriptreact",
-    "json",
-    "markdown",
-    "typescript",
-    "typescriptreact",
-    "vue"
-  ],
+  "eslint.validate": ["html", "javascript", "javascriptreact", "json", "markdown", "typescript", "typescriptreact", "vue"],
   "eslint.rules.customizations": [
     {
       "rule": "*",
@@ -32,6 +23,7 @@
   "editor.quickSuggestions": {
     "strings": true
   },
+
   "windicss.sortOnSave": true,
   "windicss.enableCodeFolding": true,
 
@@ -47,7 +39,13 @@
 
   "editor.guides.bracketPairs": true,
   "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+
   "[svg]": {
     "editor.defaultFormatter": "jock.svg"
+  },
+
+  "sonarlint.connectedMode.project": {
+    "connectionId": "drumsta",
+    "projectKey": "drumsta_companion-for-ts"
   }
 }

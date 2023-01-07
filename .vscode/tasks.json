@@ -3,10 +3,11 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "npm: lint",
-      "detail": "eslint src",
+      "label": "npm: install",
+      "detail": "Install dependencies from package",
       "type": "npm",
-      "script": "lint",
+      "script": "install",
+      "group": "none",
       "problemMatcher": []
     },
     {
@@ -21,15 +22,19 @@
       "detail": "Build the application for production",
       "type": "npm",
       "script": "build",
-      "group": "build",
-      "problemMatcher": []
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "isBackground": true
     },
     {
-      "type": "npm",
+      "label": "npm: preview",
       "detail": "Locally preview production build",
+      "type": "npm",
       "script": "preview",
-      "problemMatcher": [],
-      "label": "npm: preview"
+      "problemMatcher": []
     }
   ]
 }

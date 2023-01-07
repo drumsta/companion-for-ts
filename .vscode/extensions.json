@@ -1,10 +1,13 @@
 {
   "recommendations": [
+    "davidanson.vscode-markdownlint",
     "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
     "esbenp.prettier-vscode",
     "lokalise.i18n-ally",
     "stylelint.vscode-stylelint",
-    "vue.volar",
-    "vue.vscode-typescript-vue-plugin"
+    "voorjaar.windicss-intellisense",
+    "vue.vscode-typescript-vue-plugin",
+    "vue.volar"
   ]
 }

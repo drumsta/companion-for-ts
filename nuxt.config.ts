@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     classSuffix: '',
   },
   css: ['@/assets/css/theme.css'],
+  // extends: ['nuxt-seo-kit'],
   i18n: {
     baseUrl: 'https://www.companionforts.com',
     locales: [
@@ -42,9 +43,11 @@ export default defineNuxtConfig({
     },
   },
   pages: true,
+  runtimeConfig: {},
   typescript: {
     shim: false,
     strict: true,
+    typeCheck: false,
   },
   vite: {
     build: {
@@ -55,6 +58,9 @@ export default defineNuxtConfig({
       reportCompressedSize: true,
       target: 'esnext',
     },
+  },
+  webpack: {
+    analyze: true,
   },
   windicss: {
     analyze: true,
