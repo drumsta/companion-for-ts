@@ -17,6 +17,7 @@
     "plugin:nuxt/recommended",
     "prettier"
   ],
+  "ignorePatterns": ["**/*.json", "**/*.md"],
   "parser": "vue-eslint-parser",
   "parserOptions": {
     "ecmaVersion": "latest",
