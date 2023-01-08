@@ -11,37 +11,51 @@ export default defineNuxtConfig({
   css: ['@/assets/css/theme.css'],
   i18n: {
     baseUrl: 'https://www.companionforts.com',
+    defaultLocale: 'en',
+    detectBrowserLanguage: {
+      useCookie: true,
+      redirectOn: 'root',
+    },
+    langDir: 'locales',
+    lazy: true,
     locales: [
       {
         code: 'en',
         iso: 'en',
         name: 'English',
         file: 'en.json',
+        isCatchallLocale: true,
+      },
+      {
+        code: 'lt',
+        iso: 'lt',
+        name: 'Lietuvių',
+        file: 'lt.json',
       },
     ],
-    defaultLocale: 'en',
-    strategy: 'prefix_and_default',
-    lazy: true,
-    langDir: 'locales',
-    detectBrowserLanguage: {
-      useCookie: true,
-      alwaysRedirect: true,
-    },
+    strategy: 'prefix_except_default',
     vueI18n: {
       legacy: false,
       locale: 'en',
       fallbackLocale: 'en',
     },
   },
-  modules: ['@nuxtjs/color-mode', '@nuxtjs/i18n', '@pinia/nuxt', '@vueuse/nuxt', 'nuxt-windicss'],
+  modules: ['@nuxtjs/color-mode', '@nuxtjs/i18n', '@pinia/nuxt', '@vueuse/nuxt', 'nuxt-windicss', 'nuxt-simple-sitemap'],
   // https://github.com/nuxt/framework/issues/7197
   nitro: {
-    compressPublicAssets: true,
+    compressPublicAssets: {
+      brotli: true,
+    },
     prerender: {
       crawlLinks: true,
     },
   },
   pages: true,
+  sitemap: {
+    hostname: 'https://www.companionforts.com',
+    enabled: true,
+  },
+  ssr: true,
   typescript: {
     shim: false,
     strict: true,

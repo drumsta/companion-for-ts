@@ -25,7 +25,8 @@
   "layouts": {
     "default": {
       "navigation-target": "Site",
-      "drive": "Drive"
+      "drive": "Drive",
+      "about": "About"
     }
   },
   "pages": {

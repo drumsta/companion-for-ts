@@ -2,10 +2,7 @@
   <div class="text-s">{{ t('app.title-short') }}</div>
   <slot />
   <footer>
-    <nav
-      class="bg-theme-bg-subtle flex h-20 text-base inset-x-0 bottom-0 fixed"
-      :aria-label="t('layouts.default.navigation-target')"
-    >
+    <nav class="bg-theme-bg-subtle flex h-20 text-base inset-x-0 bottom-0 fixed" :aria-label="t('layouts.default.navigation-target')">
       <ul class="flex flex-grow justify-around">
         <li>
           <NuxtLink
@@ -24,9 +21,8 @@
 
 <script setup lang="ts">
   import { useI18n } from 'vue-i18n';
-  import type { LocalePathFunction } from 'vue-i18n-routing';
 
   const { t } = useI18n();
 
-  const localePath: LocalePathFunction = useLocalePath();
+  const localePath = useLocalePath();
 </script>
