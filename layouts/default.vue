@@ -1,5 +1,26 @@
 <template>
-  <div class="text-s">{{ t('app.title-short') }}</div>
+  <div class="flex flex-row text-s justify-between">
+    <div>{{ t('app.title-short') }}</div>
+    <div>
+      <PButton
+        aria-haspopup="menu"
+        aria-controls="languageMenu"
+        :aria-expanded="isMenuVisible"
+        :alt="t('layouts.default.language-menu')"
+        @click="onLanguageIconClick($event)"
+      >
+        <PSvg name="locales" svg-class="h-5" />
+      </PButton>
+      <PMenu
+        id="languageMenu"
+        :aria-label="t('layouts.default.language-menu')"
+        :menu-items="menuItems"
+        :is-overlay-visible="isMenuVisible"
+        container-class="right-0"
+        @outside-click="onLanguageMenuOutsideClick($event)"
+      />
+    </div>
+  </div>
   <slot />
   <footer>
     <nav class="bg-theme-bg-subtle flex h-20 text-base inset-x-0 bottom-0 fixed" :aria-label="t('layouts.default.navigation-target')">
@@ -20,9 +41,32 @@
 </template>
 
 <script setup lang="ts">
+  import type { Ref, ComputedRef } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import type { MenuItem } from '~~/components/p/pMenu.vue';
 
-  const { t } = useI18n();
-
+  const { t, locales } = useI18n();
   const localePath = useLocalePath();
+  const switchLocalePath = useSwitchLocalePath();
+
+  const isMenuVisible: Ref<boolean> = ref(false);
+
+  const menuItems: ComputedRef<MenuItem[]> = computed((): MenuItem[] => {
+    const result: MenuItem[] = [];
+    locales.value.forEach((locale) => {
+      if (typeof locale !== 'string') {
+        result.push({ key: locale.code, label: locale.name ?? locale.code, routeLocation: switchLocalePath(locale.code) });
+      }
+    });
+    return result;
+  });
+
+  const onLanguageIconClick = function onLanguageIconClick(_event: MouseEvent): void {
+    isMenuVisible.value = !isMenuVisible.value;
+  };
+
+  const onLanguageMenuOutsideClick = function onLanguageMenuOutsideClick(event: MouseEvent): void {
+    isMenuVisible.value = false;
+    event.stopPropagation();
+  };
 </script>

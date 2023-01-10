@@ -24,6 +24,7 @@
   },
   "layouts": {
     "default": {
+      "language-menu": "Kalbos parinktys",
       "navigation-target": "Svetainės",
       "drive": "Vairuok",
       "about": "Apie"
@@ -33,7 +34,7 @@
     "index": {
       "title": "@:app.title",
       "description": "@:app.description",
-      "header": "Vairuok traukini"
+      "header": "Vairuok traukinį"
     },
     "about": {
       "title": "Apie - @:app.title"

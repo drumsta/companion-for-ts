@@ -4,11 +4,7 @@
       <span id="maxSpeed">
         {{ t('components.speed-limit-selector.max-speed', { maxSpeed: speedLimitStore.maxSpeed }) }}
       </span>
-      <PRadioButton
-        v-model="speedLimitStore.speedUnits"
-        :options="speedUnits"
-        :aria-label="t('components.speed-limit-selector.select-speed-units')"
-      />
+      <PRadioButton v-model="speedLimitStore.speedUnits" :options="speedUnits" :aria-label="t('components.speed-limit-selector.select-speed-units')" />
     </div>
     <PSlider
       v-model="speedLimitStore.maxSpeed"
@@ -16,7 +12,6 @@
       container-class="bg-theme-secondary w-75 mt-6"
       range-class="bg-theme-primary"
       handle-class="bg-theme-bg border-theme-primary"
-      :tabindex="0"
       :min="30"
       :max="300"
       :step="10"
@@ -24,7 +19,6 @@
     <PKnob
       v-model="speedLimitStore.speedLimit"
       :aria-label="t('components.speed-limit-selector.current-speed')"
-      :tabindex="0"
       :min="0"
       :max="speedLimitStore.maxSpeed"
       :step="5"
@@ -47,24 +41,12 @@
       :aria-valuenow="speedLimitStore.speedLimit"
       :aria-valuemax="speedLimitStore.maxSpeed"
     >
-      <PButton class="bg-theme-negative text-theme-text w-14" type="button" @click="speedLimitStore.change(-25)"
-        >-25</PButton
-      >
-      <PButton class="bg-theme-negative text-theme-text w-14" type="button" @click="speedLimitStore.change(-10)"
-        >-10</PButton
-      >
-      <PButton class="bg-theme-negative text-theme-text w-14" type="button" @click="speedLimitStore.change(-5)"
-        >-5</PButton
-      >
-      <PButton class="bg-theme-positive text-theme-text w-14" type="button" @click="speedLimitStore.change(5)"
-        >+5</PButton
-      >
-      <PButton class="bg-theme-positive text-theme-text w-14" type="button" @click="speedLimitStore.change(10)"
-        >+10</PButton
-      >
-      <PButton class="bg-theme-positive text-theme-text mr-2 w-14" type="button" @click="speedLimitStore.change(25)"
-        >+25</PButton
-      >
+      <PButton class="bg-theme-negative text-theme-text w-14" type="button" @click="speedLimitStore.change(-25)">-25</PButton>
+      <PButton class="bg-theme-negative text-theme-text w-14" type="button" @click="speedLimitStore.change(-10)">-10</PButton>
+      <PButton class="bg-theme-negative text-theme-text w-14" type="button" @click="speedLimitStore.change(-5)">-5</PButton>
+      <PButton class="bg-theme-positive text-theme-text w-14" type="button" @click="speedLimitStore.change(5)">+5</PButton>
+      <PButton class="bg-theme-positive text-theme-text w-14" type="button" @click="speedLimitStore.change(10)">+10</PButton>
+      <PButton class="bg-theme-positive text-theme-text mr-2 w-14" type="button" @click="speedLimitStore.change(25)">+25</PButton>
     </div>
   </section>
 </template>
@@ -90,23 +72,17 @@
   ]);
 
   const getActiveSpeedUnitKey = function getActiveSpeedUnitKey(): string | undefined {
-    const speedUnitKey: string | undefined = speedUnits.value.find(
-      (unit) => unit.key === speedLimitStore.speedUnits,
-    )?.key;
+    const speedUnitKey: string | undefined = speedUnits.value.find((unit) => unit.key === speedLimitStore.speedUnits)?.key;
     return speedUnitKey;
   };
 
   const getActiveSpeedUnitValue = function getActiveSpeedUnitValue(): string | undefined {
-    const speedUnitValue: string | undefined = speedUnits.value.find(
-      (unit) => unit.key === speedLimitStore.speedUnits,
-    )?.value;
+    const speedUnitValue: string | undefined = speedUnits.value.find((unit) => unit.key === speedLimitStore.speedUnits)?.value;
     return speedUnitValue;
   };
 
   const getAlternateSpeedUnitValue = function getAlternateSpeedUnitValue(): string | undefined {
-    const speedUnitValue: string | undefined = speedUnits.value.find(
-      (unit) => unit.key !== speedLimitStore.speedUnits,
-    )?.value;
+    const speedUnitValue: string | undefined = speedUnits.value.find((unit) => unit.key !== speedLimitStore.speedUnits)?.value;
     return speedUnitValue;
   };
 

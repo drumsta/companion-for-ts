@@ -10,13 +10,10 @@
     <div
       v-for="(option, i) of props.options"
       :key="option.key"
-      class="bg-theme-bg-subtle border-theme-border rounded-md cursor-pointer border-1 m-0 text-theme-text py-1 px-4 justify-center items-center select-none inline-flex hover:(underline) focus:(underline z-1) first-of-type:(rounded-tr-none rounded-br-none) last-of-type:(rounded-tl-none rounded-bl-none) not-last:(border-r-0) not-first-of-type:not-last-of-type:(rounded-none) "
-      :class="
-        (props.buttonClass,
-        isSelected(option) ? (props.checkedButtonClass === '' ? 'bg-theme-primary' : props.checkedButtonClass) : '')
-      "
+      class="border-theme-border rounded-md cursor-pointer border-1 m-0 text-theme-text py-1 px-4 justify-center items-center select-none inline-flex hover:(underline) focus:(underline z-1) first-of-type:(rounded-tr-none rounded-br-none) last-of-type:(rounded-tl-none rounded-bl-none) not-last:(border-r-0) not-first-of-type:not-last-of-type:(rounded-none) "
+      :class="isSelected(option) ? props.checkedButtonClass : props.buttonClass"
       role="radio"
-      :tabindex="getTabIndex(i)"
+      :tabindex="i === focusedIndex ? 0 : -1"
       :aria-label="option.value"
       :aria-checked="isSelected(option)"
       @click="onClick($event, option, i)"
@@ -40,7 +37,6 @@
     containerClass?: string;
     buttonClass?: string;
     checkedButtonClass?: string;
-    tabindex?: number;
     ariaLabelledby?: string;
     ariaLabel?: string;
   }
@@ -50,9 +46,8 @@
     unselectable: false,
     disabled: false,
     containerClass: '',
-    buttonClass: '',
-    checkedButtonClass: '',
-    tabindex: 0,
+    buttonClass: 'bg-theme-bg-subtle',
+    checkedButtonClass: 'bg-theme-primary',
     ariaLabelledby: '',
     ariaLabel: '',
   });
@@ -75,10 +70,6 @@
     }
   });
 
-  const getTabIndex = function getTabIndex(i: number): string {
-    return i === focusedIndex.value ? '0' : '-1';
-  };
-
   const isSelected = function isSelected(option: { key: string; value: string }): boolean {
     return props.modelValue === option.key;
   };
@@ -92,8 +83,9 @@
     let index = 0;
 
     for (let i = 0; i <= container.value.children.length - 1; i += 1) {
-      if (container.value.children[i]?.getAttribute('tabindex') === '0')
+      if (container.value.children[i]?.getAttribute('tabindex') === '0') {
         firstTabableChild = { element: container.value.children[i], index: i };
+      }
     }
 
     if (typeof firstTabableChild === 'undefined') {
@@ -124,11 +116,7 @@
     }
   };
 
-  const onClick = function onClick(
-    _event: KeyboardEvent | MouseEvent,
-    option: { key: string; value: string },
-    index: number,
-  ): void {
+  const onClick = function onClick(_event: KeyboardEvent | MouseEvent, option: { key: string; value: string }, index: number): void {
     if (props.disabled) {
       return;
     }
@@ -146,11 +134,7 @@
     emit('change', newValue);
   };
 
-  const onKeydown = function onKeydown(
-    event: KeyboardEvent,
-    option: { key: string; value: string },
-    index: number,
-  ): void {
+  const onKeydown = function onKeydown(event: KeyboardEvent, option: { key: string; value: string }, index: number): void {
     switch (event.code) {
       case 'Space': {
         onClick(event, option, index);

@@ -24,6 +24,7 @@
   },
   "layouts": {
     "default": {
+      "language-menu": "Language Options",
       "navigation-target": "Site",
       "drive": "Drive",
       "about": "About"

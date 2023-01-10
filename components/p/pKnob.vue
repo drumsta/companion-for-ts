@@ -6,7 +6,7 @@
       viewBox="0 0 100 100"
       :width="props.size"
       :height="props.size"
-      :tabindex="props.disabled ? -1 : props.tabindex"
+      :tabindex="props.disabled ? -1 : 0"
       :aria-valuemin="props.min"
       :aria-valuemax="props.max"
       :aria-valuenow="props.modelValue"
@@ -21,34 +21,13 @@
     >
       <path class="fill-none" :class="props.rangeClass" :d="rangePath()" :stroke-width="props.strokeWidth"></path>
       <path class="fill-none" :class="props.valueClass" :d="valuePath()" :stroke-width="props.strokeWidth"></path>
-      <text
-        v-if="props.showValue"
-        class="text-center text-xl"
-        :class="props.textClass"
-        :x="50"
-        :y="props.showValue2 ? 47 : 57"
-        text-anchor="middle"
-      >
+      <text v-if="props.showValue" class="text-center text-xl" :class="props.textClass" :x="50" :y="props.showValue2 ? 47 : 57" text-anchor="middle">
         {{ valueToDisplay(props.valueTemplate) }}
       </text>
-      <text
-        v-if="props.showValue2"
-        class="text-center text-xl"
-        :class="props.textClass"
-        :x="50"
-        :y="68"
-        text-anchor="middle"
-      >
+      <text v-if="props.showValue2" class="text-center text-xl" :class="props.textClass" :x="50" :y="68" text-anchor="middle">
         {{ valueToDisplay(props.valueTemplate2) }}
       </text>
-      <text
-        v-if="props.showValue3"
-        class="text-center text-xxs"
-        :class="props.textClass"
-        :x="50"
-        :y="89"
-        text-anchor="middle"
-      >
+      <text v-if="props.showValue3" class="text-center text-xxs" :class="props.textClass" :x="50" :y="89" text-anchor="middle">
         {{ valueToDisplay(props.valueTemplate3) }}
       </text>
     </svg>
@@ -74,7 +53,6 @@
     rangeClass?: string;
     valueClass?: string;
     textClass?: string;
-    tabindex?: number;
     ariaLabelledby?: string;
     ariaLabel?: string;
   }
@@ -97,7 +75,6 @@
     rangeClass: '',
     valueClass: '',
     textClass: '',
-    tabindex: 0,
     ariaLabelledby: '',
     ariaLabel: '',
   });

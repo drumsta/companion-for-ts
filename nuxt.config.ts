@@ -76,5 +76,6 @@ export default defineNuxtConfig({
   },
   windicss: {
     analyze: true,
+    displayVersionInfo: false,
   },
 });

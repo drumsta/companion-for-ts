@@ -3,11 +3,11 @@
     <span class="h-full top-0 left-0 absolute block" :class="props.rangeClass" :style="rangeStyle()" />
     <span
       class="cursor-grab border-2 rounded-1/2 h-6 -mt-3 -ml-3 top-1/2 w-6 absolute touch-none block"
+      :class="props.handleClass"
       role="slider"
       aria-orientation="horizontal"
-      :class="props.handleClass"
       :style="handleStyle()"
-      :tabindex="props.disabled ? -1 : props.tabindex"
+      :tabindex="props.disabled ? -1 : 0"
       :aria-valuemin="props.min"
       :aria-valuemax="props.max"
       :aria-valuenow="props.modelValue"
@@ -32,7 +32,6 @@
     containerClass?: string;
     rangeClass?: string;
     handleClass?: string;
-    tabindex?: number;
     ariaLabelledby?: string;
     ariaLabel?: string;
   }
@@ -46,7 +45,6 @@
     containerClass: '',
     rangeClass: '',
     handleClass: '',
-    tabindex: 0,
     ariaLabelledby: '',
     ariaLabel: '',
   });

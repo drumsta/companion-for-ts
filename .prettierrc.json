@@ -20,9 +20,11 @@
     "https://codeguide.co/"
   ],
   "attributeGroups": [
-    "$ID",
-    "^ref$",
     "^v-",
+    "$ID",
+    "^:id$",
+    "^ref$",
+    "^:ref$",
     "^:key$",
     "$CLASS",
     "^:class$",
