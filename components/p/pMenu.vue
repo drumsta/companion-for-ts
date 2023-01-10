@@ -22,7 +22,7 @@
           ref="itemRefs"
           :key="menuItem.key"
           class="py-1 px-4 hover:(underline) focus:(underline z-1) "
-          :class="i === focusedIndex ? (props.checkedMenuItemClass === '' ? 'bg-theme-primary' : props.checkedMenuItemClass) : props.menuItemClass"
+          :class="i === focusedIndex ? props.checkedMenuItemClass : props.menuItemClass"
           role="presentation"
           tabindex="-1"
         >
@@ -58,7 +58,7 @@
     isOverlayVisible: false,
     containerClass: '',
     menuItemClass: '',
-    checkedMenuItemClass: '',
+    checkedMenuItemClass: 'bg-theme-primary',
     ariaLabelledby: '',
     ariaLabel: '',
   });
