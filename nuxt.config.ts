@@ -40,7 +40,6 @@ export default defineNuxtConfig({
       fallbackLocale: 'en',
     },
   },
-  modules: ['@nuxtjs/color-mode', '@nuxtjs/i18n', '@pinia/nuxt', '@vueuse/nuxt', 'nuxt-windicss', 'nuxt-simple-robots', 'nuxt-simple-sitemap'],
   nitro: {
     compressPublicAssets: {
       brotli: true,
@@ -50,6 +49,7 @@ export default defineNuxtConfig({
     },
   },
   pages: true,
+  modules: ['@nuxtjs/color-mode', '@nuxtjs/i18n', '@pinia/nuxt', '@vueuse/nuxt', 'nuxt-windicss', 'nuxt-simple-sitemap', 'nuxt-simple-robots'],
   robots: {
     indexable: true,
     sitemap: 'https://www.companionforts.com/sitemap.xml',
