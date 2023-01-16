@@ -73,7 +73,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.6",
-    "pinia": "^2.0.28",
+    "pinia": "^2.0.29",
     "tslib": "^2.4.1"
   }
 }
