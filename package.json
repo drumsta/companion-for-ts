@@ -49,7 +49,7 @@
     "@volar/vue-typescript": "^1.0.24",
     "@vueuse/core": "^9.7.0",
     "@vueuse/nuxt": "^9.10.0",
-    "eslint": "^8.31.0",
+    "eslint": "^8.32.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-nuxt": "^4.0.0",
     "eslint-plugin-vue": "^9.8.0",
