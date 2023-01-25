@@ -1,5 +1,4 @@
 /* eslint-disable no-duplicate-imports */
-import node from "@astrojs/node";
 import type { SitemapOptions } from "@astrojs/sitemap";
 import sitemap from "@astrojs/sitemap";
 import astroI18next from "astro-i18next";
@@ -19,11 +18,6 @@ const sitemapOptions: SitemapOptions = {
 export default defineConfig({
   // https://docs.astro.build/en/reference/configuration-reference/
   site: "https://www.companionforts.com/",
-
-  output: "server",
-  adapter: node({
-    mode: "standalone",
-  }),
 
   server: {
     host: true,
