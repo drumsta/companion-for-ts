@@ -6,8 +6,8 @@ import AmpStyle from "@components/AmpStyle.astro";
 import Footer from "@components/Footer.astro";
 import Header from "@components/Header.astro";
 import HeadCommon from "@components/HeadCommon.astro";
-import { getLanguageFromURL, normalizeLangTag } from "@i18n/util";
-import { rtlLanguages } from "@i18n/languages";
+import { normalizeLangTag, rtlLanguages } from "@i18n/util";
+import { detectLocaleFromPath } from "astro-i18next";
 
 export interface Props {
   title?: string | undefined;
@@ -17,7 +17,7 @@ export interface Props {
 
 const { title, description, pageStyle }: Props = Astro.props;
 const { pathname } = Astro.url;
-const lang: string = getLanguageFromURL(pathname);
+const lang: string = detectLocaleFromPath(pathname);
 const direction: "ltr" | "rtl" = rtlLanguages.has(lang) ? "rtl" : "ltr";
 const bcpLang: string = normalizeLangTag(lang);
 
