@@ -49,5 +49,8 @@ const { languages } = i18next;
 <link rel="alternate icon" type="image/png" href="/favicon.png" />
 <link rel="me" type="text/html" href="https://github.com/drumsta/companion-for-ts/" />
 
+<link rel="preconnect" href="https://cdn.ampproject.org">
+<link rel="dns-prefetch" href="https://cdn.ampproject.org">
+
 <link rel="canonical" href={canonicalURL} />
 {languages.map((language) => <link rel="alternate" hreflang={language} href={addTrailingSlash(localizeUrl(canonicalURL.href, language))} />)}
