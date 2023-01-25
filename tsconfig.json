@@ -1,31 +1,46 @@
 {
-  // https://www.typescriptlang.org/tsconfig
-  // https://nuxt.com/docs/guide/concepts/typescript
-  // https://github.com/typescript-eslint/typescript-eslint/blob/main/tsconfig.base.json
-  "extends": "./.nuxt/tsconfig.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "exclude": ["./dist"],
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@i18n/*": ["src/i18n/*"],
+      "@layouts/*": ["src/layouts/*"]
+    },
+    "types": ["node", "astro/client"],
+
+    // https://github.com/withastro/astro/blob/main/packages/astro/tsconfigs/base.json
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "target": "ESNext",
+
+    // https://github.com/withastro/astro/blob/main/packages/astro/tsconfigs/strict.json
+    "importsNotUsedAsValues": "error",
+    "strict": true,
+
+    // https://github.com/withastro/astro/blob/main/packages/astro/tsconfigs/strictest.json
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
-    "alwaysStrict": true,
-    "composite": true,
-    "declaration": true,
-    "declarationMap": true,
-    "downlevelIteration": true,
-    "esModuleInterop": true,
     "exactOptionalPropertyTypes": true,
-    "forceConsistentCasingInFileNames": true,
-    "importHelpers": true,
-    "importsNotUsedAsValues": "error",
-    "isolatedModules": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+
+    // Custom project options
+    "allowSyntheticDefaultImports": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noPropertyAccessFromIndexSignature": true,
     "plugins": [
       {
         "name": "typescript-eslint-language-service"
@@ -34,12 +49,9 @@
     "pretty": true,
     "removeComments": true,
     "sourceMap": true,
-    "strict": true,
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
     "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "useDefineForClassFields": true,
-    "useUnknownInCatchVariables": true
+    "strictPropertyInitialization": true
   }
 }

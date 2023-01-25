@@ -1,0 +1,42 @@
+---
+import PSvg from "@components/PSvg.astro";
+import { localizePath } from "astro-i18next";
+import { addTrailingSlash, capitalizeFirstLetter } from "@i18n/util";
+import i18next, { t } from "i18next";
+import ISO6391 from "iso-639-1";
+
+const { pathname } = Astro.url;
+const currentLanguage: string = i18next.language;
+const languages: string[] = i18next.languages.slice().sort((a: string, b: string): number => a.toLowerCase().localeCompare(b.toLowerCase()));
+---
+
+<!-- Language Selector -->
+<amp-mega-menu layout="fixed-height" height="2rem">
+  <nav>
+    <ul>
+      <li>
+        <button tabindex="0" aria-label={t("components.language-selector.language-menu")}>
+          <PSvg name="locales" svgStyle="height: 1.25rem;" />
+        </button>
+        <div
+          role="dialog"
+          class="border-color border-1 rounded-md"
+          style="background-color: var(--color-bg);left: auto;width: auto;right: 0;margin: 0.25rem;padding: 0.25rem;"
+        >
+          <ul aria-label={t("components.language-selector.language-menu")}>
+            {
+              languages.map((language: string) => <li
+                  class={`language-selector-link ${language === currentLanguage ? "language-selector-link-active" : ""}`}
+                  style="padding-top: 0.5rem;padding-bottom: 0.5rem;padding-left: 1rem;padding-right: 1rem;"
+                >
+                  <a href={addTrailingSlash(localizePath(pathname, language))}>
+                    <span>{capitalizeFirstLetter(ISO6391.getNativeName(language), language)}</span>
+                  </a>
+                </li>)
+            }
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </nav>
+</amp-mega-menu>

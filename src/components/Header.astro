@@ -1,0 +1,10 @@
+---
+import LanguageSelector from "@components/LanguageSelector.astro";
+import { t } from "i18next";
+---
+
+<!-- Header -->
+<div class="flex flex-row justify-between">
+  <div class="text-sm">{t("app.title-short")}</div>
+  <LanguageSelector />
+</div>

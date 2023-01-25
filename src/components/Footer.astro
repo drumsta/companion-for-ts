@@ -1,0 +1,31 @@
+---
+import PSvg from "@components/PSvg.astro";
+import i18next, { t } from "i18next";
+import { localizePath } from "astro-i18next";
+import { addTrailingSlash } from "@i18n/util";
+
+const { language } = i18next;
+const pathname: string = addTrailingSlash(Astro.url.pathname.replace(`/${language}`, ""));
+---
+
+<!-- Footer -->
+<footer>
+  <nav
+    class="bg-color-subtle flex"
+    style="position: fixed; height: 5rem; bottom: 0rem; right: 0px; left: 0px;"
+    aria-label={t("components.footer.navigation-target")}
+  >
+    <ul class="flex flex-grow justify-around">
+      <li>
+        <a
+          class={`flex flex-col items-center footer-link ${pathname === "/" ? "footer-link-active" : ""}`}
+          style="width: 6.25rem;"
+          href={addTrailingSlash(localizePath("/"))}
+        >
+          <PSvg name="trip" svgStyle="height: 2.5rem;" />
+          <span>{t("components.footer.drive")}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</footer>

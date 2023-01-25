@@ -1,0 +1,51 @@
+{
+  "app": {
+    "title": "Pagalbininkas Traukinio Simuliatoriui",
+    "title-short": "Pagalbininkas TS",
+    "description": "Pagalbininkas TS su 💖 padės žaisti mėgstamą traukinio simuliatorių."
+  },
+  "components": {
+    "footer": {
+      "navigation-target": "Svetainės navigacija",
+      "drive": "Vairuok",
+      "about": "Apie"
+    },
+    "language-selector": {
+      "language-menu": "Kalbos parinktys"
+    },
+    "speed-limit": {
+      "title": "Leistino greičio komponentas",
+      "max-speed": "Didžiausias greitis: {{maxSpeed}}",
+      "speed-limit": "Leistinas greitis",
+      "select-speed-units": "Pasirinkite greičio matavimo vienetus.",
+      "kph": "km/h",
+      "mph": "mph"
+    }
+  },
+  "layouts": {
+    "base-layout": {}
+  },
+  "pages": {
+    "index": {
+      "title": "Pagalbininkas Traukinio Simuliatoriui",
+      "description": "Pagalbininkas TS su 💖 padės žaisti mėgstamą traukinio simuliatorių.",
+      "header": "Vairuok traukinį"
+    },
+    "about": {
+      "title": "Apie"
+    },
+    "colors": {
+      "title": "Spalvų paletė",
+      "description": "Spalvų paletė padedanti kurti neįgaliesiems draugiškas svetaines skirtas mobiliems įrenginiams.",
+      "header": "Spalvų paletė"
+    }
+  },
+  "lorem-ipsum": {
+    "title": "Metai",
+    "description": "Pavasario linksmybės",
+    "header": "Metai",
+    "1": "Jau saulelė vėl atkopdama budino svietą ir žiemos šaltos trūsus pargraudama juokės. Šalčių pramonės su ledais sugaišti pagavo ir putodams sniegs visur į nieką pavirto. Tuo laukus orai drungni gaivydami glostė ir žoleles visokias iš numirusių šaukė. Krūmai su šilais visais išsibudino keltis, o laukų kalnai su kloniais pametė skrandas. Vislab, kas rudens bjaurybėj numirė verkdams, vislab, kas ežere gyvendams peržiemavojo. Ar po savo keru per žiemą buvo miegojęs, vislab tuo pulkais išlindo vasarą sveikyt.",
+    "2": "Žiurkės su šeškais iš šalto pašalio traukės. Varnos ir varnai su šarkoms irgi pelėdoms, pelės su vaikais ir kurmiai šilumą gyrė. Musės ir vabalai, uodai su kaimene blusų mus jau vargyt vėl pulkais visur susirinko ir ponus taip, kaip būrus, įgelt išsižiojo. Bet ir bitins jau šeimyną savo pabudyt ir prie darbo siųst bei ką pelnyt n’užsimiršo. Tuo pulkai jų pro plyšius išlįsti pagavo ir lakstydami su birbynėms žaisti pradėjo; O vorai kampuos sėdėdami verpalus audė, irgi medžiot tinklus tyloms kopinėdami mezgė. Bet ir meškos, ir vilkai šokinėdami džiaugės ir suplėšyt ką tyloms į pagirį traukės.",
+    "3": "Ale kokie dyvai – nei viens iš didelio pulko verkdams ar dūsaudams mus lankyt nesugrįžo; Ne! ne verkt, bet linksmytis visi susirinko: nės darbai žiemos visur jau buvo sugaišę irgi pavasaris ant visų laukų pasirodė. Tuo po tam pašaliai visi kribždėti pagavo irgi, bešūkaujant pulkams, ošims pasikėlė. Viens storai, o kits laibai dainuoti mokėdams ir linksmai lakstydams ik debesių kopinėjo; O kits ant šakų kopinėdams garbino Dievą, bet ir valgių dėl skūpų nei viens nesiskundė. Rūbai šio ir to didei jau buvo nudilę; O tūls lopytą parlėkdams parnešė kuodą ir pasisotyt ant laukų vos mažumą rado. O štai ir taipo parvargęs nieks nedejavo, bet visi visur sumišai šokinėdami džiaugės."
+  }
+}

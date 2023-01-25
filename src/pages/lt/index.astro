@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import SpeedLimitSelector from "@components/SpeedLimitSelector.astro";
+import { changeLanguage, t } from "i18next";
+
+changeLanguage("lt");
+
+const title: string = t("pages.index.title");
+const description: string = t("pages.index.description");
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="flex flex-col justify-center items-center">
+    <h1>{t("pages.index.header")}</h1>
+  </header>
+  <main class="flex flex-col justify-center items-center">
+    <SpeedLimitSelector />
+  </main>
+</BaseLayout>

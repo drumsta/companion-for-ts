@@ -1,0 +1,53 @@
+---
+
+import i18next, { t } from "i18next";
+import { localizeUrl } from "astro-i18next";
+import { addTrailingSlash } from "@i18n/util";
+
+export interface Props {
+  title?: string | undefined
+  description?: string | undefined
+}
+
+const { title, description }: Props = Astro.props;
+
+const canonicalURL = new URL(addTrailingSlash(Astro.url.pathname), Astro.site);
+const { languages } = i18next;
+
+/*
+ * Add type (e.g, article) and image to OG.
+ * <meta property="og:image" content="https://ia.media-imdb.com/images/rock.jpg" />
+ *
+ * Implement canonical link for default language.
+ * Find the way how to retrieve the default language.
+ * const [defaultLanguage] = i18next.languages;
+ * <link rel="canonical" hreflang="x-default" href={localizeUrl(canonicalURL.href, defaultLanguage).replace(/\/?$/u, '/')} />
+ * <meta property="og:locale" content="en_GB" />
+ * <meta property="og:locale:alternate" content="fr_FR" />
+ * <meta property="og:locale:alternate" content="es_ES" />
+ *
+ * <link rel="apple-touch-icon" href="https://www.test.ie/touch-icon-ipad.jpg" sizes="76x76"/>
+ */
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
+<meta name="application-name" content={t("app.title")} />
+<meta name="keywords" content="train simulator, trainsim, ts classic, tsw3, railworks, dovetails" />
+<meta name="author" content="https://github.com/drumsta/companion-for-ts/" />
+
+{typeof title === "undefined" ? null : <title>{title}</title>}
+{typeof description === "undefined" ? null : <meta name="description" content={description} />}
+
+{typeof title === "undefined" ? null : <meta property="og:title" content={title} />}
+<meta property="og:type" content="website" />
+{typeof description === "undefined" ? null : <meta property="og:description" content={description} />}
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:site_name" content={t("app.title")} />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="alternate icon" type="image/png" href="/favicon.png" />
+<link rel="me" type="text/html" href="https://github.com/drumsta/companion-for-ts/" />
+
+<link rel="canonical" href={canonicalURL} />
+{languages.map((language) => <link rel="alternate" hreflang={language} href={addTrailingSlash(localizeUrl(canonicalURL.href, language))} />)}

@@ -1,0 +1,51 @@
+{
+  "app": {
+    "title": "Companion for Train Simulator",
+    "title-short": "Companion for TS",
+    "description": "Play your favourite Train Simulator with a little help and 💖 from Companion for TS."
+  },
+  "components": {
+    "footer": {
+      "navigation-target": "Site",
+      "drive": "Drive",
+      "about": "About"
+    },
+    "language-selector": {
+      "language-menu": "Language Options"
+    },
+    "speed-limit": {
+      "title": "Speed limit selection component",
+      "max-speed": "Max Speed: {{maxSpeed}}",
+      "speed-limit": "Speed Limit",
+      "select-speed-units": "Select speed units",
+      "kph": "km/h",
+      "mph": "mph"
+    }
+  },
+  "layouts": {
+    "base-layout": {}
+  },
+  "pages": {
+    "index": {
+      "title": "Companion for Train Simulator",
+      "description": "Play your favourite Train Simulator with a little help and 💖 from Companion for TS.",
+      "header": "Drive a Train"
+    },
+    "about": {
+      "title": "About"
+    },
+    "colors": {
+      "title": "Color palette",
+      "description": "Color palette to build accessible, mobile-friendly website.",
+      "header": "Color palette"
+    }
+  },
+  "lorem-ipsum": {
+    "title": "Lorem Ipsum",
+    "description": "Lorem ipsum dolor sit amet",
+    "header": "Lorem Ipsum",
+    "1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae nunc sed velit dignissim sodales ut. A arcu cursus vitae congue mauris. Dolor sed viverra ipsum nunc aliquet bibendum. Quam nulla porttitor massa id neque aliquam vestibulum morbi. Duis at tellus at urna condimentum mattis pellentesque id. Nisi scelerisque eu ultrices vitae. Proin fermentum leo vel orci porta non pulvinar neque laoreet. Elementum curabitur vitae nunc sed velit. Vulputate ut pharetra sit amet aliquam id. Felis donec et odio pellentesque diam.",
+    "2": "Bibendum neque egestas congue quisque egestas diam in arcu. Fames ac turpis egestas maecenas. A lacus vestibulum sed arcu non. Duis convallis convallis tellus id interdum velit. Ac tortor vitae purus faucibus. Facilisis volutpat est velit egestas dui id ornare. Id diam maecenas ultricies mi eget mauris pharetra. Amet luctus venenatis lectus magna. Orci ac auctor augue mauris augue neque gravida in. Dignissim sodales ut eu sem integer vitae justo. Tellus at urna condimentum mattis. Duis convallis convallis tellus id. Faucibus et molestie ac feugiat sed lectus vestibulum mattis.",
+    "3": "Sed euismod nisi porta lorem. Pulvinar etiam non quam lacus suspendisse. Odio ut enim blandit volutpat maecenas volutpat blandit. Ornare massa eget egestas purus viverra accumsan in nisl nisi. Urna nec tincidunt praesent semper feugiat nibh. Adipiscing elit ut aliquam purus sit. Viverra nibh cras pulvinar mattis nunc. Volutpat diam ut venenatis tellus. Sodales neque sodales ut etiam sit amet nisl purus. Non diam phasellus vestibulum lorem sed risus ultricies tristique. Id interdum velit laoreet id donec. Tellus integer feugiat scelerisque varius morbi enim nunc faucibus. Diam donec adipiscing tristique risus nec feugiat in fermentum posuere. Auctor augue mauris augue neque gravida. In cursus turpis massa tincidunt dui ut ornare. Adipiscing bibendum est ultricies integer. Aliquet sagittis id consectetur purus ut faucibus. Felis bibendum ut tristique et egestas quis."
+  }
+}

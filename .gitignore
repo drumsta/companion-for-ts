@@ -401,12 +401,6 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-# Nuxt dev/build outputs
-.output
-.nuxt
-# Nuxt
-.nitro
-.env
-dist
-# System files
-*.log*
+# build output
+dist/
+.output/

@@ -36,8 +36,8 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           app_location: '/' # This folder contains the source code for your front-end application.
-          api_location: '.output/server' # This folder that contains the source code for your API application.
-          output_location: '.output/public' # If your web app runs a build step, the output location is the folder where the public files are generated.
+          api_location: '.dist/server' # This folder that contains the source code for your API application.
+          output_location: '.dist/client' # If your web app runs a build step, the output location is the folder where the public files are generated.
 
   close-pull-request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

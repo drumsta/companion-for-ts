@@ -1,0 +1,50 @@
+---
+import AmpBoilerplate from "@components/AmpBoilerplate.astro";
+import AmpImports from "@components/AmpImports.astro";
+import AmpScriptHashes from "@components/AmpScriptHashes.astro";
+import AmpStyle from "@components/AmpStyle.astro";
+import Footer from "@components/Footer.astro";
+import Header from "@components/Header.astro";
+import HeadCommon from "@components/HeadCommon.astro";
+import { getLanguageFromURL, normalizeLangTag } from "@i18n/util";
+import { rtlLanguages } from "@i18n/languages";
+
+export interface Props {
+  title?: string | undefined;
+  description?: string | undefined;
+  pageStyle?: string | undefined;
+}
+
+const { title, description, pageStyle }: Props = Astro.props;
+const { pathname } = Astro.url;
+const lang: string = getLanguageFromURL(pathname);
+const direction: "ltr" | "rtl" = rtlLanguages.has(lang) ? "rtl" : "ltr";
+const bcpLang: string = normalizeLangTag(lang);
+
+const customStyle = `
+/* Custom Layout Style */
+.footer-link-active,.footer-link:focus,.footer-link:hover {color: var(--color-accent);border-color: var(--color-border-accent);border-top-width: 2px;}
+.language-selector-link-active,.language-selector-link:focus,.language-selector-link:hover {background-color: var(--color-primary);text-decoration-line: underline;}
+
+/* Custom Page Style */
+${pageStyle ?? ""}`;
+---
+
+<!DOCTYPE html>
+<html amp dir={direction} lang={bcpLang}>
+  <head>
+    <HeadCommon title={title} description={description} />
+    <AmpBoilerplate />
+    <AmpImports />
+    <AmpScriptHashes />
+    <AmpStyle customStyle={customStyle} />
+  </head>
+  <body class="text-color bg-color" data-prefers-dark-mode-class="dark">
+    <!-- Base Layout -->
+    <Header />
+    <!-- Page Content -->
+    <slot />
+    <div style="height: 6rem;"></div>
+    <Footer />
+  </body>
+</html>

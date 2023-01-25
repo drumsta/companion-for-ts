@@ -1,56 +1,50 @@
 {
-  // https://github.com/prettier/prettier-vscode
-  "prettier.enable": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": false,
+  "editor.formatOnSave": false,
+  "editor.tabSize": 2,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.guides.bracketPairs": true,
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
   // https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
-  "eslint.alwaysShowStatus": true,
-  "eslint.validate": ["html", "javascript", "javascriptreact", "json", "markdown", "typescript", "typescriptreact", "vue"],
+  "eslint.validate": [
+    "html",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "astro"
+  ],
   "eslint.rules.customizations": [
     {
       "rule": "*",
       "severity": "error"
     }
   ],
-
-  // https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint#extension-settings
-  "css.validate": false,
-  "stylelint.validate": ["css", "vue"],
-
-  // https://marketplace.visualstudio.com/items?itemName=voorjaar.windicss-intellisense
-  // https://windicss.org/editors/vscode.html
-  "editor.quickSuggestions": {
-    "strings": true
-  },
-
-  "windicss.sortOnSave": true,
-  "windicss.enableCodeFolding": true,
-
-  "i18n-ally.localesPaths": ["locales"],
-  "i18n-ally.keystyle": "nested",
-  "i18n-ally.extract.keygenStyle": "kebab-case",
-  "i18n-ally.extract.keyMaxLength": 40,
-  "i18n-ally.extract.keyPrefix": "fileNameWithoutExt",
-  "i18n-ally.sourceLanguage": "en",
-  "i18n-ally.sortKeys": true,
-  "i18n-ally.enabledParsers": ["json"],
-  "i18n-ally.namespace": true,
-
-  "editor.guides.bracketPairs": true,
-  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
-
   "sonarlint.connectedMode.project": {
     "connectionId": "drumsta",
     "projectKey": "drumsta_companion-for-ts"
   },
-
-  "npm-intellisense.scanDevDependencies": true,
-
   "[svg]": {
     "editor.defaultFormatter": "jock.svg"
   },
   "[xml]": {
     "editor.defaultFormatter": "DotJoshJohnson.xml"
-  }
+  },
+  "editor.inlayHints.fontSize": 12,
+  "editor.inlayHints.padding": true,
+  "typescript.inlayHints.enumMemberValues.enabled": true,
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "typescript.inlayHints.parameterNames.enabled": "all",
+  "typescript.inlayHints.parameterTypes.enabled": true,
+  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "typescript.inlayHints.variableTypes.enabled": true,
+  "javascript.inlayHints.enumMemberValues.enabled": true,
+  "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "javascript.inlayHints.parameterNames.enabled": "all",
+  "javascript.inlayHints.parameterTypes.enabled": true,
+  "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "javascript.inlayHints.variableTypes.enabled": true
 }
