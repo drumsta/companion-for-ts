@@ -12,7 +12,6 @@ const sitemapOptions: SitemapOptions = {
       lt: "lt",
     },
   },
-  customPages: ["https://www.companionforts.com/", "https://www.companionforts.com/about"],
 };
 
 export default defineConfig({

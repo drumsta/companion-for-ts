@@ -10,7 +10,7 @@ export default {
   i18nextServer: {
     cleanCode: true,
     backend: {
-      loadPath: "./public/locales/{{lng}}/{{ns}}.json",
+      loadPath: "./src/i18n/{{lng}}/{{ns}}.json",
     },
   },
   routes: {
