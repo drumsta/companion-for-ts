@@ -7,6 +7,6 @@
     "strict-transport-security": "max-age=31536000",
     "x-frame-options": "DENY",
     "x-content-type-options": "nosniff",
-    "content-security-policy": "default-src https: 'self'; frame-src 'none'; frame-ancestors 'none'; script-src cdn.ampproject.org; style-src 'unsafe-inline'"
+    "content-security-policy": "default-src https: 'self'; frame-src 'none'; frame-ancestors 'none'; style-src 'unsafe-inline'; worker-src https://www.companionforts.com/; script-src cdn.ampproject.org"
   }
 }
