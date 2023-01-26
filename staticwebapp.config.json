@@ -7,6 +7,6 @@
     "strict-transport-security": "max-age=31536000",
     "x-frame-options": "SAMEORIGIN",
     "x-content-type-options": "nosniff",
-    "content-security-policy": "default-src https: 'self' https://companionforts-com.cdn.ampproject.org; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; worker-src blob: 'self'; style-src 'unsafe-inline'; script-src blob: https://cdn.ampproject.org; frame-src 'self' https://companionforts-com.cdn.ampproject.org; frame-ancestors 'self' https://companionforts-com.cdn.ampproject.org"
+    "content-security-policy": "default-src https: 'self' https://companionforts-com.cdn.ampproject.org; object-src 'none'; worker-src blob: 'self'; style-src 'unsafe-inline'; script-src blob: https://cdn.ampproject.org; frame-src 'self' https://companionforts-com.cdn.ampproject.org; frame-ancestors 'self' https://companionforts-com.cdn.ampproject.org"
   }
 }
