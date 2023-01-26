@@ -2,5 +2,11 @@
   "trailingSlash": "auto",
   "platform": {
     "apiRuntime": "node:18"
+  },
+  "globalHeaders": {
+    "strict-transport-security": "max-age=31536000",
+    "x-frame-options": "DENY",
+    "x-content-type-options": "nosniff",
+    "content-security-policy": "default-src https: 'self'; frame-src 'none'; frame-ancestors 'none'; script-src cdn.ampproject.org"
   }
 }
