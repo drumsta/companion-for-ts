@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "short_name": "Companion for TS",
+  "name": "Companion for Train Simulator",
+  "description": "Play your favourite Train Simulator with a little help and 💖 from Companion for TS."
+}
