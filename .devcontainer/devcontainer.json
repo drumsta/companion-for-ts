@@ -21,9 +21,7 @@
       "extensions": [
         "astro-build.astro-vscode",
         "dbaeumer.vscode-eslint",
-        "dotjoshjohnson.xml",
-        "editorconfig.editorconfig",
-        "jock.svg"
+        "editorconfig.editorconfig"
       ]
     }
   },

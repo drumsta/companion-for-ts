@@ -43,9 +43,9 @@
     "typescript-eslint-language-service": "^5.0.0"
   },
   "dependencies": {
-    "@astrojs/node": "^5.0.0",
+    "@astrojs/node": "^5.0.1",
     "@astrojs/sitemap": "^1.0.0",
-    "astro": "^2.0.1",
+    "astro": "^2.0.2",
     "astro-i18next": "^1.0.0-beta.16",
     "chroma-js": "^2.4.2",
     "iso-639-1": "^2.1.15"

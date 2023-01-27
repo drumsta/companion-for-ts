@@ -1,4 +1,7 @@
 ---
+import AmpBoilerplate from "@components/AmpBoilerplate.astro";
+import AmpImports from "@components/AmpImports.astro";
+import AmpScriptHashes from "@components/AmpScriptHashes.astro";
 import i18next, { t } from "i18next";
 import { localizeUrl, AstroI18next } from "astro-i18next";
 import { addTrailingSlash } from "@i18n/util";
@@ -25,29 +28,57 @@ const { defaultLocale } = AstroI18next.config;
  * <link rel="apple-touch-icon" href="https://www.test.ie/touch-icon-ipad.jpg" sizes="76x76"/>
  */
 ---
-
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
-<meta name="application-name" content={t("app.title")} />
-<meta name="keywords" content="train simulator, trainsim, ts classic, tsw3, railworks, dovetails" />
-<meta name="author" content="https://github.com/drumsta/companion-for-ts/" />
-
-{typeof title === "undefined" ? null : <title>{title}</title>}
-{typeof description === "undefined" ? null : <meta name="description" content={description} />}
-
-{typeof title === "undefined" ? null : <meta property="og:title" content={title} />}
-<meta property="og:type" content="website" />
-{typeof description === "undefined" ? null : <meta property="og:description" content={description} />}
-<meta property="og:url" content={canonicalURL} />
-<meta property="og:site_name" content={t("app.title")} />
-
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="alternate icon" type="image/png" href="/favicon.png" />
-<link rel="me" type="text/html" href="https://github.com/drumsta/companion-for-ts/" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
 <link rel="preconnect" href="https://cdn.ampproject.org">
 <link rel="dns-prefetch" href="https://cdn.ampproject.org">
 
-<link rel="canonical" href={canonicalURL} />
-<link rel="alternate" hreflang="x-default" href={addTrailingSlash(localizeUrl(canonicalURL.href, defaultLocale))} />
+<title>{typeof title === "undefined" ? t("app.title") : title}</title>
+<meta name="description" content={typeof description === "undefined" ? t("app.description") : description}>
+<meta name="application-name" content={t("app.title")}>
+<meta name="keywords" content="train simulator, trainsim, ts classic, tsw3, railworks, dovetails">
+
+<meta property="og:title" content={typeof title === "undefined" ? t("app.title") : title} >
+<meta property="og:type" content="website">
+<meta property="og:description" content={typeof description === "undefined" ? t("app.description") : description}>
+<meta property="og:url" content={canonicalURL}>
+<meta property="og:site_name" content={t("app.title")}>
+
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#3ED0F9">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#3ED0F9">
+<meta name="msapplication-TileColor" content="#1A1A1A">
+<meta name="msapplication-TileImage" content="/favicon-144x144.png">
+<meta name="msapplication-config" content="/browserconfig.xml">
+
+<AmpScriptHashes />
+<AmpBoilerplate />
+<AmpImports />
+
+<link rel="canonical" href={canonicalURL}>
+<link rel="alternate" hreflang="x-default" href={addTrailingSlash(localizeUrl(canonicalURL.href, defaultLocale))}>
 {languages.map((language) => <link rel="alternate" hreflang={language} href={addTrailingSlash(localizeUrl(canonicalURL.href, language))} />)}
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+<link rel="alternate icon" type="image/png" href="/favicon.png">
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" sizes="57x57" href="/favicon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/favicon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/favicon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/favicon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/favicon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/favicon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/favicon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/favicon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png">
+<link rel="apple-touch-icon" sizes="192x192" href="/favicon-192x192.png">
+
+<link rel="author" type="text/plain" href="humans.txt">
+<link rel="me" type="text/html" href="https://github.com/drumsta/companion-for-ts">

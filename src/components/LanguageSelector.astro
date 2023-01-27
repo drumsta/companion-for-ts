@@ -12,7 +12,7 @@ const languages: string[] = i18next.languages.slice().sort((a: string, b: string
 
 <!-- Language Selector -->
 <amp-mega-menu layout="fixed-height" height="2rem">
-  <nav>
+  <nav aria-label={t("components.language-selector.language-menu")}>
     <ul>
       <li>
         <button tabindex="0" aria-label={t("components.language-selector.language-menu")}>

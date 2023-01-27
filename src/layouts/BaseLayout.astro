@@ -1,7 +1,5 @@
 ---
-import AmpBoilerplate from "@components/AmpBoilerplate.astro";
-import AmpImports from "@components/AmpImports.astro";
-import AmpScriptHashes from "@components/AmpScriptHashes.astro";
+import AmpServiceWorker from "@components/AmpServiceWorker.astro";
 import AmpStyle from "@components/AmpStyle.astro";
 import Footer from "@components/Footer.astro";
 import Header from "@components/Header.astro";
@@ -34,12 +32,10 @@ ${pageStyle ?? ""}`;
 <html amp dir={direction} lang={bcpLang}>
   <head>
     <HeadCommon title={title} description={description} />
-    <AmpBoilerplate />
-    <AmpImports />
-    <AmpScriptHashes />
     <AmpStyle customStyle={customStyle} />
   </head>
   <body class="text-color bg-color" data-prefers-dark-mode-class="dark">
+    <AmpServiceWorker />
     <!-- Base Layout -->
     <Header />
     <!-- Page Content -->
