@@ -11,9 +11,11 @@ export interface Props {
   title?: string | undefined;
   description?: string | undefined;
   pageStyle?: string | undefined;
+  noindex?: boolean | undefined;
+  nofollow?: boolean | undefined;
 }
 
-const { title, description, pageStyle }: Props = Astro.props;
+const { title, description, pageStyle, noindex, nofollow }: Props = Astro.props;
 const { pathname } = Astro.url;
 const lang: string = detectLocaleFromPath(pathname);
 const direction: "ltr" | "rtl" = rtlLanguages.has(lang) ? "rtl" : "ltr";
@@ -31,7 +33,7 @@ ${pageStyle ?? ""}`;
 <!DOCTYPE html>
 <html amp dir={direction} lang={bcpLang}>
   <head>
-    <HeadCommon title={title} description={description} />
+    <HeadCommon title={title} description={description} noindex={noindex} nofollow={nofollow} />
     <AmpStyle customStyle={customStyle} />
   </head>
   <body class="text-color bg-color" data-prefers-dark-mode-class="dark">

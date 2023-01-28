@@ -15,83 +15,83 @@ const colorBaseLuminance: number = chroma(colorBase).luminance();
 const color1Luminance: number = chroma(color1).luminance();
 const colorGrades: number[] = [...Array(202).keys()].map((i) => (i * 0.5) - 0.5);
 const colorFamilies: string[] = [
-    "",
-    "White",
-    "Red",
-    "Orange",
-    "Amber",
-    "Yellow",
-    "Lime",
-    "Green",
-    "Emerald",
-    "Teal",
-    "Aqua",
-    "Cyan",
-    "Sky",
-    "Blue",
-    "Indigo",
-    "Violet",
-    "Purple",
-    "Fuchsia",
-    "Pink",
-    "Rose",
+  "",
+  "White",
+  "Red",
+  "Orange",
+  "Amber",
+  "Yellow",
+  "Lime",
+  "Green",
+  "Emerald",
+  "Teal",
+  "Aqua",
+  "Cyan",
+  "Sky",
+  "Blue",
+  "Indigo",
+  "Violet",
+  "Purple",
+  "Fuchsia",
+  "Pink",
+  "Rose",
 ];
 const colorValues: string[] = [
-    "",
-    "#FFFFFF",
-    "#FF0000",
-    "#FF8000",
-    "#FFC000",
-    "#FFFF00",
-    "#80FF00",
-    "#00FF00",
-    "#00FF80",
-    "#00FFC0",
-    "#00FFFF",
-    "#00C0FF",
-    "#0080FF",
-    "#0000FF",
-    "#4000FF",
-    "#8000FF",
-    "#C000FF",
-    "#FF00FF",
-    "#FF0080",
-    "#FF0040",
+  "",
+  "#FFFFFF",
+  "#FF0000",
+  "#FF8000",
+  "#FFC000",
+  "#FFFF00",
+  "#80FF00",
+  "#00FF00",
+  "#00FF80",
+  "#00FFC0",
+  "#00FFFF",
+  "#00C0FF",
+  "#0080FF",
+  "#0000FF",
+  "#4000FF",
+  "#8000FF",
+  "#C000FF",
+  "#FF00FF",
+  "#FF0080",
+  "#FF0040",
 ];
 const calcColor = function calcColor(grade: number, col: number): any {
-    const color = chroma(colorValues[col]);
-    const colorLch = color.lch();
-    const colorLchLightness = chroma(grade, colorLch[1], colorLch[2], "lch");
-    // Console.log(color1luminance);
-    const contrastRatio: number = Math.round(((21 * Math.exp(-0.030445224 * grade)) + Number.EPSILON) * 100) /
+  const color = chroma(colorValues[col]);
+  const colorLch = color.lch();
+  const colorLchLightness = chroma(grade, colorLch[1], colorLch[2], "lch");
+  // Console.log(color1luminance);
+  const contrastRatio: number = Math.round(((21 * Math.exp(-0.030445224 * grade)) + Number.EPSILON) * 100) /
         100;
-    const contrastRatioInverted: number = 1 / contrastRatio;
-    const color2Luminance: number = colorBaseLuminance > 0.5
-        ? (contrastRatioInverted * (colorBaseLuminance + 0.05)) - 0.05
-        : ((colorBaseLuminance + 0.05) / contrastRatioInverted) - 0.05;
-    const color2Temp = colorLchLightness.luminance(color2Luminance, "lch");
-    const color2 = color2Temp.set("lch.h", Number(color2Temp.lch()[2]) + colorHueCorrection);
-    return color2;
+  const contrastRatioInverted: number = 1 / contrastRatio;
+  const color2Luminance: number = colorBaseLuminance > 0.5
+    ? (contrastRatioInverted * (colorBaseLuminance + 0.05)) - 0.05
+    : ((colorBaseLuminance + 0.05) / contrastRatioInverted) - 0.05;
+  const color2Temp = colorLchLightness.luminance(color2Luminance, "lch");
+  const color2 = color2Temp.set("lch.h", Number(color2Temp.lch()[2]) + colorHueCorrection);
+  return color2;
 };
 const calcContrastRatio = function calcContrastRatio(grade: number): number {
-    const color2 = calcColor(grade, 1);
-    const color2Luminance: number = color2.luminance();
-    const ratio: number = 1 /
+  const color2 = calcColor(grade, 1);
+  const color2Luminance: number = color2.luminance();
+  const ratio: number = 1 /
         (color1Luminance > color2Luminance
-            ? (color2Luminance + 0.05) / (color1Luminance + 0.05)
-            : (color1Luminance + 0.05) / (color2Luminance + 0.05));
-    const contrastRatio: number = Math.round((ratio + Number.EPSILON) * 100) / 100;
-    // Const contrastRatio: number = Math.round((21 * Math.exp(-0.030445224 * grade) + Number.EPSILON) * 100) / 100;
-    return contrastRatio;
+          ? (color2Luminance + 0.05) / (color1Luminance + 0.05)
+          : (color1Luminance + 0.05) / (color2Luminance + 0.05));
+  const contrastRatio: number = Math.round((ratio + Number.EPSILON) * 100) / 100;
+  // Const contrastRatio: number = Math.round((21 * Math.exp(-0.030445224 * grade) + Number.EPSILON) * 100) / 100;
+  return contrastRatio;
 };
 const applyLightness = function applyLightness(grade: number, col: number): string {
-    const color2 = calcColor(grade, col);
-    const color2hex = color2.hex().toUpperCase();
-    return color2hex;
+  const color2 = calcColor(grade, col);
+  const color2hex = color2.hex().toUpperCase();
+  return color2hex;
 };
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} noindex={true} nofollow={true}>
   <header class="flex flex-col justify-center items-center">
     <h1>{t("pages.colors.header")}</h1>
   </header>

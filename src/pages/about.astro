@@ -8,7 +8,7 @@ const title: string = t("lorem-ipsum.header");
 const description: string = t("lorem-ipsum.description");
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} noindex={true} nofollow={true}>
   <header class="flex flex-col justify-center items-center">
     <h1>{t("lorem-ipsum.header")}</h1>
     <h2>{t("lorem-ipsum.description")}</h2>
