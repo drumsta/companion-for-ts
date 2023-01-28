@@ -121,7 +121,10 @@
       "name": "Drive a Train",
       "description": "Drive a Train with a little help and 💖 from Companion for TS.",
       "url": "/",
-      "icons": [{"src": "/images/svg/drive-98x98.png", "sizes": "98x98", "purpose": "any"}]
+      "icons": [
+        {"src": "/images/svg/drive-98x98.png", "sizes": "98x98", "purpose": "maskable"},
+        {"src": "/images/svg/drive-98x98.png", "sizes": "98x98", "purpose": "any"}
+      ]
     }
   ],
   "screenshots": [

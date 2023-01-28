@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://www.companionforts.com/sitemap.xml
+Sitemap: https://www.companionforts.com/sitemap-index.xml
 Host: www.companionforts.com
