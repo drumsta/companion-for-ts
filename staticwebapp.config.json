@@ -5,13 +5,13 @@
   },
   "globalHeaders": {
     "access-control-allow-origin": "*",
-    "content-security-policy": "default-src 'self'; object-src 'none'; worker-src blob: 'self'; style-src 'unsafe-inline'; script-src blob: https://cdn.ampproject.org 'sha256-WIPKNob6q4KMCGit4SiqOsV3MT3PfisuFm6GFy/dUbM='; frame-src 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com; frame-ancestors 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com; connect-src https://cdn.ampproject.org/; base-uri 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com",
-    "permissions-policy": "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), clipboard-write=(), conversion-measurement=(), cross-origin-isolated=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), focus-without-user-activation=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), navigation-override=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), serial=(), speaker-selection=(), sync-script=(), sync-xhr=(), trust-token-redemption=(), unload=(), usb=(), vertical-scroll=(), web-share=(), window-placement=(), xr-spatial-tracking=()",
-    "referrer-policy": "same-origin",
+    "content-security-policy": "default-src 'none'; base-uri 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com; block-all-mixed-content; connect-src https://cdn.ampproject.org/; frame-ancestors 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com; frame-src 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com; img-src 'self'; object-src 'none'; script-src blob: https://cdn.ampproject.org 'sha256-WIPKNob6q4KMCGit4SiqOsV3MT3PfisuFm6GFy/dUbM='; style-src 'unsafe-inline'; worker-src blob: 'self';",
+    "permissions-policy": "accelerometer=(), autoplay=(), camera=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), serial=(), sync-xhr=(), trust-token-redemption=(), unload=(), usb=(), web-share=(), window-placement=(), xr-spatial-tracking=()",
+    "referrer-policy": "strict-origin-when-cross-origin",
     "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
     "x-content-type-options": "nosniff",
     "x-dns-prefetch-control": "on",
-    "x-frame-options": "SAMEORIGIN",
+    "x-frame-options": "deny",
     "x-xss-protection": "1; mode=block"
   }
 }
