@@ -5,9 +5,11 @@
   },
   "globalHeaders": {
     "content-security-policy": "default-src https: 'self' https://www-companionforts-com.cdn.ampproject.org; object-src 'none'; worker-src blob: 'self'; style-src 'unsafe-inline'; script-src blob: https://cdn.ampproject.org 'sha256-WIPKNob6q4KMCGit4SiqOsV3MT3PfisuFm6GFy/dUbM='; frame-src 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com; frame-ancestors 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com; require-trusted-types-for 'script'; base-uri 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com",
+    "referrer-policy": "no-referrer, same-origin",
     "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
     "x-content-type-options": "nosniff",
     "x-dns-prefetch-control": "on",
-    "x-frame-options": "SAMEORIGIN"
+    "x-frame-options": "SAMEORIGIN",
+    "x-xss-protection": "1; mode=block"
   }
 }
