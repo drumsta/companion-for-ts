@@ -4,8 +4,10 @@
     "apiRuntime": "node:18"
   },
   "globalHeaders": {
-    "content-security-policy": "default-src https: 'self' https://www-companionforts-com.cdn.ampproject.org; object-src 'none'; worker-src blob: 'self'; style-src 'unsafe-inline'; script-src blob: https://cdn.ampproject.org 'sha256-WIPKNob6q4KMCGit4SiqOsV3MT3PfisuFm6GFy/dUbM='; frame-src 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com; frame-ancestors 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com; base-uri 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com",
-    "referrer-policy": "no-referrer, same-origin",
+    "access-control-allow-origin": "*",
+    "content-security-policy": "default-src 'self'; object-src 'none'; worker-src blob: 'self'; style-src 'unsafe-inline'; script-src blob: https://cdn.ampproject.org 'sha256-WIPKNob6q4KMCGit4SiqOsV3MT3PfisuFm6GFy/dUbM='; frame-src 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com; frame-ancestors 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com; base-uri 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com",
+    "permissions-policy": "accelerometer(), ambient-light-sensor(), autoplay(), battery(), camera(), display-capture(), document-domain(), encrypted-media(), execution-while-not-rendered(), execution-while-out-of-viewport(), fullscreen(), gamepad(), geolocation=(), gyroscope(), hid(), idle-detection(), local-fonts(), magnetometer(), microphone=(), midi(), payment(), picture-in-picture(), publickey-credentials-get(), screen-wake-lock(), serial(), speaker-selection(), usb(), web-share(), xr-spatial-tracking()",
+    "referrer-policy": "same-origin",
     "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
     "x-content-type-options": "nosniff",
     "x-dns-prefetch-control": "on",
