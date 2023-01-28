@@ -4,9 +4,10 @@
     "apiRuntime": "node:18"
   },
   "globalHeaders": {
-    "strict-transport-security": "max-age=31536000",
-    "x-frame-options": "SAMEORIGIN",
+    "content-security-policy": "default-src https: 'self' https://www-companionforts-com.cdn.ampproject.org; object-src 'none'; worker-src blob: 'self'; style-src 'unsafe-inline'; script-src blob: https://cdn.ampproject.org 'sha256-WIPKNob6q4KMCGit4SiqOsV3MT3PfisuFm6GFy/dUbM='; frame-src 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com; frame-ancestors 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com; require-trusted-types-for 'script'; base-uri 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com",
+    "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
     "x-content-type-options": "nosniff",
-    "content-security-policy": "default-src https: 'self' https://www-companionforts-com.cdn.ampproject.org; object-src 'none'; worker-src blob: 'self'; style-src 'unsafe-inline'; script-src blob: https://cdn.ampproject.org 'sha256-WIPKNob6q4KMCGit4SiqOsV3MT3PfisuFm6GFy/dUbM='; frame-src 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com; frame-ancestors 'self' https://www-companionforts-com.cdn.ampproject.org https://www.google.com"
+    "x-dns-prefetch-control": "on",
+    "x-frame-options": "SAMEORIGIN"
   }
 }
