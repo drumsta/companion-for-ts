@@ -1,5 +1,5 @@
 Canonical: https://www.companionforts.com//.well-known/security.txt
-Expires: 2023-12-01T23:00:01+00:00
+Expires: 2023-12-31T23:59:59+00:00
 Policy: https://github.com/drumsta/companion-for-ts/security/policy
 Contact: https://github.com/drumsta/companion-for-ts/security/policy
 Preferred-Languages: en

@@ -1,4 +1,4 @@
 User-agent: *
-Allow: /
+Disallow: /.well-known/
 Sitemap: https://www.companionforts.com/sitemap-index.xml
 Host: www.companionforts.com
