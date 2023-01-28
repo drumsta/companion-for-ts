@@ -129,7 +129,7 @@
   ],
   "screenshots": [
     {
-      "src": "screenshots/screenshot-01.jpg",
+      "src": "/screenshots/screenshot-01.jpg",
       "sizes": "1080x2041",
       "type": "image/jpg",
       "platform": "narrow",
