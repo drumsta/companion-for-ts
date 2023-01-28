@@ -31,7 +31,8 @@
     "build": "npx astro-i18next generate && astro build",
     "preview": "astro preview",
     "start": "node ./dist/server/entry.mjs",
-    "lint": "astro check && tsc --noEmit"
+    "lint": "astro check && tsc --noEmit",
+    "update": "ncu -u && npm update --save && npm install"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
