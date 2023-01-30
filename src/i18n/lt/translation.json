@@ -31,6 +31,12 @@
       "description": "Pagalbininkas TS su 💖 padės žaisti mėgstamą traukinio simuliatorių.",
       "header": "Vairuok traukinį"
     },
+    "404": {
+      "title": "Puslapis nerastas - Klaida 404",
+      "description": "Puslapio nepavyko rasti.",
+      "header": "Puslapis nerastas",
+      "1": "Šio puslapio nepavyko rasti."
+    },
     "about": {
       "title": "Apie"
     },

@@ -31,6 +31,12 @@
       "description": "Play your favourite Train Simulator with a little help and 💖 from Companion for Train Simulator.",
       "header": "Drive a Train"
     },
+    "404": {
+      "title": "Page not found - Error 404",
+      "description": "The requested URL was not found on this server.",
+      "header": "Page not found",
+      "1": "The requested URL was not found on this server."
+    },
     "about": {
       "title": "About"
     },

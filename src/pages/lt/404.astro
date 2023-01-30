@@ -1,0 +1,18 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { changeLanguage, t } from "i18next";
+
+changeLanguage("lt");
+
+const title: string = t("pages.404.title");
+const description: string = t("pages.404.description");
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="flex flex-col justify-center items-center">
+    <h1>{t("pages.404.header")}</h1>
+  </header>
+  <main class="flex flex-col justify-center items-center">
+    <div>{t("pages.404.1")}</div>
+  </main>
+</BaseLayout>

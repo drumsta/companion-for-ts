@@ -8,6 +8,30 @@
   "dir": "ltr",
   "icons": [
     {
+      "src": "/favicon-57x57.png",
+      "type": "image/png",
+      "sizes": "57x57",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon-57x57.png",
+      "type": "image/png",
+      "sizes": "57x57",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-60x60.png",
+      "type": "image/png",
+      "sizes": "60x60",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon-60x60.png",
+      "type": "image/png",
+      "sizes": "60x60",
+      "purpose": "any"
+    },
+    {
       "src": "/favicon-72x72.png",
       "type": "image/png",
       "sizes": "72x72",
@@ -20,6 +44,18 @@
       "purpose": "any"
     },
     {
+      "src": "/favicon-76x76.png",
+      "type": "image/png",
+      "sizes": "76x76",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon-76x76.png",
+      "type": "image/png",
+      "sizes": "76x76",
+      "purpose": "any"
+    },
+    {
       "src": "/favicon-96x96.png",
       "type": "image/png",
       "sizes": "96x96",
@@ -29,6 +65,30 @@
       "src": "/favicon-96x96.png",
       "type": "image/png",
       "sizes": "96x96",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-114x114.png",
+      "type": "image/png",
+      "sizes": "114x114",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon-114x114.png",
+      "type": "image/png",
+      "sizes": "114x114",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-120x120.png",
+      "type": "image/png",
+      "sizes": "120x120",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon-120x120.png",
+      "type": "image/png",
+      "sizes": "120x120",
       "purpose": "any"
     },
     {
@@ -65,6 +125,18 @@
       "src": "/favicon-152x152.png",
       "type": "image/png",
       "sizes": "152x152",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-180x180.png",
+      "type": "image/png",
+      "sizes": "180x180",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon-180x180.png",
+      "type": "image/png",
+      "sizes": "180x180",
       "purpose": "any"
     },
     {
