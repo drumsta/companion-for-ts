@@ -34,11 +34,12 @@ const { defaultLocale } = AstroI18next.config;
 <link rel="dns-prefetch" href="https://cdn.ampproject.org">
 
 <meta name="robots" content={`${noindex ? "noindex" : "index"}, ${nofollow ? "nofollow" : "follow"}`} >
+<link rel="sitemap" type="application/xml" href="/sitemap-index.xml">
 
 <title>{typeof title === "undefined" ? t("app.title") : title}</title>
 <meta name="description" content={typeof description === "undefined" ? t("app.description") : description}>
 <meta name="application-name" content={t("app.title")}>
-<meta name="keywords" content="train simulator, trainsim, ts classic, tsw3, railworks, dovetails">
+<meta name="keywords" content="train simulator,trainsim,ts classic,tsw3,railworks,dovetails">
 
 <meta property="og:title" content={typeof title === "undefined" ? t("app.title") : title}>
 <meta property="og:type" content="website">
@@ -92,7 +93,7 @@ const { defaultLocale } = AstroI18next.config;
 <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png">
 <link rel="apple-touch-icon" sizes="192x192" href="/favicon-192x192.png">
 
-<link rel="author" type="text/plain" href="humans.txt">
+<link rel="author" type="text/plain" href="/humans.txt">
 <link rel="me" type="text/html" href="https://github.com/drumsta/companion-for-ts">
 
 <meta property="fb:app_id" content="717330293272817">
