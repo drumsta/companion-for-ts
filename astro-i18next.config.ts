@@ -15,8 +15,8 @@ export default {
   },
   routes: {
     lt: {
-      about: "apie",
-      colors: "spalvos",
+      about: "about",
+      colors: "colors",
     },
   },
 } as AstroI18nextConfig;

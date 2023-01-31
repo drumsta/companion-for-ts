@@ -412,7 +412,7 @@ const checkedRadioButtonClass = "bg-color-primary-dark text-color-light";
 
   const oTMSLS = function oTMSLS(event) {
     if (event.touches.length !== 1) return;
-    const [touch] = event.touches;
+    const touch = event.touches.item(0);
     event.offsetX = touch.clientX - sLSCoords.left;
     event.offsetY = touch.clientY - sLSCoords.top;
     oCSLS(event);

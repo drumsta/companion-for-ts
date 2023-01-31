@@ -12,6 +12,8 @@ const sitemapOptions: SitemapOptions = {
       lt: "lt",
     },
   },
+  filter: (page) => page !== "https://www.companionforts.com/colors/" &&
+    page !== "https://www.companionforts.com/lt/colors/",
 };
 
 export default defineConfig({

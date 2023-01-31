@@ -3,10 +3,10 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "npm: install",
-      "detail": "Install dependencies from package",
+      "label": "npm: update",
+      "detail": "Install & update dependencies from package",
       "type": "npm",
-      "script": "install",
+      "script": "update",
       "group": "none",
       "problemMatcher": []
     },
