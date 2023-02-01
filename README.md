@@ -14,4 +14,4 @@ A simple helper to play your beloved Train Simulator.
 
 ## Would like to express your gratitude?
 
-Hit the :star: **Star** button!
+Hit the :star: **Star** button! Sometimes [the simplest things](https://github.com/drumsta/companion-for-ts/stargazers) mean the most!

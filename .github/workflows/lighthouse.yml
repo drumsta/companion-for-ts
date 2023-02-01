@@ -1,6 +1,6 @@
 # For more information regarding configuration:
 # https://github.com/treosh/lighthouse-ci-action
-name: Lighthouse CI
+name: Lighthouse CI with impossible targets
 
 on:
   workflow_dispatch:
