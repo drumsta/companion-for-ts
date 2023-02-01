@@ -24,8 +24,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          submodules: true
 
       - name: Build And Deploy
         id: build-deploy
@@ -38,6 +36,15 @@ jobs:
           app_location: '/' # This folder contains the source code for your front-end application.
           # api_location: 'dist/server' # This folder that contains the source code for your API application.
           output_location: 'dist' # If your web app runs a build step, the output location is the folder where the public files are generated.
+
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@v9
+        with:
+          urls: |
+            https://www.companionforts.com/
+          budgetPath: ./impossible-budget.json # test performance budgets
+          uploadArtifacts: true # save results as an action artifacts
+          temporaryPublicStorage: true # upload lighthouse report to the temporary storage
 
   close-pull-request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

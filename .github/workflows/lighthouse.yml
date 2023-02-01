@@ -1,0 +1,24 @@
+# For more information regarding configuration:
+# https://github.com/treosh/lighthouse-ci-action
+name: Lighthouse CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  lighthouse:
+    name: Audit the website using Lighthouse
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@v9
+        with:
+          urls: |
+            https://www.companionforts.com/
+          budgetPath: ./impossible-budget.json # test performance budgets
+          uploadArtifacts: true # save results as an action artifacts
+          temporaryPublicStorage: true # upload lighthouse report to the temporary storage
