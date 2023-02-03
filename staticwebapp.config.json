@@ -11,7 +11,6 @@
     "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
     "x-content-type-options": "nosniff",
     "x-dns-prefetch-control": "on",
-    "x-frame-options": "deny",
     "x-xss-protection": "1; mode=block"
   }
 }

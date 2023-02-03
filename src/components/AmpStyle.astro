@@ -11,7 +11,7 @@ const { customStyle }: Props = Astro.props;
 const style = `
 /* Style Reset */
 *,::before,::after {box-sizing: border-box;border-width: 0;border-style: solid;border-color: currentColor;}
-html {line-height: 1.5;-webkit-text-size-adjust: 100%;-moz-tab-size: 4;tab-size: 4;scrollbar-gutter: stable;font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';}
+html {line-height: 1.5;-moz-tab-size: 4;tab-size: 4;scrollbar-gutter: stable;font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';}
 body {margin: 0;line-height: inherit;}
 h1,h2,h3,h4,h5,h6 {font-size: inherit;font-weight: inherit;}
 a {color: inherit;text-decoration: inherit;}
@@ -93,7 +93,7 @@ h1 {font-size: 1.75em;}
 h2 {font-size: 1.5em;}
 h3 {font-size: 1.25em;}
 h4 {font-size: 1.125em;}
-button {display: inline-flex;justify-content: center;align-items: center;user-select: none;border-radius: 0.375rem; margin-left: 0.5rem; padding-top: 0.25rem; padding-bottom: 0.25rem; padding-left: 1rem; padding-right: 1rem;}
+button {display: inline-flex;justify-content: center;align-items: center;-webkit-user-select: none;user-select: none;border-radius: 0.375rem; margin-left: 0.5rem; padding-top: 0.25rem; padding-bottom: 0.25rem; padding-left: 1rem; padding-right: 1rem;}
 
 /* Common Atomic Style */
 .absolute {position: absolute;}
@@ -118,7 +118,7 @@ button {display: inline-flex;justify-content: center;align-items: center;user-se
 .border-1 {border-width: 1px;}
 .rounded-md {border-radius: 0.375rem;}
 .rounded-1-2 {border-radius: 50%;}
-.select-none {user-select: none;}
+.select-none {-webkit-user-select: none;user-select: none;}
 .cursor-pointer {cursor: pointer;}
 .cursor-grab {cursor: grab;}
 .touch-none {touch-action: none;}
