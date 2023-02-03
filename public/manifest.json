@@ -185,7 +185,7 @@
   "background_color": "#1A1A1A",
   "orientation": "any",
   "launch_handler": {
-    "client_mode": ["focus-existing, auto"]
+    "client_mode": ["focus-existing", "auto"]
   },
   "shortcuts" : [
     {
