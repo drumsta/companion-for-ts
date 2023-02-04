@@ -6,6 +6,8 @@ import Header from "@components/Header.astro";
 import HeadCommon from "@components/HeadCommon.astro";
 import { normalizeLangTag, rtlLanguages } from "@i18n/util";
 import { detectLocaleFromPath } from "astro-i18next";
+import { Schema } from "astro-seo-schema";
+import type { Graph, Thing, WithContext } from "schema-dts";
 
 export interface Props {
   title?: string | undefined;
@@ -13,9 +15,11 @@ export interface Props {
   pageStyle?: string | undefined;
   noindex?: boolean | undefined;
   nofollow?: boolean | undefined;
+  jsonLd?: Graph | WithContext<Thing> | undefined;
 }
 
-const { title, description, pageStyle, noindex, nofollow }: Props = Astro.props;
+const { title, description, pageStyle, noindex, nofollow, jsonLd }: Props =
+  Astro.props;
 const { pathname } = Astro.url;
 const lang: string = detectLocaleFromPath(pathname);
 const direction: "ltr" | "rtl" = rtlLanguages.has(lang) ? "rtl" : "ltr";
@@ -33,7 +37,13 @@ ${pageStyle ?? ""}`;
 <!DOCTYPE html>
 <html amp dir={direction} lang={bcpLang}>
   <head>
-    <HeadCommon title={title} description={description} noindex={noindex} nofollow={nofollow} />
+    <HeadCommon
+      title={title}
+      description={description}
+      noindex={noindex}
+      nofollow={nofollow}
+    />
+    {typeof jsonLd === "undefined" ? null : <Schema item={jsonLd} />}
     <AmpStyle customStyle={customStyle} />
   </head>
   <body class="text-color bg-color" data-prefers-dark-mode-class="dark">
