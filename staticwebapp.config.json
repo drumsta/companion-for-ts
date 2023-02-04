@@ -12,5 +12,8 @@
     "x-content-type-options": "nosniff",
     "x-dns-prefetch-control": "on",
     "x-xss-protection": "1; mode=block"
+  },
+  "mimeTypes": {
+    ".webmanifest": "application/manifest+json"
   }
 }
