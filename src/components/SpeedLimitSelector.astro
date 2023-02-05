@@ -1,4 +1,5 @@
 ---
+import PSvg from "@components/PSvg.astro";
 import i18next, { t } from "i18next";
 
 const cL: string = i18next.language;
@@ -17,189 +18,214 @@ const defaultRadioButtonClass =
   "p-radio-button justify-center items-center select-none border-color border-1 rounded-md cursor-pointer";
 const uncheckedRadioButtonClass = "bg-color-subtle text-color";
 const checkedRadioButtonClass = "bg-color-primary-dark text-color-light";
+const xxx = "{{ rollingStockClass }}";
 ---
-
-<!-- Speed Limit Component-->
-<amp-script
-  id="speed-limit-amp-script"
-  layout="flex-item"
-  script="speed-limit-script"
->
-  <div
-    id="speed-limit-section"
-    title={t("components.speed-limit.title")}
-    class="flex flex-col justify-center items-center"
+<main class="flex flex-col justify-center items-center">
+  <!-- Train Selection -->
+  <button
+    type="button"
+    on="tap:sidebar-right-top.open"
+    class="absolute border-color border-1"
+    style="z-index: 100;top: 12.5rem; right: 0; padding: 0rem;border-bottom-right-radius: 0px;border-top-right-radius: 0px;"
+    tabindex="0"
+    aria-label={t("components.speed-limit.side-selection")}
   >
-    <!-- Max Speed Info & Speed Units Selector -->
-    <div class="flex flex-row items-center">
-      <!-- Max Speed Info -->
-      <span id="ms-info">
-        {maxSpeedInfoText.replace("{{maxSpeed}}", defaultMS.toLocaleString(cL))}
-      </span>
-      <!-- Speed Units Selector - Radio button -->
-      <div
-        id="sus"
-        data-su
-        class="flex flex-row"
-        style="margin-top: 0.125rem;margin-left: 0.5rem;"
-        role="radiogroup"
-        aria-label={t("components.speed-limit.select-speed-units")}
-      >
-        {
-          sUO.map((option: { key: string; value: string }) => <div
-              id={`sus-${option.key}`}
-              data-key={option.key}
-              class={defaultRadioButtonClass}
-              style="margin: 0px;padding-top: 0.25rem;padding-bottom: 0.25rem;padding-left: 1rem;padding-right: 1rem;"
-              tabindex="0"
-              role="radio"
-              aria-label={option.value}
-              aria-checked="false"
-            >
-              <span>{option.value}</span>
-            </div>)
-        }
-      </div>
-    </div>
-    <!-- Max Speed Selector - Slider -->
+    <PSvg name="settings" svgStyle="height: 2.5rem;" />
+  </button>
+
+  <!-- Speed Limit Component-->
+  <amp-script
+    id="speed-limit-amp-script"
+    layout="flex-item"
+    script="speed-limit-script"
+  >
+    <!-- Component Main Section -->
     <div
-      class="relative select-none"
-      style="height: 2.25rem;width: 18.75rem;margin-top: 1rem;padding: 0.125rem;"
+      id="speed-limit-section"
+      title={t("components.speed-limit.title")}
+      class="flex flex-col justify-center items-center"
     >
-      <input
-        type="range"
-        id="mss"
-        min={minMS}
-        max={maxMS}
-        value={defaultMS}
-        step="10"
-        list="mss-values"
-        class="block"
-        style="width: 100%;"
-        aria-labelledby="ms-info"
-      />
-      <datalist
-        id="mss-values"
-        class="flex justify-between text-base"
-        style="padding-top: 0.625rem;"
+      <!-- Max Speed Info & Speed Units Selector -->
+      <div class="flex flex-row items-center">
+        <!-- Max Speed Info -->
+        <span id="ms-info">
+          {maxSpeedInfoText.replace("{{maxSpeed}}", defaultMS.toLocaleString(cL))}
+        </span>
+        <!-- Speed Units Selector - Radio button -->
+        <div
+          id="sus"
+          data-su
+          class="flex flex-row"
+          style="margin-top: 0.125rem;margin-left: 0.5rem;"
+          role="radiogroup"
+          aria-label={t("components.speed-limit.select-speed-units")}
+        >
+          {
+            sUO.map((option: { key: string; value: string }) => <div
+                id={`sus-${option.key}`}
+                data-key={option.key}
+                class={defaultRadioButtonClass}
+                style="margin: 0px;padding-top: 0.25rem;padding-bottom: 0.25rem;padding-left: 1rem;padding-right: 1rem;"
+                tabindex="0"
+                role="radio"
+                aria-label={option.value}
+                aria-checked="false"
+              >
+                <span>{option.value}</span>
+              </div>)
+          }
+        </div>
+      </div>
+      <!-- Max Speed Selector - Slider -->
+      <div
+        class="relative select-none"
+        style="height: 2.25rem;width: 18.75rem;margin-top: 1rem;padding: 0.125rem;"
       >
-        <option value="30" label={(30).toLocaleString(cL)}
-          >{(30).toLocaleString(cL)}</option
+        <input
+          type="range"
+          id="mss"
+          min={minMS}
+          max={maxMS}
+          value={defaultMS}
+          step="10"
+          list="mss-values"
+          class="block"
+          style="width: 100%;"
+          aria-labelledby="ms-info"
+        />
+        <datalist
+          id="mss-values"
+          class="flex justify-between text-base"
+          style="padding-top: 0.625rem;"
         >
-        <option value="90" label={(90).toLocaleString(cL)}
-          >{(90).toLocaleString(cL)}</option
+          <option value="30" label={(30).toLocaleString(cL)}
+            >{(30).toLocaleString(cL)}</option
+          >
+          <option value="90" label={(90).toLocaleString(cL)}
+            >{(90).toLocaleString(cL)}</option
+          >
+          <option value="160" label={(160).toLocaleString(cL)}
+            >{(160).toLocaleString(cL)}</option
+          >
+          <option value="230" label={(230).toLocaleString(cL)}
+            >{(230).toLocaleString(cL)}</option
+          >
+          <option value="300" label={(300).toLocaleString(cL)}
+            >{(300).toLocaleString(cL)}</option
+          >
+        </datalist>
+      </div>
+      <!-- Speed Limit Selector - Knob -->
+      <div style="margin-top: 1.5rem;padding: 0.625rem;">
+        <svg
+          id="sls"
+          width="300"
+          height="300"
+          viewBox="0 0 100 100"
+          class="cursor-grab"
+          tabindex="0"
+          role="slider"
+          aria-valuemin="0"
+          aria-valuemax={defaultMS}
+          aria-valuenow={defaultSL}
+          aria-label={t("components.speed-limit.speed-limit")}
         >
-        <option value="160" label={(160).toLocaleString(cL)}
-          >{(160).toLocaleString(cL)}</option
-        >
-        <option value="230" label={(230).toLocaleString(cL)}
-          >{(230).toLocaleString(cL)}</option
-        >
-        <option value="300" label={(300).toLocaleString(cL)}
-          >{(300).toLocaleString(cL)}</option
-        >
-      </datalist>
-    </div>
-    <!-- Speed Limit Selector - Knob -->
-    <div style="margin-top: 1.5rem;padding: 0.625rem;">
-      <svg
-        id="sls"
-        width="300"
-        height="300"
-        viewBox="0 0 100 100"
-        class="cursor-grab"
+          <path
+            id="slspn"
+            class="fill-none stroke-color-negative-dark"
+            d="M 30 84.64 A 40 40 0 1 1 70 84.64"
+            stroke-width="14"></path>
+          <path
+            id="slspp"
+            class="fill-none stroke-color-positive-dark"
+            d="M 30 84.64 A 40 40 0 0 1 50 10"
+            stroke-width="14"></path>
+          <text
+            id="sls-text-1"
+            x="50"
+            y="47"
+            text-anchor="middle"
+            class="fill-text-color text-center text-xl select-none"
+          >
+            {defaultSL.toLocaleString(cL)}
+          </text>
+          <text
+            id="sls-text-2"
+            x="50"
+            y="68"
+            text-anchor="middle"
+            class="fill-text-color text-center text-xl select-none"
+          >
+            {defaultSU}
+          </text>
+          <text
+            id="sls-text-3"
+            x="50"
+            y="89"
+            text-anchor="middle"
+            class="fill-text-color text-center select-none"
+            style="font-size: 0.5rem;"
+          >
+            {alternateSU}
+          </text>
+        </svg>
+      </div>
+      <!-- Speed Limit Quick Buttons -->
+      <div
+        id="slsb"
+        class="flex justify-center"
+        style="height: 3.125rem"
         tabindex="0"
-        role="slider"
+        role="spinbutton"
         aria-valuemin="0"
         aria-valuemax={defaultMS}
         aria-valuenow={defaultSL}
         aria-label={t("components.speed-limit.speed-limit")}
       >
-        <path
-          id="slspn"
-          class="fill-none stroke-color-negative-dark"
-          d="M 30 84.64 A 40 40 0 1 1 70 84.64"
-          stroke-width="14"></path>
-        <path
-          id="slspp"
-          class="fill-none stroke-color-positive-dark"
-          d="M 30 84.64 A 40 40 0 0 1 50 10"
-          stroke-width="14"></path>
-        <text
-          id="sls-text-1"
-          x="50"
-          y="47"
-          text-anchor="middle"
-          class="fill-text-color text-center text-xl select-none"
-        >
-          {defaultSL.toLocaleString(cL)}
-        </text>
-        <text
-          id="sls-text-2"
-          x="50"
-          y="68"
-          text-anchor="middle"
-          class="fill-text-color text-center text-xl select-none"
-        >
-          {defaultSU}
-        </text>
-        <text
-          id="sls-text-3"
-          x="50"
-          y="89"
-          text-anchor="middle"
-          class="fill-text-color text-center select-none"
-          style="font-size: 0.5rem;"
-        >
-          {alternateSU}
-        </text>
-      </svg>
+        <button
+          type="button"
+          id="slsb-m-25"
+          class="bg-color-negative-dark text-color-light"
+          style="width: 3.125rem;">-25</button>
+        <button
+          type="button"
+          id="slsb-m-10"
+          class="bg-color-negative-dark text-color-light"
+          style="width: 3.125rem;">-10</button>
+        <button
+          type="button"
+          id="slsb-m-5"
+          class="bg-color-negative-dark text-color-light"
+          style="width: 3.125rem;">-5</button>
+        <button
+          type="button"
+          id="slsb-p-5"
+          class="bg-color-positive-dark text-color-light"
+          style="width: 3.125rem;">+5</button>
+        <button
+          type="button"
+          id="slsb-p-10"
+          class="bg-color-positive-dark text-color-light"
+          style="width: 3.125rem;">+10</button>
+        <button
+          type="button"
+          id="slsb-p-25"
+          class="bg-color-positive-dark text-color-light"
+          style="width: 3.125rem;margin-right: 0.5rem;">+25</button>
+      </div>
     </div>
-    <!-- Speed Limit Quick Buttons -->
-    <div
-      id="slsb"
-      class="flex justify-center"
-      style="height: 3.125rem"
-      tabindex="0"
-      role="spinbutton"
-      aria-valuemin="0"
-      aria-valuemax={defaultMS}
-      aria-valuenow={defaultSL}
-      aria-label={t("components.speed-limit.speed-limit")}
-    >
-      <button
-        type="button"
-        id="slsb-m-25"
-        class="bg-color-negative-dark text-color-light"
-        style="width: 3.125rem;">-25</button>
-      <button
-        type="button"
-        id="slsb-m-10"
-        class="bg-color-negative-dark text-color-light"
-        style="width: 3.125rem;">-10</button>
-      <button
-        type="button"
-        id="slsb-m-5"
-        class="bg-color-negative-dark text-color-light"
-        style="width: 3.125rem;">-5</button>
-      <button
-        type="button"
-        id="slsb-p-5"
-        class="bg-color-positive-dark text-color-light"
-        style="width: 3.125rem;">+5</button>
-      <button
-        type="button"
-        id="slsb-p-10"
-        class="bg-color-positive-dark text-color-light"
-        style="width: 3.125rem;">+10</button>
-      <button
-        type="button"
-        id="slsb-p-25"
-        class="bg-color-positive-dark text-color-light"
-        style="width: 3.125rem;margin-right: 0.5rem;">+25</button>
-    </div>
-  </div>
-</amp-script>
+  </amp-script>
+</main>
+<amp-sidebar id="sidebar-right-top" layout="nodisplay" side="right">
+  <amp-autocomplete filter="substring" filter-value="rollingStockClass" min-characters="0" prefetch src="/json/rolling-stock-class.json">
+    <input type="search" class="text-color bg-color-subtle">
+    <template type="amp-mustache" id="amp-template-rolling-stock">
+      <div class="text-color bg-color-subtle" data-value="{{rollingStockClass}}">
+          <div class="autocomplete-item" set:html={xxx}></div>
+      </div>
+    </template>
+  </amp-autocomplete>
+</amp-sidebar>
 <script
   id="speed-limit-script"
   type="text/plain"

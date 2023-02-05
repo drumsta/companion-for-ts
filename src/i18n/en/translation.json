@@ -23,7 +23,8 @@
       "speed-limit": "Speed Limit",
       "select-speed-units": "Select speed units",
       "kph": "km/h",
-      "mph": "mph"
+      "mph": "mph",
+      "side-selection": "Train selection"
     }
   },
   "layouts": {

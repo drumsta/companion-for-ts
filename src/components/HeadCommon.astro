@@ -1,6 +1,5 @@
 ---
 import AmpBoilerplate from "@components/AmpBoilerplate.astro";
-import AmpImports from "@components/AmpImports.astro";
 import AmpScriptHashes from "@components/AmpScriptHashes.astro";
 import i18next, { t } from "i18next";
 import { localizeUrl, AstroI18next } from "astro-i18next";
@@ -65,7 +64,6 @@ const { defaultLocale } = AstroI18next.config;
 
 <AmpScriptHashes />
 <AmpBoilerplate />
-<AmpImports />
 
 <link rel="canonical" href={canonicalUrl}>
 <link rel="amphtml" href={canonicalUrl}>

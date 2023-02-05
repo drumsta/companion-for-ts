@@ -21,9 +21,10 @@
       "title": "Leistino greičio komponentas",
       "max-speed": "Didžiausias greitis: {{maxSpeed}}",
       "speed-limit": "Leistinas greitis",
-      "select-speed-units": "Pasirinkite greičio matavimo vienetus.",
+      "select-speed-units": "Pasirinkite greičio matavimo vienetus",
       "kph": "km/h",
-      "mph": "mph"
+      "mph": "mph",
+      "side-selection": "Traukinio pasirinkimas"
     }
   },
   "layouts": {

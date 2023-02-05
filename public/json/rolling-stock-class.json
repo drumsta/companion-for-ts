@@ -1,0 +1,97 @@
+{
+  "items": [
+    {
+      "rollingStockClass": "Class 66",
+      "rollingStockModel": "JT42CWR",
+      "manufacturerName": "Electro-Motive Diesel (EMD)",
+      "rollingStockCategory": "Locomotive",
+      "typeDescription": "Diesel Electric Locomotive",
+      "transmissionType": "Electric Transmission",
+      "powerType": "Diesel",
+      "primeMover": "12N-710G3B",
+      "brakingSystem": "Air",
+      "maximumSpeed": 75,
+      "speedUnits": "mph"
+    },
+    {
+      "rollingStockClass": "Class 375",
+      "manufacturerName": "Bombardier Transportation",
+      "rollingStockFamily": "Electrostar",
+      "rollingStockCategory": "Multiple Unit Car",
+      "typeDescription": "Electric Multiple Unit (EMU)",
+      "powerType": "Electric",
+      "electrificationRequirements": [
+        {
+          "powerSource": "Third Rail",
+          "currentCollector": "Contact Shoe",
+          "supplyType": {
+            "current": "DC",
+            "voltage": "750 V"
+          }
+        }
+      ],
+      "brakingSystem": "Electro-pneumatic",
+      "maximumSpeed": 100,
+      "speedUnits": "mph"
+    },
+    {
+      "rollingStockClass": "Class 395",
+      "manufacturerName": "Hitachi Rail",
+      "rollingStockFamily": "A-train",
+      "rollingStockCategory": "Multiple Unit Car",
+      "typeDescription": "Electric Multiple Unit (EMU)",
+      "powerType": "Electric",
+      "electrificationRequirements": [
+        {
+          "powerSource": "Overhead Wires",
+          "currentCollector": "Pantograph",
+          "supplyType": {
+            "current": "AC",
+            "voltage": "25 kV",
+            "frequency": "50 Hz"
+          },
+          "maximumSpeed": 140
+        },
+        {
+          "powerSource": "Third Rail",
+          "currentCollector": "Contact Shoe",
+          "supplyType": {
+            "current": "DC",
+            "voltage": "750 V"
+          },
+          "maximumSpeed": 100
+        }
+      ],
+      "brakingSystem": "Electro-pneumatic",
+      "maximumSpeed": 140,
+      "speedUnits": "mph"
+    },
+    {
+      "rollingStockClass": "Class 465",
+      "manufacturerName": [
+        "British Rail Engineering Limited / ABB Transportation",
+        "Metro-Cammell"
+      ],
+      "rollingStockFamily": "Networker",
+      "rollingStockCategory": "Multiple Unit Car",
+      "typeDescription": "Electric Multiple Unit (EMU)",
+      "powerType": "Electric",
+      "electrificationRequirements": [
+        {
+          "powerSource": "Third Rail",
+          "currentCollector": "Contact Shoe",
+          "supplyType": {
+            "current": "DC",
+            "voltage": "750 V"
+          }
+        }
+      ],
+      "brakingSystem": [
+        "Electro-pneumatic",
+        "Rheostatic / Regenerative"
+      ],
+      "maximumSpeed": 75,
+      "speedUnits": "mph"
+    }
+  ]
+}

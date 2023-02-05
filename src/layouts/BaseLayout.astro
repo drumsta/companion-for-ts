@@ -1,4 +1,5 @@
 ---
+import AmpImports from "@components/AmpImports.astro";
 import AmpServiceWorker from "@components/AmpServiceWorker.astro";
 import AmpStyle from "@components/AmpStyle.astro";
 import Footer from "@components/Footer.astro";
@@ -16,10 +17,14 @@ export interface Props {
   noindex?: boolean | undefined;
   nofollow?: boolean | undefined;
   jsonLd?: Graph | WithContext<Thing> | undefined;
+  includeAmpAutocomplete?: boolean | undefined;
+  includeAmpForm?: boolean | undefined;
+  includeAmpMustache?: boolean | undefined;
+  includeAmpScript?: boolean | undefined;
+  includeAmpSidebar?: boolean | undefined;
 }
 
-const { title, description, pageStyle, noindex, nofollow, jsonLd }: Props =
-  Astro.props;
+const { jsonLd }: Props = Astro.props;
 const { pathname } = Astro.url;
 const lang: string = detectLocaleFromPath(pathname);
 const direction: "ltr" | "rtl" = rtlLanguages.has(lang) ? "rtl" : "ltr";
@@ -31,18 +36,24 @@ const customStyle = `
 .language-selector-link-active,.language-selector-link:focus,.language-selector-link:hover {background-color: var(--color-primary);text-decoration-line: underline;}
 
 /* Custom Page Style */
-${pageStyle ?? ""}`;
+${Astro.props.pageStyle ?? ""}`;
 ---
 
 <!DOCTYPE html>
 <html amp dir={direction} lang={bcpLang}>
   <head>
     <HeadCommon
-      title={title}
-      description={description}
-      noindex={noindex}
-      nofollow={nofollow}
+      title={Astro.props.title}
+      description={Astro.props.description}
+      noindex={Astro.props.noindex}
+      nofollow={Astro.props.nofollow}
     />
+    <AmpImports
+      includeAmpAutocomplete={Astro.props.includeAmpAutocomplete}
+      includeAmpForm={Astro.props.includeAmpForm}
+      includeAmpMustache={Astro.props.includeAmpMustache}
+      includeAmpScript={Astro.props.includeAmpScript}
+      includeAmpSidebar={Astro.props.includeAmpSidebar} />
     {typeof jsonLd === "undefined" ? null : <Schema item={jsonLd} />}
     <AmpStyle customStyle={customStyle} />
   </head>
@@ -52,7 +63,6 @@ ${pageStyle ?? ""}`;
     <Header />
     <!-- Page Content -->
     <slot />
-    <div style="height: 1rem;"></div>
     <Footer />
   </body>
 </html>

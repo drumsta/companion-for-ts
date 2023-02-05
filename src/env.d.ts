@@ -3,8 +3,12 @@
 /// <reference types="astro/client" />
 
 declare namespace astroHTML.JSX {
+  interface ButtonHTMLAttributes {
+    "on"?: string;
+  }
+
   interface HtmlHTMLAttributes {
-    amp: boolean;
+    "amp": boolean;
   }
 
   interface StyleHTMLAttributes {
