@@ -8,7 +8,11 @@
     "footer": {
       "navigation-target": "Site",
       "drive": "Drive",
-      "about": "About"
+      "more-menu": "More",
+      "more-menu-items": {
+        "about": "About Us",
+        "privacy-policy": "Privacy Policy"
+      }
     },
     "language-selector": {
       "language-menu": "Language Options"
@@ -38,7 +42,22 @@
       "1": "The requested URL was not found on this server."
     },
     "about": {
-      "title": "About"
+      "title": "About Companion for Train Simulator",
+      "description": "Curious about Companion for Train Simulator? Learn more about our philosophy, people, and technology.",
+      "header": "About us",
+      "1-header": "Our philosophy",
+      "1": "We believe that driving a train should be a fascinating experience. At the same time it is a very responsible task and you should avoid any unnecessary risks. Companion for Train Simulator strives to be your little cab budy, silently sitting beside and giving a helping hand when you need it."
+    },
+    "privacy-policy": {
+      "title": "Privacy Policy",
+      "description": "Please ready our policy to understand our approach how we collect and use any personal information.",
+      "header": "Privacy Policy",
+      "1-header": "Your privacy",
+      "1": "We believe that your privacy is important. We don't ask any personal details. However, to ensure a better service, we do store some your personal settings to the browser's local storage, e.g. selected max speed or speed units. All stored data is kept locally in your browser only and never are transferred to any third parties.",
+      "2-header": "The use of cookies",
+      "2": "We consciously refrain from using tracking, marketing, or any other commercial cookies. Simply put: your visit to this website is completely anonymous.",
+      "3-header": "Monitoring and analytics",
+      "3": "Currently we don't use any monitoring or analytics service to get visibility of how many visits we get. If we will start using one, it will be a privacy-focused analytics tool that stores no cookies and is GDPR, CCPA and PECR compliant."
     },
     "colors": {
       "title": "Color palette",

@@ -1,0 +1,28 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { changeLanguage, t } from "i18next";
+
+changeLanguage("en");
+
+const title: string = t("pages.privacy-policy.title");
+const description: string = t("pages.privacy-policy.description");
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  noindex={true}
+  nofollow={true}
+>
+  <header class="flex flex-col justify-center items-center">
+    <h1>{t("pages.privacy-policy.header")}</h1>
+  </header>
+  <main>
+    <h2>{t("pages.privacy-policy.1-header")}</h2>
+    <p>{t("pages.privacy-policy.1")}</p>
+    <h2>{t("pages.privacy-policy.2-header")}</h2>
+    <p>{t("pages.privacy-policy.2")}</p>
+    <h2>{t("pages.privacy-policy.3-header")}</h2>
+    <p>{t("pages.privacy-policy.3")}</p>
+  </main>
+</BaseLayout>

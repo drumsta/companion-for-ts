@@ -8,7 +8,11 @@
     "footer": {
       "navigation-target": "Svetainės navigacija",
       "drive": "Vairuok",
-      "about": "Apie"
+      "more-menu": "Daugiau",
+      "more-menu-items": {
+        "about": "Apie mus",
+        "privacy-policy": "Privatumo politika"
+      }
     },
     "language-selector": {
       "language-menu": "Kalbos parinktys"
@@ -38,7 +42,22 @@
       "1": "Šio puslapio nepavyko rasti."
     },
     "about": {
-      "title": "Apie"
+      "title": "Apie Pagalbininką Traukinio Simuliatoriui",
+      "description": "Smalsaujatės apie Pagalbininką Traukinio Simuliatoriui? Sužinokite daugiau apie mūsų filosofiją, žmones, bei technologiją.",
+      "header": "Apie mus",
+      "1-header": "Mūsų požiūris",
+      "1": "Mes tikime, kad traukinio vairavimas turi būti įspūdingas dalykas. Tuo pat metu, tai labai atsakinga ir reikėtų vengti jokių bereikalingų rizikų. Pagalbininkas Traukinio Simuliatoriui siekia tapti jūsų kasdieniu palydovu."
+    },
+    "privacy-policy": {
+      "title": "Privatumo politika",
+      "description": "Privatumo politikoje mes trumpai išdėstome esminius principus kaip ir kokiu būdu renkame bei apdorojame informaciją susijusią su jumis.",
+      "header": "Privatumo politika",
+      "1-header": "Jūsų privatumas",
+      "1": "Mes tikime, kad privatumas yra esminė vertybė. Mes neprašome jokių privačių jūsų duomenų. Tačiau, paslaugų užtikrinimui, mes išsaugome keletą jūsų pasirinkimų vietinėje naršyklės saugykloje, pvz. pasirinktą maksimalų greitį ar greičio vienetus. Visi duomenys yra saugomi tik naršyklės saugykloje ir neperduodami jokiai trečiai šaliai.",
+      "2-header": "Slapukų naudojimas",
+      "2": "Mes sąmoningai vengiame naudoti bet kokius slapukus sekimo, marketingo ar komerciniais tikslais. Paprastai sakant - jūsų naršymas yra visiškai anonimiškas.",
+      "3-header": "Stebėjimas ir analitika",
+      "3": "Šiuo metu mes nestebime ir neanalizuojame jūsų naudojimosi mūsų svetaine. Jeigu mes pradėsime rinkti šią informaciją, tai bus pilnai saugu ir privatu, nenaudos jokių slapukų ir atitiks GDPR, CCPA bei PECR reikalavimus."
     },
     "colors": {
       "title": "Spalvų paletė",

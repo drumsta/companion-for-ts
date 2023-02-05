@@ -4,18 +4,21 @@ import { changeLanguage, t } from "i18next";
 
 changeLanguage("lt");
 
-const title: string = t("lorem-ipsum.header");
-const description: string = t("lorem-ipsum.description");
+const title: string = t("pages.about.title");
+const description: string = t("pages.about.description");
 ---
 
-<BaseLayout title={title} description={description} noindex={true} nofollow={true}>
+<BaseLayout
+  title={title}
+  description={description}
+  noindex={true}
+  nofollow={true}
+>
   <header class="flex flex-col justify-center items-center">
-    <h1>{t("lorem-ipsum.header")}</h1>
-    <h2>{t("lorem-ipsum.description")}</h2>
+    <h1>{t("pages.about.header")}</h1>
   </header>
   <main>
-    <div>{t("lorem-ipsum.1")}</div>
-    <div>{t("lorem-ipsum.2")}</div>
-    <div>{t("lorem-ipsum.3")}</div>
+    <h2>{t("pages.about.1-header")}</h2>
+    <p>{t("pages.about.1")}</p>
   </main>
 </BaseLayout>
