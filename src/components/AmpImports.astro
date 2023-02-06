@@ -1,6 +1,7 @@
 ---
 export interface Props {
   includeAmpAutocomplete?: boolean | undefined;
+  includeAmpBind?: boolean | undefined;
   includeAmpForm?: boolean | undefined;
   includeAmpMustache?: boolean | undefined;
   includeAmpScript?: boolean | undefined;
@@ -9,6 +10,7 @@ export interface Props {
 
 const {
   includeAmpAutocomplete,
+  includeAmpBind,
   includeAmpForm,
   includeAmpMustache,
   includeAmpScript,
@@ -18,6 +20,7 @@ const {
 <script async custom-element="amp-install-serviceworker" crossorigin="anonymous" src="https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js"></script>
 <script async custom-element="amp-mega-menu" crossorigin="anonymous" src="https://cdn.ampproject.org/v0/amp-mega-menu-0.1.js"></script>
 {typeof includeAmpAutocomplete === "undefined" || !includeAmpAutocomplete ? null : <script async custom-element="amp-autocomplete" crossorigin="anonymous" src="https://cdn.ampproject.org/v0/amp-autocomplete-0.1.js"></script>}
+{typeof includeAmpBind === "undefined" || !includeAmpBind ? null : <script async custom-element="amp-bind" crossorigin="anonymous" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>}
 {typeof includeAmpForm === "undefined" || !includeAmpForm ? null : <script async custom-element="amp-form" crossorigin="anonymous" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>}
 {typeof includeAmpMustache === "undefined" || !includeAmpMustache ? null : <script async custom-template="amp-mustache" crossorigin="anonymous" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>}
 {typeof includeAmpScript === "undefined" || !includeAmpScript ? null : <script async custom-element="amp-script" crossorigin="anonymous" src="https://cdn.ampproject.org/v0/amp-script-0.1.js"></script>}

@@ -18,34 +18,34 @@ const defaultRadioButtonClass =
   "p-radio-button justify-center items-center select-none border-color border-1 rounded-md cursor-pointer";
 const uncheckedRadioButtonClass = "bg-color-subtle text-color";
 const checkedRadioButtonClass = "bg-color-primary-dark text-color-light";
-const xxx = "{{ rollingStockClass }}";
 ---
-<main class="flex flex-col justify-center items-center">
-  <!-- Train Selection -->
-  <button
-    type="button"
-    on="tap:sidebar-right-top.open"
-    class="absolute border-color border-1"
-    style="z-index: 100;top: 12.5rem; right: 0; padding: 0rem;border-bottom-right-radius: 0px;border-top-right-radius: 0px;"
-    tabindex="0"
-    aria-label={t("components.speed-limit.side-selection")}
-  >
-    <PSvg name="settings" svgStyle="height: 2.5rem;" />
-  </button>
+<!-- Add data-ampdevmode during development -->
+<amp-script
+  id="speed-limit-amp-script"
+  layout="flex-item"
+  script="speed-limit-script"
+>
+  <main class="flex flex-col justify-center items-center">
+    <!-- Train Selection -->
+    <button
+      type="button"
+      on="tap:sidebar-right-top.open"
+      class="absolute border-color border-1"
+      style="z-index: 100;top: 12.5rem; right: 0; padding: 0rem;border-bottom-right-radius: 0px;border-top-right-radius: 0px;"
+      tabindex="0"
+      aria-label={t("components.speed-limit.side-selection")}
+    >
+      <PSvg name="settings" svgStyle="height: 2.5rem;" />
+    </button>
 
-  <!-- Speed Limit Component-->
-  <amp-script
-    id="speed-limit-amp-script"
-    layout="flex-item"
-    script="speed-limit-script"
-  >
+    <!-- Speed Limit Component -->
     <!-- Component Main Section -->
     <div
       id="speed-limit-section"
       title={t("components.speed-limit.title")}
       class="flex flex-col justify-center items-center"
     >
-      <!-- Max Speed Info & Speed Units Selector -->
+    <!-- Max Speed Info & Speed Units Selector -->
       <div class="flex flex-row items-center">
         <!-- Max Speed Info -->
         <span id="ms-info">
@@ -214,18 +214,31 @@ const xxx = "{{ rollingStockClass }}";
           style="width: 3.125rem;margin-right: 0.5rem;">+25</button>
       </div>
     </div>
-  </amp-script>
-</main>
-<amp-sidebar id="sidebar-right-top" layout="nodisplay" side="right">
-  <amp-autocomplete filter="substring" filter-value="rollingStockClass" min-characters="0" prefetch src="/json/rolling-stock-class.json">
-    <input type="search" class="text-color bg-color-subtle">
-    <template type="amp-mustache" id="amp-template-rolling-stock">
-      <div class="text-color bg-color-subtle" data-value="{{rollingStockClass}}">
-          <div class="autocomplete-item" set:html={xxx}></div>
-      </div>
-    </template>
-  </amp-autocomplete>
-</amp-sidebar>
+  </main>
+
+  <amp-sidebar id="sidebar-right-top" layout="nodisplay" side="right">
+    <amp-autocomplete
+      id="amp-autocomplete-rs-search"
+      filter="fuzzy"
+      filter-value="rollingStockClass"
+      min-characters="0"
+      prefetch src="/json/rolling-stock-class.json"
+      on="select:AMP.setState({rollingStock: event.valueAsObject})"
+    >
+      <input
+        type="search"
+        id="rs-search"
+        class="text-color bg-color-subtle border-1"
+        style="padding: 0.5rem;"
+      >
+      <template type="amp-mustache" is:raw>
+        <div class="text-color bg-color-subtle" data-value="{{rollingStockClass}}" data-json="{{objToJson}}">
+          <div>{{ rollingStockClass }}</div>
+        </div>
+      </template>
+    </amp-autocomplete>
+  </amp-sidebar>
+</amp-script>
 <script
   id="speed-limit-script"
   type="text/plain"

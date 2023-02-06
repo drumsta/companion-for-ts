@@ -9,11 +9,18 @@ const title: string = t("pages.index.title");
 const description: string = t("pages.index.description");
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout
+  title={title}
+  description={description}
+  includeAmpAutocomplete={true}
+  includeAmpBind={true}
+  includeAmpForm={true}
+  includeAmpMustache={true}
+  includeAmpScript={true}
+  includeAmpSidebar={true}
+>
   <header class="flex flex-col justify-center items-center">
     <h1>{t("pages.index.header")}</h1>
   </header>
-  <main class="flex flex-col justify-center items-center">
-    <SpeedLimitSelector />
-  </main>
+  <SpeedLimitSelector />
 </BaseLayout>
