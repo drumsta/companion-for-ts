@@ -27,11 +27,11 @@
       { "resourceType": "font", "budget": 1 },
       { "resourceType": "image", "budget": 1 },
       { "resourceType": "media", "budget": 1 },
-      { "resourceType": "other", "budget": 1 },
+      { "resourceType": "other", "budget": 2 },
       { "resourceType": "script", "budget": 10 },
       { "resourceType": "stylesheet", "budget": 1 },
-      { "resourceType": "third-party", "budget": 10 },
-      { "resourceType": "total", "budget": 10 }
+      { "resourceType": "third-party", "budget": 15 },
+      { "resourceType": "total", "budget": 15 }
     ]
   }
 ]
