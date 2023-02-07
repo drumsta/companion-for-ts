@@ -21,6 +21,7 @@ const checkedRadioButtonClass = "bg-color-primary-dark text-color-light";
 ---
 <!-- Add data-ampdevmode during development -->
 <amp-script
+  data-ampdevmode
   id="speed-limit-amp-script"
   layout="flex-item"
   script="speed-limit-script"
@@ -29,9 +30,10 @@ const checkedRadioButtonClass = "bg-color-primary-dark text-color-light";
     <!-- Train Selection -->
     <button
       type="button"
+      id="sidebar-right-top-button"
       on="tap:sidebar-right-top.open"
       class="absolute border-color border-1"
-      style="z-index: 100;top: 12.5rem; right: 0; padding: 0rem;border-bottom-right-radius: 0px;border-top-right-radius: 0px;"
+      style="z-index: 100;top: 8rem; right: 0; padding: 0rem;border-bottom-right-radius: 0px;border-top-right-radius: 0px;"
       tabindex="0"
       aria-label={t("components.speed-limit.side-selection")}
     >
@@ -39,7 +41,6 @@ const checkedRadioButtonClass = "bg-color-primary-dark text-color-light";
     </button>
 
     <!-- Speed Limit Component -->
-    <!-- Component Main Section -->
     <div
       id="speed-limit-section"
       title={t("components.speed-limit.title")}
@@ -223,7 +224,6 @@ const checkedRadioButtonClass = "bg-color-primary-dark text-color-light";
       filter-value="rollingStockClass"
       min-characters="0"
       prefetch src="/json/rolling-stock-class.json"
-      on="select:AMP.setState({rollingStock: event.valueAsObject})"
     >
       <input
         type="search"
