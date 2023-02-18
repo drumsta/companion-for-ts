@@ -69,7 +69,6 @@ const radioItem: string = await Astro.slots.render("radio-item");
   const updateValue = function updateValue(radioGroupElement: Element, newKey: string): void {
     const key = radioGroupElement.getAttribute("data-p-radio-group");
     if (newKey === key) return;
-    console.log("updateValue");
 
     radioGroupElement.setAttribute("data-p-radio-group", newKey);
   };

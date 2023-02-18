@@ -3,35 +3,35 @@
     "path": "/*",
     "timings": [
       { "metric": "cumulative-layout-shift", "budget": 1 },
-      { "metric": "first-contentful-paint", "budget": 1250 },
-      { "metric": "first-meaningful-paint", "budget": 1750 },
-      { "metric": "interactive", "budget": 2500 },
-      { "metric": "largest-contentful-paint", "budget": 2750 },
-      { "metric": "max-potential-fid", "budget": 250 },
-      { "metric": "speed-index", "budget": 2000 },
-      { "metric": "total-blocking-time", "budget": 500 }
+      { "metric": "first-contentful-paint", "budget": 1000 },
+      { "metric": "first-meaningful-paint", "budget": 1000 },
+      { "metric": "interactive", "budget": 1000 },
+      { "metric": "largest-contentful-paint", "budget": 1000 },
+      { "metric": "max-potential-fid", "budget": 50 },
+      { "metric": "speed-index", "budget": 1000 },
+      { "metric": "total-blocking-time", "budget": 50 }
     ],
     "resourceSizes": [
       { "resourceType": "document", "budget": 10000 },
       { "resourceType": "font", "budget": 1 },
       { "resourceType": "image", "budget": 1 },
       { "resourceType": "media", "budget": 1 },
-      { "resourceType": "other", "budget": 20000 },
-      { "resourceType": "script", "budget": 110000 },
-      { "resourceType": "stylesheet", "budget": 5000 },
-      { "resourceType": "third-party", "budget": 150000 },
-      { "resourceType": "total", "budget": 150000 }
+      { "resourceType": "other", "budget": 10000 },
+      { "resourceType": "script", "budget": 30000 },
+      { "resourceType": "stylesheet", "budget": 15000 },
+      { "resourceType": "third-party", "budget": 1 },
+      { "resourceType": "total", "budget": 100000 }
     ],
     "resourceCounts": [
       { "resourceType": "document", "budget": 1 },
       { "resourceType": "font", "budget": 1 },
       { "resourceType": "image", "budget": 1 },
       { "resourceType": "media", "budget": 1 },
-      { "resourceType": "other", "budget": 2 },
-      { "resourceType": "script", "budget": 10 },
+      { "resourceType": "other", "budget": 1 },
+      { "resourceType": "script", "budget": 5 },
       { "resourceType": "stylesheet", "budget": 1 },
-      { "resourceType": "third-party", "budget": 15 },
-      { "resourceType": "total", "budget": 15 }
+      { "resourceType": "third-party", "budget": 1 },
+      { "resourceType": "total", "budget": 5 }
     ]
   }
 ]
