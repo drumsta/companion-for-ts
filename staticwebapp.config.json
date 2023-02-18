@@ -5,7 +5,7 @@
   },
   "globalHeaders": {
     "access-control-allow-origin": "*",
-    "content-security-policy": "default-src 'none'; connect-src 'self'; image-src 'self'; manifest-src 'self'; script-src 'self'; style-src 'unsafe-inline' 'self';",
+    "content-security-policy": "default-src 'none'; connect-src 'self'; img-src 'self'; manifest-src 'self'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self';",
     "permissions-policy": "accelerometer=(), autoplay=(), camera=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), serial=(), sync-xhr=(), usb=()",
     "referrer-policy": "strict-origin-when-cross-origin",
     "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
