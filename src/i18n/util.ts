@@ -1,10 +1,3 @@
-import type enUI from "@i18n/en/ui";
-import type languages from "@i18n/languages";
-
-export type UIDictionaryKeys = keyof typeof enUI;
-export type UIDict = Partial<typeof enUI>;
-export type UILanguageKeys = keyof typeof languages;
-
 /**
  * Set of right-to-left language codes.
  * https://en.wikipedia.org/wiki/Script_(Unicode)

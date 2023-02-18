@@ -1,0 +1,77 @@
+---
+import PAutocomplete from "@components/generic/PAutocomplete.astro";
+import PSidebar from "@components/generic/PSidebar.astro";
+import PSvg from "@components/generic/PSvg.astro";
+import { t } from "i18next";
+---
+
+<!-- Train Selection -->
+<button
+  type="button"
+  id="train-helper-button"
+  class="absolute border-color-border border z-50 top-48 right-0 p-0 rounded-r-none"
+  tabindex="0"
+  aria-label={t("components.train-helper.train-helper")}
+>
+  <PSvg name="settings" svgClass="h-12" />
+</button>
+<PSidebar id="train-helper-sidebar" side="right" className="bg-color-bg border-color-border">
+  <div class="flex flex-col">
+    <PAutocomplete
+      id="rolling-stock-class-search"
+      src="/json/rolling-stock-class.json"
+      filterValue="rollingStockClass"
+      className="text-color-text bg-color-bg-subtle"
+    >
+      <template slot="results-item-template" is:raw>
+        <div class="hover:bg-color-bg-accent hover:underline" data-rolling-stock-class="{{ rollingStockClass }}"> {{
+        rollingStockClass }} </div>
+      </template>
+    </PAutocomplete>
+  </div>
+</PSidebar>
+
+<script>
+  import { speedLimitStore } from "@src/stores/speedLimitStore";
+
+  const trainHelperButton = document.getElementById("train-helper-button") as HTMLElement;
+  const trainHelperSidebar = document.getElementById("train-helper-sidebar") as HTMLElement;
+  const rollingStockSearch = document.getElementById("rolling-stock-class-search") as HTMLInputElement;
+
+  // Elements Update
+
+  // View Update
+  const initView = function initView(): void {
+    rollingStockSearch.setAttribute("value", speedLimitStore.value.rollingStock ?? "");
+  };
+
+  const updateSidebarView = function updateSidebarView(): void {
+    trainHelperSidebar.toggleAttribute("open");
+  };
+
+  // State Update
+  const setRollingStockState = function setRollingStockState(value: string): void {
+    speedLimitStore.setKey("rollingStock", value);
+  };
+
+  // Events
+  const onClickTrainHelperButton = function onClickTrainHelperButton(event: Event): void {
+    if (!event.currentTarget) return;
+
+    updateSidebarView();
+  };
+
+  const onChangeRollingStockSearch = function onChangeRollingStockSearch(event: Event): void {
+    if (!event.currentTarget) return;
+
+    const value = rollingStockSearch.value;
+
+    setRollingStockState(value);
+  };
+
+  // Init
+  initView();
+
+  trainHelperButton.addEventListener("click", onClickTrainHelperButton, { passive: true });
+  rollingStockSearch.addEventListener("change", onChangeRollingStockSearch, { passive: true });
+</script>

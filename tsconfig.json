@@ -1,15 +1,19 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "exclude": ["./dist"],
+  "exclude": ["./dist", "./node_modules"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "@src/*": ["src/*"],
+      "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
       "@i18n/*": ["src/i18n/*"],
-      "@layouts/*": ["src/layouts/*"]
+      "@layouts/*": ["src/layouts/*"],
+      "@pages/*": ["src/pages/*"]
     },
-    "types": ["node", "astro/client"],
+    "types": ["astro/client"],
+    "allowJs": true,
+    "checkJs": true,
 
     // https://github.com/withastro/astro/blob/main/packages/astro/tsconfigs/base.json
     "esModuleInterop": true,

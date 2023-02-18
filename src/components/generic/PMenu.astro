@@ -1,0 +1,97 @@
+---
+import { DOMParser, XMLSerializer } from "@xmldom/xmldom";
+
+const xmlns = 'xmlns="http://www.w3.org/1999/xhtml"';
+const id = (Math.random() + 1).toString(36).substring(2);
+
+const menuHeading = await Astro.slots.render("menu-heading");
+const button = new DOMParser().parseFromString(menuHeading, "text/html").documentElement;
+if (!button || (button.tagName !== "button" && button.getAttribute("role") !== "button"))
+  throw new Error("Menu heading is not a Button!");
+
+const menuContent = await Astro.slots.render("menu-content");
+const div = new DOMParser().parseFromString(menuContent, "text/html").documentElement;
+if (!div || div.tagName !== "div" || div.getAttribute("role") !== "dialog")
+  throw new Error("Menu content is not a Div tag or role is not a Dialog!");
+
+let className = "cursor-pointer";
+button.setAttribute("class", `${className} ${button.getAttribute("class") ?? ""}`);
+button.setAttribute("aria-controls", id);
+button.setAttribute("aria-haspopup", "dialog");
+button.setAttribute("aria-expanded", `${false}`);
+const menuHeadingHtml: string = new XMLSerializer().serializeToString(button).replace(xmlns, "");
+
+className = "p-1 m-1 border rounded-md !absolute !opacity-0 !invisible open:!opacity-100 open:!visible";
+div.setAttribute("class", `${className} ${div.getAttribute("class") ?? ""}`);
+div.setAttribute("id", id);
+div.setAttribute("aria-modal", `${false}`);
+div.removeAttribute("open");
+const menuContentHtml: string = new XMLSerializer().serializeToString(div).replace(xmlns, "");
+---
+
+<span class="relative !z-50 !whitespace-nowrap" data-p-menu>
+  <Fragment set:html={menuHeadingHtml} />
+  <Fragment set:html={menuContentHtml} />
+  <div
+    class="bg-black/50 !opacity-0 !inset-0 !-z-10 !fixed !invisible transition-[visibility] open:!opacity-100 open:!visible open:transition-opacity"
+    aria-hidden="true"
+  >
+  </div>
+</span>
+
+<script>
+  let expandedMenuHeading: Element | null = null;
+  let expandedMenuContent: Element | null = null;
+
+  // Elements Update
+  const toggleMenuState = function toggleMenuState(button: Element | null): void {
+    if (!button) return;
+
+    const menuContent = button.nextElementSibling;
+    if (!menuContent) return;
+
+    const divMask = menuContent.nextElementSibling;
+    if (!divMask) return;
+
+    const newState = !((button.getAttribute("aria-expanded") ?? "false") === "true");
+
+    button.setAttribute("aria-expanded", `${newState}`);
+    menuContent.setAttribute("aria-modal", `${newState}`);
+    menuContent.toggleAttribute("open", newState);
+    divMask.toggleAttribute("open", newState);
+
+    newState
+      ? setTimeout(function (): void {
+          document.addEventListener("mousedown", onClickMenuDocument, { passive: true });
+        }, 100)
+      : document.removeEventListener("mousedown", onClickMenuDocument);
+    expandedMenuHeading = newState ? button : null;
+    expandedMenuContent = newState ? menuContent : null;
+  };
+
+  // Events
+  const onClickMenuDocument = function onClickMenuDocument(event: Event): void {
+    if (!event.currentTarget || !expandedMenuContent) return;
+
+    const element = event.target as Element;
+    if (expandedMenuContent.contains(element)) return;
+    toggleMenuState(expandedMenuHeading);
+  };
+
+  const onMenuButtonClick = function onMenuButtonClick(event: Event): void {
+    if (!event.currentTarget) return;
+
+    const button = event.currentTarget as Element;
+    if (expandedMenuHeading && expandedMenuHeading !== button) toggleMenuState(expandedMenuHeading);
+    else toggleMenuState(button);
+  };
+
+  // Init
+  const menuList: NodeListOf<Element> = document.querySelectorAll("[data-p-menu]");
+  menuList.forEach((menuItem): void => {
+    const button = menuItem.firstElementChild;
+    if (!button) return;
+
+    button.addEventListener("click", onMenuButtonClick, { passive: true });
+  });
+</script>

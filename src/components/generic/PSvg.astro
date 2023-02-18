@@ -1,0 +1,19 @@
+---
+export interface Props {
+  name: string;
+  svgClass?: string | undefined;
+}
+
+const { name, svgClass }: Props = Astro.props;
+let icon: string = "";
+
+const iconsImport = import.meta.glob("/src/assets/svg/**/**.svg", { as: "raw", eager: false });
+const iconFile: (() => Promise<string>) | undefined = iconsImport[`/src/assets/svg/${name}.svg`];
+
+if (typeof iconFile !== "undefined") {
+  icon = await iconFile();
+  icon = icon.replace("<svg ", `<svg class="${svgClass ?? ""}" `);
+}
+---
+
+<span set:html={icon} />

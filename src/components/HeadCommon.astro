@@ -1,9 +1,7 @@
 ---
-import AmpBoilerplate from "@components/AmpBoilerplate.astro";
-import AmpScriptHashes from "@components/AmpScriptHashes.astro";
-import i18next, { t } from "i18next";
-import { localizeUrl, AstroI18next } from "astro-i18next";
 import { addTrailingSlash } from "@i18n/util";
+import { AstroI18next, localizeUrl } from "astro-i18next";
+import i18next, { t } from "i18next";
 
 export interface Props {
   title?: string | undefined;
@@ -19,6 +17,7 @@ const ogImageUrl = new URL("/og-image.png", Astro.site);
 const twitterImageUrl = new URL("/twitter-image.png", Astro.site);
 const { languages, language } = i18next;
 const { defaultLocale } = AstroI18next.config;
+
 /*
  * https://ogp.me/
  * https://developers.facebook.com/tools/debug/
@@ -26,71 +25,84 @@ const { defaultLocale } = AstroI18next.config;
  * https://cards-dev.twitter.com/validator
  */
 ---
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<link rel="preconnect" href="https://cdn.ampproject.org">
-<link rel="dns-prefetch" href="https://cdn.ampproject.org">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 
-<meta name="robots" content={`${noindex ? "noindex" : "index"}, ${nofollow ? "nofollow" : "follow"}`} >
-<link rel="sitemap" type="application/xml" href="/sitemap-index.xml">
+<link rel="preconnect" href="https://www.companionforts.com" />
+<link rel="dns-prefetch" href="https://www.companionforts.com" />
+
+<meta name="robots" content={`${noindex ? "noindex" : "index"}, ${nofollow ? "nofollow" : "follow"}`} />
+<link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
 
 <title>{typeof title === "undefined" ? t("app.title") : title}</title>
-<meta name="description" content={typeof description === "undefined" ? t("app.description") : description}>
-<meta name="application-name" content={t("app.title")}>
-<meta name="keywords" content="train simulator,trainsim,ts classic,tsw3,railworks,dovetails">
+<meta name="description" content={typeof description === "undefined" ? t("app.description") : description} />
+<meta name="application-name" content={t("app.title")} />
+<meta name="keywords" content="train simulator,trainsim,ts classic,tsw3,railworks,dovetails" />
 
-<meta property="og:title" content={typeof title === "undefined" ? t("app.title") : title}>
-<meta property="og:type" content="website">
-<meta property="og:description" content={typeof description === "undefined" ? t("app.description") : description}>
-<meta property="og:url" content={canonicalUrl}>
-<meta property="og:image" content={ogImageUrl}>
-<meta property="og:image:alt" content={typeof description === "undefined" ? t("app.description") : description}>
-<meta property="og:site_name" content={t("app.title")}>
-<meta property="og:locale" content={language}>
-{languages.map((languageItem) => <meta property="og:locale:alternate" content={languageItem} />)}
+<meta property="og:title" content={typeof title === "undefined" ? t("app.title") : title} />
+<meta property="og:type" content="website" />
+<meta property="og:description" content={typeof description === "undefined" ? t("app.description") : description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:image:alt" content={typeof description === "undefined" ? t("app.description") : description} />
+<meta property="og:site_name" content={t("app.title")} />
+<meta property="og:locale" content={language} />
+{
+  languages.map((languageItem: string): any => (
+    <Fragment>
+      <meta property="og:locale:alternate" content={languageItem} />
+    </Fragment>
+  ))
+}
 
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content={typeof title === "undefined" ? t("app.title") : title}>
-<meta name="twitter:description" content={typeof description === "undefined" ? t("app.description") : description}>
-<meta property="twitter:image" content={twitterImageUrl}>
-<meta property="twitter:image:alt" content={typeof description === "undefined" ? t("app.description") : description}>
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={typeof title === "undefined" ? t("app.title") : title} />
+<meta name="twitter:description" content={typeof description === "undefined" ? t("app.description") : description} />
+<meta property="twitter:image" content={twitterImageUrl} />
+<meta property="twitter:image:alt" content={typeof description === "undefined" ? t("app.description") : description} />
 
-<meta name="theme-color" media="(prefers-color-scheme: light)" content="#3ED0F9">
-<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#3ED0F9">
-<meta name="msapplication-TileColor" content="#1A1A1A">
-<meta name="msapplication-TileImage" content="/favicon-144x144.png">
-<meta name="msapplication-config" content="/browserconfig.xml">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#3ED0F9" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#3ED0F9" />
+<meta name="msapplication-TileColor" content="#1A1A1A" />
+<meta name="msapplication-TileImage" content="/favicon-144x144.png" />
+<meta name="msapplication-config" content="/browserconfig.xml" />
 
-<AmpScriptHashes />
-<AmpBoilerplate />
+<link rel="canonical" href={canonicalUrl} />
+<link rel="alternate" hreflang="x-default" href={addTrailingSlash(localizeUrl(canonicalUrl.href, defaultLocale))} />
+{
+  languages.map((languageItem: string) => (
+    <Fragment>
+      <link
+        rel="alternate"
+        hreflang={languageItem}
+        href={addTrailingSlash(localizeUrl(canonicalUrl.href, languageItem))}
+      />
+    </Fragment>
+  ))
+}
 
-<link rel="canonical" href={canonicalUrl}>
-<link rel="amphtml" href={canonicalUrl}>
-<link rel="alternate" hreflang="x-default" href={addTrailingSlash(localizeUrl(canonicalUrl.href, defaultLocale))}>
-{languages.map((languageItem) => <link rel="alternate" hreflang={languageItem} href={addTrailingSlash(localizeUrl(canonicalUrl.href, languageItem))} />)}
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+<link rel="alternate icon" type="image/png" href="/favicon.png" />
+<link rel="shortcut icon" type="image/png" href="/favicon-128x128.png" />
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
-<link rel="alternate icon" type="image/png" href="/favicon.png">
-<link rel="shortcut icon" type="image/png" href="/favicon-128x128.png">
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="apple-touch-icon" sizes="57x57" href="/favicon-57x57.png" />
+<link rel="apple-touch-icon" sizes="60x60" href="/favicon-60x60.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/favicon-72x72.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="/favicon-76x76.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/favicon-114x114.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="/favicon-120x120.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/favicon-144x144.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="/favicon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png" />
+<link rel="apple-touch-icon" sizes="192x192" href="/favicon-192x192.png" />
 
-<link rel="manifest" href="/site.webmanifest">
-<link rel="apple-touch-icon" sizes="57x57" href="/favicon-57x57.png">
-<link rel="apple-touch-icon" sizes="60x60" href="/favicon-60x60.png">
-<link rel="apple-touch-icon" sizes="72x72" href="/favicon-72x72.png">
-<link rel="apple-touch-icon" sizes="76x76" href="/favicon-76x76.png">
-<link rel="apple-touch-icon" sizes="114x114" href="/favicon-114x114.png">
-<link rel="apple-touch-icon" sizes="120x120" href="/favicon-120x120.png">
-<link rel="apple-touch-icon" sizes="144x144" href="/favicon-144x144.png">
-<link rel="apple-touch-icon" sizes="152x152" href="/favicon-152x152.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png">
-<link rel="apple-touch-icon" sizes="192x192" href="/favicon-192x192.png">
+<link rel="author" type="text/plain" href="/humans.txt" />
+<link rel="me" type="text/html" href="https://github.com/drumsta/companion-for-ts" />
 
-<link rel="author" type="text/plain" href="/humans.txt">
-<link rel="me" type="text/html" href="https://github.com/drumsta/companion-for-ts">
-
-<meta property="fb:app_id" content="717330293272817">
+<script src="@src/runtime.ts"></script>

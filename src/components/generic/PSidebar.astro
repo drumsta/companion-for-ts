@@ -1,0 +1,85 @@
+---
+export interface Props {
+  id: string;
+  side: "left" | "right";
+  className?: string | undefined;
+}
+
+const { id, side, className }: Props = Astro.props;
+---
+
+<div
+  id={id}
+  class={"hidden border !fixed top-0 !max-h-screen h-screen max-w-[80vw] !min-w-[10vw] z-[1000]" +
+    " !opacity-0 !invisible open:!flex open:!opacity-100 open:!visible" +
+    (side === "left" ? " !left-0 rounded-r-md" : " !right-0  rounded-l-md") +
+    " " +
+    className}
+  data-p-sidebar
+>
+  <slot />
+</div>
+<div
+  id={`${id}-mask`}
+  class="bg-black/50 !opacity-0 !inset-0 !z-[999] !fixed !invisible transition-[visibility] open:!opacity-100 open:!visible open:transition-opacity"
+  aria-hidden="true"
+>
+</div>
+
+<script>
+  let expandedSidebar: Element | null = null;
+
+  // Elements Update
+  const updateSidebarElement = function updateSidebarElement(sidebar: Element | null): void {
+    if (!sidebar) return;
+
+    const newState = sidebar.hasAttribute("open");
+
+    const sidebarMask = document.getElementById(`${sidebar.id}-mask`) as HTMLElement;
+    sidebarMask.toggleAttribute("open", newState);
+
+    newState
+      ? setTimeout(function (): void {
+          document.addEventListener("mousedown", onClickSidebarDocument, { passive: true });
+        }, 100)
+      : document.removeEventListener("mousedown", onClickSidebarDocument);
+    expandedSidebar = newState ? sidebar : null;
+  };
+
+  // Model Update
+  const toggleMenuState = function toggleMenuState(sidebar: Element | null): void {
+    if (!sidebar) return;
+
+    const newState = !sidebar.hasAttribute("open");
+
+    sidebar.toggleAttribute("open", newState);
+  };
+
+  // Observers
+  const onMutation = function onMutation(mutationList: MutationRecord[]): void {
+    const mutationRecord = mutationList[0];
+    if (!mutationRecord) return;
+
+    const sidebar = mutationRecord.target as Element;
+    updateSidebarElement(sidebar);
+  };
+
+  // Events
+  const onClickSidebarDocument = function onClickSidebarDocument(event: Event): void {
+    if (!event.currentTarget || !expandedSidebar) return;
+
+    const element = event.target as Element;
+    if (expandedSidebar.contains(element)) return;
+    toggleMenuState(expandedSidebar);
+  };
+
+  // Init
+  const observer = new MutationObserver(onMutation);
+  const sidebars = document.querySelectorAll("[data-p-sidebar]");
+  sidebars.forEach((sidebar): void => {
+    observer.observe(sidebar, {
+      attributes: true,
+      attributeFilter: ["open"],
+    });
+  });
+</script>

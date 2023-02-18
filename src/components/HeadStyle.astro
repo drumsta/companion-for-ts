@@ -4,7 +4,7 @@
  * https://github.com/unocss/unocss/blob/main/packages/reset/antfu.md
  */
 export interface Props {
-  customStyle?: string | undefined
+  customStyle?: string | undefined;
 }
 
 const { customStyle }: Props = Astro.props;
@@ -130,12 +130,8 @@ button {display: inline-flex;justify-content: center;align-items: center;-webkit
 .p-radio-button:last-of-type {border-top-left-radius: 0px;border-bottom-left-radius: 0px;}
 .p-radio-button:not(:last-child) {border-right-width: 0px;}
 .p-radio-button:not(:first-of-type):not(::not(:first-of-type)-of-type) {border-radius: 0px;}
-
-/* Custom AMP Style */
-amp-mega-menu nav {background-color: transparent;}
-amp-sidebar {background-color: var(--color-bg);}
 ${customStyle ?? ""}
 `;
 ---
 
-<style is:inline amp-custom set:html={style}></style>
+<style is:inline set:html={style}></style>

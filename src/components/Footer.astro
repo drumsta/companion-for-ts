@@ -1,84 +1,63 @@
 ---
-import PSvg from "@components/PSvg.astro";
+import PMenu from "@components/generic/PMenu.astro";
+import PSvg from "@components/generic/PSvg.astro";
 import { addTrailingSlash } from "@i18n/util";
-import About from "@src/pages/about.astro";
-import PrivacyPolicy from "@src/pages/privacy-policy.astro";
+import About from "@pages/about.astro";
+import PrivacyPolicy from "@pages/privacy-policy.astro";
 import { localizePath } from "astro-i18next";
 import i18next, { t } from "i18next";
 
 const { language } = i18next;
-const pathname: string = addTrailingSlash(
-  Astro.url.pathname.replace(`/${language}`, "")
-);
+const pathname: string = addTrailingSlash(Astro.url.pathname.replace(`/${language}`, ""));
 ---
 
 <!-- Footer -->
 <footer>
-  <amp-mega-menu layout="fixed-height" height="5rem">
-    <nav
-      class="bg-color-subtle flex"
-      style="position: fixed; bottom: 0rem; right: 0px; left: 0px;"
-      aria-label={t("components.footer.navigation-target")}
-    >
-      <ul class="flex flex-grow justify-around">
-        <!-- Drive -->
-        <li>
-          <a
-            class={`flex flex-col items-center footer-link ${
-              pathname === "/" ? "footer-link-active" : ""
-            }`}
-            style="width: 6.25rem;"
-            href={addTrailingSlash(localizePath("/"))}
-          >
-            <PSvg name="drive" svgStyle="height: 2.5rem;" />
-            <span>{t("components.footer.drive")}</span>
-          </a>
-        </li>
-        <!-- More Menu -->
-        <li>
+  <nav class="bg-color-bg-subtle flex inset-x-0 bottom-0 fixed" aria-label={t("components.footer.navigation-target")}>
+    <ul class="flex flex-grow justify-around">
+      <!-- Drive -->
+      <li>
+        <a
+          class={`flex flex-col w-24 items-center hover:text-color-text-accent hover:border-color-border-accent hover:border-t-2 hover:underline focus:text-color-text-accent focus:border-color-border-accent focus:border-t-2 focus:underline ${
+            pathname === "/" ? "text-color-text-accent border-color-border-accent border-t-2" : ""
+          }`}
+          href={addTrailingSlash(localizePath("/"))}
+        >
+          <PSvg name="drive" svgClass="h-10" />
+          <span>{t("components.footer.drive")}</span>
+        </a>
+      </li>
+      <!-- More Menu -->
+      <li>
+        <PMenu>
           <button
+            slot="menu-heading"
             type="button"
-            class="flex flex-col items-center footer-link"
+            class="rounded-none flex flex-col w-24 items-center hover:text-color-text-accent hover:border-color-border-accent hover:border-t-2 hover:underline focus:text-color-text-accent focus:border-color-border-accent focus:border-t-2 focus:underline"
             tabindex="0"
             aria-label={t("components.footer.more-menu")}
           >
-            <PSvg name="menu" svgStyle="height: 2.5rem;" />
+            <PSvg name="menu" svgClass="h-10" />
             <span>{t("components.footer.more-menu")}</span>
           </button>
-          <div
-            role="dialog"
-            class="border-color border-1 rounded-md"
-            style="background-color: var(--color-bg);left: auto;width: auto;bottom: 5rem;margin: 0.25rem;padding: 0.25rem;"
-          >
+          <div slot="menu-content" role="dialog" class="bg-color-bg border-color-border bottom-20">
             <ul aria-label={t("components.footer.more-menu")}>
               <!-- Privacy Policy -->
-              <li
-                style="padding-top: 0.5rem;padding-bottom: 0.5rem;padding-left: 1rem;padding-right: 1rem;"
-              >
-                <a
-                  href={addTrailingSlash(
-                    localizePath(`/${PrivacyPolicy.name}`, language)
-                  )}
-                >
+              <li class="py-2 px-4 focus:bg-color-bg-subtle focus:underline hover:bg-color-bg-subtle hover:underline">
+                <a href={addTrailingSlash(localizePath(`/${PrivacyPolicy.name}`, language))}>
                   <span>{t("components.footer.more-menu-items.privacy-policy")}</span>
                 </a>
               </li>
               <!-- About Us -->
-              <li
-                style="padding-top: 0.5rem;padding-bottom: 0.5rem;padding-left: 1rem;padding-right: 1rem;"
-              >
-                <a
-                  href={addTrailingSlash(
-                    localizePath(`/${About.name}`, language)
-                  )}
-                >
+              <li class="py-2 px-4 focus:bg-color-bg-subtle focus:underline hover:bg-color-bg-subtle hover:underline">
+                <a href={addTrailingSlash(localizePath(`/${About.name}`, language))}>
                   <span>{t("components.footer.more-menu-items.about")}</span>
                 </a>
               </li>
             </ul>
           </div>
-        </li>
-      </ul>
-    </nav>
-  </amp-mega-menu>
+        </PMenu>
+      </li>
+    </ul>
+  </nav>
 </footer>

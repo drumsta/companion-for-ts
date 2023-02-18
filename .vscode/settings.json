@@ -1,31 +1,27 @@
 {
-  "editor.formatOnPaste": false,
-  "editor.formatOnType": false,
-  "editor.formatOnSave": false,
+  "editor.detectIndentation": false,
   "editor.tabSize": 2,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
+  "editor.insertSpaces": true,
+
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "editor.formatOnSave": true,
   "editor.guides.bracketPairs": true,
   "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
-  // https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
-  "eslint.validate": [
-    "html",
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "astro"
-  ],
-  "eslint.rules.customizations": [
-    {
-      "rule": "*",
-      "severity": "error"
-    }
-  ],
+  "editor.linkedEditing": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.addMissingImports": true,
+    "source.fixAll": true,
+    "source.organizeImports": true
+  },
+  "prettier.documentSelectors": ["**/*.astro"],
   "sonarlint.connectedMode.project": {
     "connectionId": "drumsta",
     "projectKey": "drumsta_companion-for-ts"
+  },
+  "[astro]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[svg]": {
     "editor.defaultFormatter": "jock.svg"
@@ -33,6 +29,44 @@
   "[xml]": {
     "editor.defaultFormatter": "DotJoshJohnson.xml"
   },
-  "editor.inlayHints.fontSize": 12,
+
+  "editor.inlayHints.fontSize": 11,
   "editor.inlayHints.padding": true,
+  "editor.inlayHints.enabled": "on",
+
+  "javascript.inlayHints.enumMemberValues.enabled": true,
+  "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "javascript.inlayHints.parameterNames.enabled": "all",
+  "javascript.inlayHints.parameterNames.suppressWhenArgumentMatchesName": true,
+  "javascript.inlayHints.parameterTypes.enabled": true,
+  "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "javascript.inlayHints.variableTypes.enabled": true,
+  "javascript.inlayHints.variableTypes.suppressWhenTypeMatchesName": true,
+
+  "typescript.inlayHints.enumMemberValues.enabled": true,
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "typescript.inlayHints.parameterNames.enabled": "all",
+  "typescript.inlayHints.parameterNames.suppressWhenArgumentMatchesName": true,
+  "typescript.inlayHints.parameterTypes.enabled": true,
+  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "typescript.inlayHints.variableTypes.enabled": true,
+  "typescript.inlayHints.variableTypes.suppressWhenTypeMatchesName": true,
+
+  "eslint.probe": ["javascript", "javascriptreact", "typescript", "typescriptreact", "html", "markdown", "astro"],
+
+  "editor.codeLens": true,
+  "diffEditor.codeLens": true,
+  "javascript.referencesCodeLens.enabled": true,
+  "javascript.referencesCodeLens.showOnAllFunctions": true,
+  "typescript.implementationsCodeLens.enabled": true,
+  "typescript.referencesCodeLens.enabled": true,
+  "typescript.referencesCodeLens.showOnAllFunctions": true,
+  "editor.codeLensFontSize": 11,
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "tailwindCSS.includeLanguages": {
+    "astro": "html"
+  },
+  "tailwindCSS.classAttributes": ["class", "className", "svgClass", "uncheckedClass", "checkedClass"]
 }

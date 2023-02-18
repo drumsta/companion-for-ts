@@ -1,530 +1,334 @@
 ---
-import PSvg from "@components/PSvg.astro";
+import PKnob from "@components/generic/PKnob.astro";
+import PRadio from "@components/generic/PRadio.astro";
+import PSlider from "@components/generic/PSlider.astro";
 import i18next, { t } from "i18next";
 
-const cL: string = i18next.language;
-const sUO: { key: string; value: string }[] = [
+const currentLanguage: string = i18next.language;
+const speedUnitsOptions: { key: string; value: string }[] = [
   { key: "km/h", value: t("components.speed-limit.kph") },
   { key: "mph", value: t("components.speed-limit.mph") },
 ];
-const defaultSL = 60;
-const minMS = 30;
-const maxMS = 300;
-const defaultMS = 120;
-const defaultSU = "km/h";
-const alternateSU = "mph";
-const maxSpeedInfoText: string = t("components.speed-limit.max-speed");
-const defaultRadioButtonClass =
-  "p-radio-button justify-center items-center select-none border-color border-1 rounded-md cursor-pointer";
-const uncheckedRadioButtonClass = "bg-color-subtle text-color";
-const checkedRadioButtonClass = "bg-color-primary-dark text-color-light";
+
+const minMaxSpeed = 30;
+const maxMaxSpeed = 300;
+const maxSpeedStep = 10;
+const maxSpeedDataList = [30, 90, 160, 230, 300];
+const speedlimitStep = 5;
+const defaultSpeedLimit = 60;
+const defaultMaxSpeed = 120;
+const maxSpeedInfoTemplate = t("components.speed-limit.max-speed");
+const speedUnitsSelectorAriaLabel = t("components.speed-limit.select-speed-units");
+const speedLimitSelectorAriaLabel = t("components.speed-limit.speed-limit");
+const defaultSpeedUnits = t("components.speed-limit.kph");
+const alternateSpeedUnits = t("components.speed-limit.mph");
 ---
-<!-- Add data-ampdevmode during development -->
-<amp-script
-  data-ampdevmode
-  id="speed-limit-amp-script"
-  layout="flex-item"
-  script="speed-limit-script"
->
-  <main class="flex flex-col justify-center items-center">
-    <!-- Train Selection -->
-    <button
-      type="button"
-      id="sidebar-right-top-button"
-      on="tap:sidebar-right-top.open"
-      class="absolute border-color border-1"
-      style="z-index: 100;top: 8rem; right: 0; padding: 0rem;border-bottom-right-radius: 0px;border-top-right-radius: 0px;"
-      tabindex="0"
-      aria-label={t("components.speed-limit.side-selection")}
-    >
-      <PSvg name="settings" svgStyle="height: 2.5rem;" />
-    </button>
 
-    <!-- Speed Limit Component -->
-    <div
-      id="speed-limit-section"
-      title={t("components.speed-limit.title")}
-      class="flex flex-col justify-center items-center"
-    >
+<!-- Speed Limit Component -->
+<main
+  id="speed-limit-component"
+  class="flex flex-col justify-center items-center"
+  data-speed-units={JSON.stringify(speedUnitsOptions)}
+>
+  <div
+    id="speed-limit-section"
+    title={t("components.speed-limit.title")}
+    class="flex flex-col justify-center items-center"
+  >
     <!-- Max Speed Info & Speed Units Selector -->
-      <div class="flex flex-row items-center">
-        <!-- Max Speed Info -->
-        <span id="ms-info">
-          {maxSpeedInfoText.replace("{{maxSpeed}}", defaultMS.toLocaleString(cL))}
-        </span>
-        <!-- Speed Units Selector - Radio button -->
-        <div
-          id="sus"
-          data-su
-          class="flex flex-row"
-          style="margin-top: 0.125rem;margin-left: 0.5rem;"
-          role="radiogroup"
-          aria-label={t("components.speed-limit.select-speed-units")}
-        >
-          {
-            sUO.map((option: { key: string; value: string }) => <div
-                id={`sus-${option.key}`}
-                data-key={option.key}
-                class={defaultRadioButtonClass}
-                style="margin: 0px;padding-top: 0.25rem;padding-bottom: 0.25rem;padding-left: 1rem;padding-right: 1rem;"
-                tabindex="0"
-                role="radio"
-                aria-label={option.value}
-                aria-checked="false"
-              >
-                <span>{option.value}</span>
-              </div>)
-          }
-        </div>
-      </div>
-      <!-- Max Speed Selector - Slider -->
-      <div
-        class="relative select-none"
-        style="height: 2.25rem;width: 18.75rem;margin-top: 1rem;padding: 0.125rem;"
+    <div class="flex flex-row items-center">
+      <!-- Max Speed Info -->
+      <span id="max-speed-info" class="mr-2" data-text-template={maxSpeedInfoTemplate}>
+        {maxSpeedInfoTemplate.replace("{{maxSpeed}}", defaultMaxSpeed.toLocaleString(currentLanguage))}
+      </span>
+      <!-- Speed Units Selector - Radio Group -->
+      <PRadio
+        id="speed-units-selector"
+        options={speedUnitsOptions}
+        uncheckedClass="bg-color-bg-subtle text-color-text"
+        checkedClass="bg-color-primary-dark text-color-light"
+        ariaLabel={speedUnitsSelectorAriaLabel}
       >
-        <input
-          type="range"
-          id="mss"
-          min={minMS}
-          max={maxMS}
-          value={defaultMS}
-          step="10"
-          list="mss-values"
-          class="block"
-          style="width: 100%;"
-          aria-labelledby="ms-info"
-        />
-        <datalist
-          id="mss-values"
-          class="flex justify-between text-base"
-          style="padding-top: 0.625rem;"
-        >
-          <option value="30" label={(30).toLocaleString(cL)}
-            >{(30).toLocaleString(cL)}</option
-          >
-          <option value="90" label={(90).toLocaleString(cL)}
-            >{(90).toLocaleString(cL)}</option
-          >
-          <option value="160" label={(160).toLocaleString(cL)}
-            >{(160).toLocaleString(cL)}</option
-          >
-          <option value="230" label={(230).toLocaleString(cL)}
-            >{(230).toLocaleString(cL)}</option
-          >
-          <option value="300" label={(300).toLocaleString(cL)}
-            >{(300).toLocaleString(cL)}</option
-          >
-        </datalist>
-      </div>
-      <!-- Speed Limit Selector - Knob -->
-      <div style="margin-top: 1.5rem;padding: 0.625rem;">
-        <svg
-          id="sls"
-          width="300"
-          height="300"
-          viewBox="0 0 100 100"
-          class="cursor-grab"
-          tabindex="0"
-          role="slider"
-          aria-valuemin="0"
-          aria-valuemax={defaultMS}
-          aria-valuenow={defaultSL}
-          aria-label={t("components.speed-limit.speed-limit")}
-        >
-          <path
-            id="slspn"
-            class="fill-none stroke-color-negative-dark"
-            d="M 30 84.64 A 40 40 0 1 1 70 84.64"
-            stroke-width="14"></path>
-          <path
-            id="slspp"
-            class="fill-none stroke-color-positive-dark"
-            d="M 30 84.64 A 40 40 0 0 1 50 10"
-            stroke-width="14"></path>
-          <text
-            id="sls-text-1"
-            x="50"
-            y="47"
-            text-anchor="middle"
-            class="fill-text-color text-center text-xl select-none"
-          >
-            {defaultSL.toLocaleString(cL)}
-          </text>
-          <text
-            id="sls-text-2"
-            x="50"
-            y="68"
-            text-anchor="middle"
-            class="fill-text-color text-center text-xl select-none"
-          >
-            {defaultSU}
-          </text>
-          <text
-            id="sls-text-3"
-            x="50"
-            y="89"
-            text-anchor="middle"
-            class="fill-text-color text-center select-none"
-            style="font-size: 0.5rem;"
-          >
-            {alternateSU}
-          </text>
-        </svg>
-      </div>
-      <!-- Speed Limit Quick Buttons -->
-      <div
-        id="slsb"
-        class="flex justify-center"
-        style="height: 3.125rem"
-        tabindex="0"
-        role="spinbutton"
-        aria-valuemin="0"
-        aria-valuemax={defaultMS}
-        aria-valuenow={defaultSL}
-        aria-label={t("components.speed-limit.speed-limit")}
-      >
-        <button
-          type="button"
-          id="slsb-m-25"
-          class="bg-color-negative-dark text-color-light"
-          style="width: 3.125rem;">-25</button>
-        <button
-          type="button"
-          id="slsb-m-10"
-          class="bg-color-negative-dark text-color-light"
-          style="width: 3.125rem;">-10</button>
-        <button
-          type="button"
-          id="slsb-m-5"
-          class="bg-color-negative-dark text-color-light"
-          style="width: 3.125rem;">-5</button>
-        <button
-          type="button"
-          id="slsb-p-5"
-          class="bg-color-positive-dark text-color-light"
-          style="width: 3.125rem;">+5</button>
-        <button
-          type="button"
-          id="slsb-p-10"
-          class="bg-color-positive-dark text-color-light"
-          style="width: 3.125rem;">+10</button>
-        <button
-          type="button"
-          id="slsb-p-25"
-          class="bg-color-positive-dark text-color-light"
-          style="width: 3.125rem;margin-right: 0.5rem;">+25</button>
-      </div>
+        <span slot="radio-item">{"{{option.value}}"}</span>
+      </PRadio>
     </div>
-  </main>
-
-  <amp-sidebar id="sidebar-right-top" layout="nodisplay" side="right">
-    <amp-autocomplete
-      id="amp-autocomplete-rs-search"
-      filter="fuzzy"
-      filter-value="rollingStockClass"
-      min-characters="0"
-      prefetch src="/json/rolling-stock-class.json"
+    <!-- Max Speed Selector - Slider -->
+    <PSlider
+      id="max-speed-selector"
+      className="h-9 w-[18.75rem] mt-4 p-0.5"
+      min={minMaxSpeed}
+      max={maxMaxSpeed}
+      currentValue={defaultMaxSpeed}
+      step={maxSpeedStep}
+      datalist={maxSpeedDataList}
+      ariaLabeledBy="max-speed-info"
+    />
+    <!-- Speed Limit Selector - Knob -->
+    <div class="mt-6 p-2.5">
+      <PKnob
+        id="speed-limit-selector"
+        min={0}
+        max={defaultMaxSpeed}
+        currentValue={defaultSpeedLimit}
+        step={speedlimitStep}
+        size={300}
+        text2={defaultSpeedUnits}
+        text3={alternateSpeedUnits}
+        ariaLabel={speedLimitSelectorAriaLabel}
+      />
+    </div>
+    <!-- Speed Limit Quick Buttons -->
+    <div
+      id="speed-limit-spinbutton"
+      class="flex justify-center h-[3.125rem]"
+      tabindex="0"
+      role="spinbutton"
+      aria-valuemin="0"
+      aria-valuemax={defaultMaxSpeed}
+      aria-valuenow={defaultSpeedLimit}
+      aria-label={t("components.speed-limit.speed-limit")}
     >
-      <input
-        type="search"
-        id="rs-search"
-        class="text-color bg-color-subtle border-1"
-        style="padding: 0.5rem;"
+      <button
+        type="button"
+        id="speed-limit-spinbutton-m-25"
+        class="bg-color-negative-dark text-color-light w-[3.125rem]">-25</button
       >
-      <template type="amp-mustache" is:raw>
-        <div class="text-color bg-color-subtle" data-value="{{rollingStockClass}}" data-json="{{objToJson}}">
-          <div>{{ rollingStockClass }}</div>
-        </div>
-      </template>
-    </amp-autocomplete>
-  </amp-sidebar>
-</amp-script>
-<script
-  id="speed-limit-script"
-  type="text/plain"
-  target="amp-script"
-  define:vars={{
-    cL,
-    defaultSL,
-    minMS,
-    maxMS,
-    defaultMS,
-    defaultSU,
-    sUO,
-    maxSpeedInfoText,
-    defaultRadioButtonClass,
-    uncheckedRadioButtonClass,
-    checkedRadioButtonClass,
-  }}
->
-  /*
-   * Variables
-   */
-  const maxSpeedInfo = document.getElementById("ms-info");
-  const sUSelector = document.getElementById("sus");
-  const maxSS = document.getElementById("mss");
-  const sLS = document.getElementById("sls");
-  const sLSPN = document.getElementById("slspn");
-  const sLSPP = document.getElementById("slspp");
-  const sLSText1 = document.getElementById("sls-text-1");
-  const sLSText2 = document.getElementById("sls-text-2");
-  const sLSText3 = document.getElementById("sls-text-3");
-  const sLSB = document.getElementById("slsb");
-  const sLSBM25 = document.getElementById("slsb-m-25");
-  const sLSBM10 = document.getElementById("slsb-m-10");
-  const sLSBM5 = document.getElementById("slsb-m-5");
-  const sLSBP5 = document.getElementById("slsb-p-5");
-  const sLSBP10 = document.getElementById("slsb-p-10");
-  const sLSBP25 = document.getElementById("slsb-p-25");
+      <button
+        type="button"
+        id="speed-limit-spinbutton-m-10"
+        class="bg-color-negative-dark text-color-light w-[3.125rem]">-10</button
+      >
+      <button type="button" id="speed-limit-spinbutton-m-5" class="bg-color-negative-dark text-color-light w-[3.125rem]"
+        >-5</button
+      >
+      <button type="button" id="speed-limit-spinbutton-p-5" class="bg-color-positive-dark text-color-light w-[3.125rem]"
+        >+5</button
+      >
+      <button
+        type="button"
+        id="speed-limit-spinbutton-p-10"
+        class="bg-color-positive-dark text-color-light w-[3.125rem]">+10</button
+      >
+      <button
+        type="button"
+        id="speed-limit-spinbutton-p-25"
+        class="bg-color-positive-dark text-color-light w-[3.125rem] mr-2">+25</button
+      >
+    </div>
+  </div>
+</main>
 
-  let sU = localStorage.getItem("app/speed-units") ?? defaultSU;
-  let mS = Number(localStorage.getItem("app/speed-max") ?? defaultMS);
-  let sL = Number(localStorage.getItem("app/speed-limit") ?? defaultSL);
-  const minSpeed = 0;
-  const sLStep = 5;
-  const p = { passive: true };
-  let sLSCoords = { left: 0, top: 0 };
+<script>
+  import { SpeedLimitStore, speedLimitStore } from "@src/stores/speedLimitStore";
+  import { rollingStockClassList } from "@src/data/rollingStockClass";
 
-  const radius = 40;
-  const midX = 50;
-  const midY = 50;
-  const minRadians = (4 * Math.PI) / 3;
-  const maxRadians = -Math.PI / 3;
-  const minX = midX + (Math.cos(minRadians) * radius);
-  const minY = midY - (Math.sin(minRadians) * radius);
-  const maxX = midX + (Math.cos(maxRadians) * radius);
-  const maxY = midY - (Math.sin(maxRadians) * radius);
+  const currentLanguage = document.documentElement.getAttribute("lang") ?? "en";
+  const speedLimitComponent = document.getElementById("speed-limit-component") as HTMLElement;
+  const maxSpeedInfo = document.getElementById("max-speed-info") as HTMLElement;
+  const speedUnitsSelector = document.getElementById("speed-units-selector") as HTMLElement;
+  const maxSpeedSelector = document.getElementById("max-speed-selector") as HTMLInputElement;
+  const speedLimitSelector = document.getElementById("speed-limit-selector") as HTMLElement;
+  const speedLimitSelectorText1 = document.getElementById("speed-limit-selector-text-1") as HTMLElement;
+  const speedLimitSelectorText2 = document.getElementById("speed-limit-selector-text-2") as HTMLElement;
+  const speedLimitSelectorText3 = document.getElementById("speed-limit-selector-text-3") as HTMLElement;
+  const speedLimitSpinButton = document.getElementById("speed-limit-spinbutton") as HTMLElement;
+  const speedLimitSpinButtonM25 = document.getElementById("speed-limit-spinbutton-m-25") as HTMLElement;
+  const speedLimitSpinButtonM10 = document.getElementById("speed-limit-spinbutton-m-10") as HTMLElement;
+  const speedLimitSpinButtonM5 = document.getElementById("speed-limit-spinbutton-m-5") as HTMLElement;
+  const speedLimitSpinButtonP5 = document.getElementById("speed-limit-spinbutton-p-5") as HTMLElement;
+  const speedLimitSpinButtonP10 = document.getElementById("speed-limit-spinbutton-p-10") as HTMLElement;
+  const speedLimitSpinButtonP25 = document.getElementById("speed-limit-spinbutton-p-25") as HTMLElement;
+  const speedUnitsOptions: { key: string; value: string }[] = JSON.parse(
+    speedLimitComponent.getAttribute("data-speed-units") ?? "",
+  );
 
-  const rangePath = function rangePath() {
-    return `M ${minX} ${minY} A ${radius} ${radius} 0 1 1 ${maxX} ${maxY}`;
-  };
-
-  const mapRange = function mapRange(x, inMin, inMax, outMin, outMax) {
-    return (((x - inMin) * (outMax - outMin)) / (inMax - inMin)) + outMin;
-  };
-
-  const zeroRadians = function zeroRadians() {
-    if (minSpeed > 0 && mS > 0) return mapRange(minSpeed, minSpeed, mS, minRadians, maxRadians);
-
-    return mapRange(0, minSpeed, mS, minRadians, maxRadians);
-  };
-
-  const valueRadians = function valueRadians() {
-    return mapRange(sL, minSpeed, mS, minRadians, maxRadians);
-  };
-
-  const zeroX = function zeroX() {
-    return midX + (Math.cos(zeroRadians()) * radius);
-  };
-
-  const zeroY = function zeroY() {
-    return midY - (Math.sin(zeroRadians()) * radius);
-  };
-
-  const largeArc = function largeArc() {
-    return Math.abs(zeroRadians() - valueRadians()) < Math.PI ? 0 : 1;
-  };
-
-  const sweep = function sweep() {
-    return valueRadians() > zeroRadians() ? 0 : 1;
-  };
-
-  const valueX = function valueX() {
-    return midX + (Math.cos(valueRadians()) * radius);
-  };
-
-  const valueY = function valueY() {
-    return midY - (Math.sin(valueRadians()) * radius);
-  };
-
-  const valuePath = function valuePath() {
-    return `M ${zeroX()} ${zeroY()} A ${radius} ${radius} 0 ${largeArc()} ${sweep()} ${valueX()} ${valueY()}`;
-  };
-
-  const convertSL = function convertSL() {
+  // Functions
+  const convertSpeedValue = function convertSpeedValue(speedUnits: string, speedValue: number): number {
     const mphToKmhFactor = 1.609344;
-    if (sU === "km/h") return sL / mphToKmhFactor;
-    if (sU === "mph") return sL * mphToKmhFactor;
+    if (speedUnits === "km/h") return speedValue / mphToKmhFactor;
+    if (speedUnits === "mph") return speedValue * mphToKmhFactor;
     return 0;
   };
 
-  const normSV = function normSV(speed) {
-    if (speed >= 10) return speed.toFixed(0).toLocaleString(cL);
-    if (speed < 10 && speed > 0) return speed.toFixed(1).toLocaleString(cL);
-    return speed.toLocaleString(cL);
+  const normalizeSpeedValue = function normalizeSpeedValue(speedValue: number): string {
+    if (speedValue < 10 && speedValue > 0) return (Math.trunc(speedValue * 10) / 10).toLocaleString(currentLanguage);
+    return Math.trunc(speedValue).toLocaleString(currentLanguage);
   };
 
-  const setSUOS = function setSUOS(option) {
-    const sUSO = document.getElementById(`sus-${option.key}`);
+  // Elements Update
+  const updateMaxSpeedElements = function updateMaxSpeedElements(): void {
+    const maxSpeed = speedLimitStore.value.maxSpeed;
 
-    if (option.key === sU) {
-      sUSO.className = `${defaultRadioButtonClass} ${checkedRadioButtonClass}`;
-      sUSO.setAttribute("aria-checked", "true");
-    } else {
-      sUSO.className = `${defaultRadioButtonClass} ${uncheckedRadioButtonClass}`;
-      sUSO.setAttribute("aria-checked", "false");
+    maxSpeedInfo.innerHTML = (maxSpeedInfo.getAttribute("data-text-template") ?? "").replace(
+      "{{maxSpeed}}",
+      maxSpeed.toLocaleString(currentLanguage),
+    );
+    speedLimitSpinButton.setAttribute("aria-valuemax", maxSpeed.toString());
+  };
+
+  const updateSpeedLimitElements = function updateSpeedLimitElements(): void {
+    const speedUnits = speedLimitStore.value.speedUnits;
+    const speedLimit = speedLimitStore.value.speedLimit;
+    const alternateSpeedUnits = speedUnitsOptions.find((option): boolean => option.key !== speedUnits)?.value ?? "";
+    const alternateSpeedLimit = normalizeSpeedValue(convertSpeedValue(speedUnits, speedLimit));
+
+    speedLimitSelectorText1.innerHTML = speedLimit.toLocaleString(currentLanguage);
+    speedLimitSelectorText2.innerHTML =
+      speedUnitsOptions.find((option): boolean => option.key === speedUnits)?.value ?? "";
+    speedLimitSelectorText3.innerHTML = `${alternateSpeedLimit} ${alternateSpeedUnits}`;
+    speedLimitSpinButton.setAttribute("aria-valuenow", speedLimit.toString());
+  };
+
+  // View Update
+  const initView = function initView(): void {
+    speedUnitsSelector.setAttribute("data-p-radio-group", speedLimitStore.value.speedUnits);
+    maxSpeedSelector.setAttribute("data-p-slider", speedLimitStore.value.maxSpeed.toString());
+    speedLimitSelector.setAttribute("data-p-knob-range", speedLimitStore.value.maxSpeed.toString());
+    speedLimitSelector.setAttribute("data-p-knob-value", speedLimitStore.value.speedLimit.toString());
+  };
+
+  const updateSpeedUnitsView = function updateSpeedUnitsView(newKey: string): void {
+    speedUnitsSelector.setAttribute("data-p-radio-group", newKey);
+  };
+
+  const updateMaxSpeedView = function updateMaxSpeedView(newValue: number): void {
+    const min = Number(maxSpeedSelector.min);
+    const max = Number(maxSpeedSelector.max);
+    if (newValue < min) newValue = min;
+    if (newValue > max) newValue = max;
+
+    maxSpeedSelector.setAttribute("data-p-slider", newValue.toString());
+  };
+
+  const updateSpeedLimitView = function updateSpeedLimitView(newValue: number): void {
+    if (newValue < 0) newValue = 0;
+    if (newValue > speedLimitStore.value.maxSpeed) newValue = speedLimitStore.value.maxSpeed;
+
+    speedLimitSelector.setAttribute("data-p-knob-value", newValue.toString());
+  };
+
+  // State Update
+  const setSpeedUnitsState = function setSpeedUnitsState(key: string): void {
+    speedLimitStore.setKey("speedUnits", key);
+
+    updateSpeedLimitElements();
+  };
+
+  const setMaxSpeedState = function setMaxSpeedState(value: number): void {
+    speedLimitStore.setKey("maxSpeed", value);
+
+    if (value < speedLimitStore.value.speedLimit) {
+      updateSpeedLimitView(value);
+    }
+
+    speedLimitSelector.setAttribute("data-p-knob-range", speedLimitStore.value.maxSpeed.toString());
+    updateMaxSpeedElements();
+  };
+
+  const setSpeedLimitState = function setSpeedLimitState(value: number): void {
+    speedLimitStore.setKey("speedLimit", value);
+
+    updateSpeedLimitElements();
+  };
+
+  // Events
+  const onChangeSpeedUnitsSelector = function onChangeSpeedUnitsSelector(event: Event): void {
+    if (!event.currentTarget) return;
+
+    const customEvent = event as CustomEvent<string>;
+    const key = customEvent.detail;
+
+    setSpeedUnitsState(key);
+  };
+
+  const onChangeMaxSpeedSelector = function onChangeMaxSpeedSelector(event: Event): void {
+    if (!event.currentTarget) return;
+
+    const element = event.currentTarget as HTMLInputElement;
+    const value = Number(element.value);
+
+    setMaxSpeedState(value);
+  };
+
+  const onChangeSpeedLimitSelector = function onChangeSpeedLimitSelector(event: Event): void {
+    if (!event.currentTarget) return;
+
+    const customEvent = event as CustomEvent<number>;
+    const value = Number(customEvent.detail);
+
+    setSpeedLimitState(value);
+  };
+
+  const onClickSpeedLimitSpinButtonM25 = function onClickSpeedLimitSpinButtonM25(event: Event): void {
+    if (!event.currentTarget) return;
+
+    const value = Number(speedLimitSelector.getAttribute("data-p-knob-value") ?? "0");
+    updateSpeedLimitView(value - 25);
+  };
+
+  const onClickSpeedLimitSpinButtonM10 = function onClickSpeedLimitSpinButtonM10(event: Event): void {
+    if (!event.currentTarget) return;
+
+    const value = Number(speedLimitSelector.getAttribute("data-p-knob-value") ?? "0");
+    updateSpeedLimitView(value - 10);
+  };
+
+  const onClickSpeedLimitSpinButtonM5 = function onClickSpeedLimitSpinButtonM5(event: Event): void {
+    if (!event.currentTarget) return;
+
+    const value = Number(speedLimitSelector.getAttribute("data-p-knob-value") ?? "0");
+    updateSpeedLimitView(value - 5);
+  };
+
+  const onClickSpeedLimitSpinButtonP5 = function onClickSpeedLimitSpinButtonP5(event: Event): void {
+    if (!event.currentTarget) return;
+
+    const value = Number(speedLimitSelector.getAttribute("data-p-knob-value") ?? "0");
+    updateSpeedLimitView(value + 5);
+  };
+
+  const onClickSpeedLimitSpinButtonP10 = function onClickSpeedLimitSpinButtonP10(event: Event): void {
+    if (!event.currentTarget) return;
+
+    const value = Number(speedLimitSelector.getAttribute("data-p-knob-value") ?? "0");
+    updateSpeedLimitView(value + 10);
+  };
+
+  const onClickSpeedLimitSpinButtonP25 = function onClickSpeedLimitSpinButtonP25(event: Event): void {
+    if (!event.currentTarget) return;
+
+    const value = Number(speedLimitSelector.getAttribute("data-p-knob-value") ?? "0");
+    updateSpeedLimitView(value + 25);
+  };
+
+  const onChangeSpeedLimitStore = function onChangeSpeedLimitStore(
+    key: keyof SpeedLimitStore,
+    value: SpeedLimitStore[keyof SpeedLimitStore],
+  ): void {
+    if (key === "rollingStock" && value !== "") {
+      const rollingStock = rollingStockClassList.find(
+        (rollingStockClass) => rollingStockClass.rollingStockClass === value,
+      );
+      if (!rollingStock) return;
+      updateSpeedUnitsView(rollingStock.speedUnits);
+      updateMaxSpeedView(rollingStock.maximumSpeed);
     }
   };
 
-  const setSUS = function setSUS() {
-    localStorage.setItem("app/speed-units", sU);
-    sUSelector.setAttribute("data-su", sU);
-    sUO.forEach(setSUOS);
-  };
+  // Init
+  initView();
+  updateMaxSpeedElements();
+  updateSpeedLimitElements();
 
-  const setMSS = function setMSS() {
-    if (mS < minMS) mS = minMS;
-    if (mS > maxMS) mS = maxMS;
-    if (mS < sL) sL = mS;
-    localStorage.setItem("app/speed-max", mS);
-    maxSpeedInfo.innerHTML = maxSpeedInfoText.replace("{{maxSpeed}}", mS.toLocaleString(cL));
-  };
+  speedUnitsSelector.addEventListener("change", onChangeSpeedUnitsSelector, { passive: true });
+  maxSpeedSelector.addEventListener("change", onChangeMaxSpeedSelector, { passive: true });
+  speedLimitSelector.addEventListener("change", onChangeSpeedLimitSelector, { passive: true });
+  speedLimitSpinButtonM25.addEventListener("click", onClickSpeedLimitSpinButtonM25, { passive: true });
+  speedLimitSpinButtonM10.addEventListener("click", onClickSpeedLimitSpinButtonM10, { passive: true });
+  speedLimitSpinButtonM5.addEventListener("click", onClickSpeedLimitSpinButtonM5, { passive: true });
+  speedLimitSpinButtonP5.addEventListener("click", onClickSpeedLimitSpinButtonP5, { passive: true });
+  speedLimitSpinButtonP10.addEventListener("click", onClickSpeedLimitSpinButtonP10, { passive: true });
+  speedLimitSpinButtonP25.addEventListener("click", onClickSpeedLimitSpinButtonP25, { passive: true });
 
-  const setSLS = function setSLS() {
-    if (typeof sL === "undefined") sL = 0;
-    if (isNaN(sL)) sL = 0;
-    if (sL < 0) sL = 0;
-    if (sL > mS) sL = mS;
-    localStorage.setItem("app/speed-limit", sL);
-    sLS.setAttribute("aria-valuemax", mS);
-    sLS.setAttribute("aria-valuenow", sL);
-    sLSPN.setAttribute("d", rangePath());
-    sLSPP.setAttribute("d", valuePath());
-    sLSText1.innerHTML = sL.toLocaleString(cL);
-    sLSText2.innerHTML = sU;
-    const alternateSU = sUO.find((option) => option.key !== sU).value;
-    sLSText3.innerHTML = `${normSV(convertSL())} ${alternateSU}`;
-    sLSB.setAttribute("aria-valuemax", mS);
-    sLSB.setAttribute("aria-valuenow", sL);
-  };
-
-  const calcSL = function calcSL(offsetX, offsetY) {
-    const sLSSize = sLS.getAttribute("width");
-    const dx = offsetX - (sLSSize / 2);
-    const dy = (sLSSize / 2) - offsetY;
-    const angle = Math.atan2(dy, dx);
-    const start = (-Math.PI / 2) - (Math.PI / 6);
-    let mappedValue = 0;
-    if (angle > maxRadians) mappedValue = mapRange(angle, minRadians, maxRadians, minSpeed, mS);
-    else if (angle < start) mappedValue = mapRange(angle + (2 * Math.PI), minRadians, maxRadians, minSpeed, mS);
-    else return sL;
-
-    return (Math.round((mappedValue - minSpeed) / sLStep) * sLStep) + minSpeed;
-  };
-
-  const oCSUO = function oCSUO(event) {
-    const newKey = event.currentTarget.getAttribute("data-key");
-    if (newKey === sU) return;
-    sU = newKey;
-    setSUS();
-    setSLS();
-  };
-
-  const oIMaxSS = function oIMaxSS(event) {
-    const newValue = event.currentTarget.value;
-    if (newValue === mS) return;
-    mS = newValue;
-    setMSS();
-    setSLS();
-  };
-
-  const oCSLS = function oCSLS(event) {
-    const newValue = calcSL(event.offsetX, event.offsetY);
-    if (newValue === sL) return;
-    sL = newValue;
-    setSLS();
-  };
-
-  const oMMSLS = function oMMSLS(event) {
-    oCSLS(event);
-  };
-
-  const oMUSLS = function oMUSLS(_event) {
-    sLS.removeEventListener("mousemove", oMMSLS);
-    sLS.removeEventListener("mouseup", oMUSLS);
-  };
-
-  const oMDSLS = function oMDSLS(_event) {
-    sLS.addEventListener("mousemove", oMMSLS, p);
-    sLS.addEventListener("mouseup", oMUSLS, p);
-  };
-
-  const oTMSLS = function oTMSLS(event) {
-    if (event.touches.length !== 1) return;
-    const touch = event.touches.item(0);
-    event.offsetX = touch.clientX - sLSCoords.left;
-    event.offsetY = touch.clientY - sLSCoords.top;
-    oCSLS(event);
-  };
-
-  const oTESLS = function oTESLS(_event) {
-    sLS.removeEventListener("touchmove", oTMSLS);
-    sLS.removeEventListener("touchend", oTESLS);
-  };
-
-  const oTSSLS = function oTSSLS(_event) {
-    sLS.addEventListener("touchmove", oTMSLS, p);
-    sLS.addEventListener("touchend", oTESLS, p);
-  };
-
-  const oCSLSBM25 = function oCSLSBM25(_event) {
-    sL -= 25;
-    setSLS();
-  };
-
-  const oCSLSBM10 = function oCSLSBM10(_event) {
-    sL -= 10;
-    setSLS();
-  };
-
-  const oCSLSBM5 = function oCSLSBM5(_event) {
-    sL -= 5;
-    setSLS();
-  };
-
-  const oCSLSBP5 = function oCSLSBP5(_event) {
-    sL += 5;
-    setSLS();
-  };
-
-  const oCSLSBP10 = function oCSLSBP10(_event) {
-    sL += 10;
-    setSLS();
-  };
-
-  const oCSLSBP25 = function oCSLSBP25(_event) {
-    sL += 25;
-    setSLS();
-  };
-
-  maxSS.value = mS;
-
-  setMSS();
-  setSUS();
-  setSLS();
-
-  sUO.forEach((option) => {
-    const sUSO = document.getElementById(`sus-${option.key}`);
-    sUSO.addEventListener("click", oCSUO, p);
-  });
-  maxSS.addEventListener("input", oIMaxSS, p);
-  sLS.addEventListener("click", oCSLS, p);
-  sLS.addEventListener("mousedown", oMDSLS, p);
-  sLS.addEventListener(
-    "touchstart",
-    (event) => {
-      event.target.getBoundingClientRectAsync().then((coords) => {
-        sLSCoords = coords;
-      });
-
-      oTSSLS();
-    },
-    p
-  );
-  sLSBM25.addEventListener("click", oCSLSBM25, p);
-  sLSBM10.addEventListener("click", oCSLSBM10, p);
-  sLSBM5.addEventListener("click", oCSLSBM5, p);
-  sLSBP5.addEventListener("click", oCSLSBP5, p);
-  sLSBP10.addEventListener("click", oCSLSBP10, p);
-  sLSBP25.addEventListener("click", oCSLSBP25, p);
+  speedLimitStore.listen(onChangeSpeedLimitStore);
 </script>

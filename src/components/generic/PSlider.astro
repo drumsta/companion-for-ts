@@ -1,0 +1,98 @@
+---
+import i18next from "i18next";
+
+export interface Props {
+  id: string;
+  min?: number;
+  max?: number;
+  currentValue?: number;
+  step?: number;
+  datalist?: number[];
+  className?: string | undefined;
+  ariaLabeledBy?: string | undefined;
+}
+
+const { id, min, max, currentValue, step, datalist, className, ariaLabeledBy }: Props = Astro.props;
+const currentLanguage: string = i18next.language;
+---
+
+<div class=`relative select-none ${className}`>
+  <input
+    type="range"
+    id={id}
+    min={min ?? 0}
+    max={max ?? 100}
+    value={currentValue ?? max ?? 100}
+    step={step ?? 1}
+    list=`${id}-values`
+    class="block w-full"
+    aria-labelledby={ariaLabeledBy}
+    data-p-slider={currentValue ?? max ?? 100}
+  />
+  {typeof datalist !== "undefined" && datalist.length > 0
+   ? <Fragment>
+  <datalist id=`${id}-values` class="flex justify-between text-base pt-[0.625rem]">
+    {
+      datalist.map((value, _index, _array) => (
+        <option value={value} label={value.toLocaleString(currentLanguage)}>{value.toLocaleString(currentLanguage)}</option>
+      ))
+    }
+  </datalist>
+    </Fragment>
+    : null}
+</div>
+
+<script>
+  // Elements Update
+  const updateSliderElement = function updateRadioItemStatus(slider: HTMLInputElement): void {
+    const newValue = slider.getAttribute("data-p-slider") ?? 100;
+    slider.value = newValue.toString();
+  };
+
+  // Model Update
+  const notify = function notify(slider: HTMLInputElement): void {
+    const event = new Event("change");
+    slider.dispatchEvent(event);
+  };
+
+  const updateValue = function updateValue(slider: HTMLInputElement, newValue: number): void {
+    const value = Number(slider.getAttribute("data-p-slider"));
+    if (newValue === value) return;
+
+    slider.setAttribute("data-p-slider", newValue.toString());
+  };
+
+  // Observers
+  const onMutationSlider = function onMutationSlider(mutationList: MutationRecord[]): void {
+    const mutationRecord = mutationList[0];
+    if (!mutationRecord) return;
+
+    const inputRange = mutationRecord.target as HTMLInputElement;
+    updateSliderElement(inputRange);
+
+    if (mutationRecord.attributeName === "data-p-slider") {
+      notify(inputRange);
+    }
+  };
+
+  // Events
+  const onInputMaxSpeedSelector = function onInputMaxSpeedSelector(event: Event): void {
+    if (!event.currentTarget) return;
+
+    const slider = event.currentTarget as HTMLInputElement;
+    const newValue = Number(slider.value);
+
+    updateValue(slider, newValue);
+  };
+
+  // Init
+  const observer = new MutationObserver(onMutationSlider);
+  const sliders = document.querySelectorAll("[data-p-slider]");
+  sliders.forEach((slider): void => {
+    slider.addEventListener("input", onInputMaxSpeedSelector, { passive: true });
+    observer.observe(slider, {
+      attributes: true,
+      attributeFilter: ["data-p-slider"],
+    });
+  });
+</script>

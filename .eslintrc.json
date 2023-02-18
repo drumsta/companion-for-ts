@@ -9,91 +9,74 @@
   "extends": [
     "eslint:all",
     "plugin:@typescript-eslint/recommended",
-    "plugin:security-node/recommended",
-    "plugin:anti-trojan-source/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:@typescript-eslint/strict",
     "plugin:astro/recommended"
   ],
-  "plugins": [
-    "@typescript-eslint",
-    "security-node",
-    "anti-trojan-source",
-    "astro"
-  ],
-  "ignorePatterns": [
-    "*/node_modules/*"
-  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": ["./tsconfig.json"]
+  },
+  "plugins": ["@typescript-eslint", "astro"],
+  "ignorePatterns": ["*/dist/*", "*/node_modules/*"],
   "reportUnusedDisableDirectives": true,
   "overrides": [
     {
-      "files": [
-        "*.astro"
-      ],
+      "files": ["*.astro"],
       "parser": "astro-eslint-parser",
       "parserOptions": {
         "parser": "@typescript-eslint/parser",
-        "extraFileExtensions": [
-          ".astro"
-        ]
+        "extraFileExtensions": [".astro"]
       }
     }
   ],
   "rules": {
     // eslint
     "array-element-newline": ["error", "consistent"],
-    "comma-dangle": ["error", {"arrays": "always-multiline", "exports": "always-multiline", "functions": "never", "imports": "always-multiline", "objects": "always-multiline"}],
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "always-multiline",
+        "imports": "always-multiline",
+        "objects": "always-multiline"
+      }
+    ],
     "curly": ["error", "multi"],
     "function-call-argument-newline": ["error", "consistent"],
     "function-paren-newline": ["error", "multiline-arguments"],
     "id-length": "off",
-    "indent": [
+    "indent": ["error", 2],
+    "lines-around-comment": "off",
+    "max-len": [
       "error",
-      2,
       {
-        "SwitchCase": 1,
-        "VariableDeclarator": 1,
-        "outerIIFEBody": 1,
-        "MemberExpression": 1,
-        "FunctionDeclaration": {"parameters": 1, "body": 1},
-        "FunctionExpression": {"parameters": 1, "body": 1},
-        "CallExpression": {"arguments": 1},
-        "ArrayExpression": 1,
-        "ObjectExpression": 1,
-        "ImportDeclaration": 1,
-        "flatTernaryExpressions": false,
-        "ignoreComments": false,
-        "ignoredNodes": [
-          "TemplateLiteral *",
-          "JSXElement",
-          "JSXElement > *",
-          "JSXAttribute",
-          "JSXIdentifier",
-          "JSXNamespacedName",
-          "JSXMemberExpression",
-          "JSXSpreadAttribute",
-          "JSXExpressionContainer",
-          "JSXOpeningElement",
-          "JSXClosingElement",
-          "JSXFragment",
-          "JSXOpeningFragment",
-          "JSXClosingFragment",
-          "JSXText",
-          "JSXEmptyExpression",
-          "JSXSpreadChild"
-        ],
-        "offsetTernaryExpressions": true
+        "code": 120,
+        "tabWidth": 2,
+        "ignoreUrls": true,
+        "ignoreTemplateLiterals": true
       }
     ],
-    "lines-around-comment": "off",
-    "max-len": ["error", {"code": 160, "tabWidth": 2, "ignoreUrls": true, "ignoreTemplateLiterals": true}],
     "max-lines": "off",
     "max-params": "off",
     "max-statements": "off",
     "multiline-ternary": ["error", "always-multiline"],
-    "no-extra-parens": ["error", "all", { "enforceForArrowConditionals": false, "enforceForFunctionPrototypeMethods": false, "nestedBinaryExpressions": false, "returnAssign": false }],
+    "no-extra-parens": [
+      "error",
+      "all",
+      {
+        "enforceForArrowConditionals": false,
+        "enforceForFunctionPrototypeMethods": false,
+        "nestedBinaryExpressions": false,
+        "returnAssign": false
+      }
+    ],
     "no-magic-numbers": "off",
     "no-ternary": "off",
     "no-undef": "off",
     "no-undefined": "off",
+    "nonblock-statement-body-position": ["error", "any"],
     "object-curly-spacing": ["error", "always"],
     "object-property-newline": ["error", { "allowAllPropertiesOnSameLine": true }],
     "one-var": "off",
@@ -102,8 +85,10 @@
     "sort-imports": "off",
     "sort-keys": "off",
     "space-before-function-paren": ["error", "never"],
+    "spaced-comment": ["error", "always", { "markers": ["/"] }],
 
     // plugin:@typescript-eslint
+    "@typescript-eslint/no-dynamic-delete": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {

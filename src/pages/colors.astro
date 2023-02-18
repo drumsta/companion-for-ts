@@ -1,7 +1,6 @@
 ---
-/* eslint @typescript-eslint/no-explicit-any: 0 */
-import chroma from "chroma-js";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import chroma from "chroma-js";
 import { changeLanguage, t } from "i18next";
 
 changeLanguage("en");
@@ -13,7 +12,7 @@ const colorHueCorrection = 0;
 const colorBase = "#FFFFFF";
 const colorBaseLuminance: number = chroma(colorBase).luminance();
 const color1Luminance: number = chroma(color1).luminance();
-const colorGrades: number[] = [...Array(202).keys()].map((i) => (i * 0.5) - 0.5);
+const colorGrades: number[] = [...Array(202).keys()].map((i) => i * 0.5 - 0.5);
 const colorFamilies: string[] = [
     "",
     "White",
@@ -62,13 +61,11 @@ const calcColor = function calcColor(grade: number, col: number): any {
     const color = chroma(colorValues[col]);
     const colorLch = color.lch();
     const colorLchLightness = chroma(grade, colorLch[1], colorLch[2], "lch");
-    // Console.log(color1luminance);
-    const contrastRatio: number = Math.round(((21 * Math.exp(-0.030445224 * grade)) + Number.EPSILON) * 100) /
-        100;
+    const contrastRatio: number = Math.round((21 * Math.exp(-0.030445224 * grade) + Number.EPSILON) * 100) / 100;
     const contrastRatioInverted: number = 1 / contrastRatio;
     const color2Luminance: number = colorBaseLuminance > 0.5
-        ? (contrastRatioInverted * (colorBaseLuminance + 0.05)) - 0.05
-        : ((colorBaseLuminance + 0.05) / contrastRatioInverted) - 0.05;
+        ? contrastRatioInverted * (colorBaseLuminance + 0.05) - 0.05
+        : (colorBaseLuminance + 0.05) / contrastRatioInverted - 0.05;
     const color2Temp = colorLchLightness.luminance(color2Luminance, "lch");
     const color2 = color2Temp.set("lch.h", Number(color2Temp.lch()[2]) + colorHueCorrection);
     return color2;
@@ -99,36 +96,32 @@ const applyLightness = function applyLightness(grade: number, col: number): stri
     <table>
       <thead>
         <tr>
-          {
-            colorFamilies.map((family: string, col: number) => (col === 0 ? <th>&nbsp</th> : <th>{family}</th>))
-          }
+          {colorFamilies.map((family: string, col: number) => (col === 0 ? <th>&nbsp</th> : <th>{family}</th>))}
         </tr>
       </thead>
       <tbody>
         {
-          colorGrades.map((grade: number, row: number) => (
-            row === 0
-              ? <tr />
-              : <tr>
-                {colorFamilies.map((_family: string, col: number) => (
-                  col === 0
-                    ? <th>{`${grade} - ${calcContrastRatio(grade)}`}</th>
-                    : <td
-                      style={`background-color: ${
-                        color1Luminance > 0.5
-                          ? applyLightness(grade, col)
-                          : color1
-                      };color: ${
-                        color1Luminance > 0.5
-                          ? color1
-                          : applyLightness(grade, col)
+          colorGrades.map((grade: number, row: number) =>
+            row === 0 ? (
+              <tr />
+            ) : (
+              <tr>
+                {colorFamilies.map((_family: string, col: number) =>
+                  col === 0 ? (
+                    <th>{`${grade} - ${calcContrastRatio(grade)}`}</th>
+                  ) : (
+                    <td
+                      style={`background-color: ${color1Luminance > 0.5 ? applyLightness(grade, col) : color1};color: ${
+                        color1Luminance > 0.5 ? color1 : applyLightness(grade, col)
                       };`}
                     >
                       <div>{`${applyLightness(grade, col)}`}</div>
                     </td>
-                ))}
+                  ),
+                )}
               </tr>
-          ))
+            ),
+          )
         }
       </tbody>
     </table>

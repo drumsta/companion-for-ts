@@ -1,10 +1,8 @@
 ---
-import AmpImports from "@components/AmpImports.astro";
-import AmpServiceWorker from "@components/AmpServiceWorker.astro";
-import AmpStyle from "@components/AmpStyle.astro";
+import "@assets/styles/theme.css";
 import Footer from "@components/Footer.astro";
-import Header from "@components/Header.astro";
 import HeadCommon from "@components/HeadCommon.astro";
+import Header from "@components/Header.astro";
 import { normalizeLangTag, rtlLanguages } from "@i18n/util";
 import { detectLocaleFromPath } from "astro-i18next";
 import { Schema } from "astro-seo-schema";
@@ -13,54 +11,25 @@ import type { Graph, Thing, WithContext } from "schema-dts";
 export interface Props {
   title?: string | undefined;
   description?: string | undefined;
-  pageStyle?: string | undefined;
   noindex?: boolean | undefined;
   nofollow?: boolean | undefined;
   jsonLd?: Graph | WithContext<Thing> | undefined;
-  includeAmpAutocomplete?: boolean | undefined;
-  includeAmpBind?: boolean | undefined;
-  includeAmpForm?: boolean | undefined;
-  includeAmpMustache?: boolean | undefined;
-  includeAmpScript?: boolean | undefined;
-  includeAmpSidebar?: boolean | undefined;
 }
 
-const { jsonLd }: Props = Astro.props;
+const { title, description, noindex, nofollow, jsonLd }: Props = Astro.props;
 const { pathname } = Astro.url;
 const lang: string = detectLocaleFromPath(pathname);
 const direction: "ltr" | "rtl" = rtlLanguages.has(lang) ? "rtl" : "ltr";
 const bcpLang: string = normalizeLangTag(lang);
-
-const customStyle = `
-/* Custom Layout Style */
-.footer-link-active,.footer-link:focus,.footer-link:hover {color: var(--color-accent);border-color: var(--color-border-accent);border-top-width: 2px;}
-.language-selector-link-active,.language-selector-link:focus,.language-selector-link:hover {background-color: var(--color-primary);text-decoration-line: underline;}
-
-/* Custom Page Style */
-${Astro.props.pageStyle ?? ""}`;
 ---
 
 <!DOCTYPE html>
-<html amp dir={direction} lang={bcpLang}>
+<html dir={direction} lang={bcpLang} class="dark">
   <head>
-    <HeadCommon
-      title={Astro.props.title}
-      description={Astro.props.description}
-      noindex={Astro.props.noindex}
-      nofollow={Astro.props.nofollow}
-    />
-    <AmpImports
-      includeAmpAutocomplete={Astro.props.includeAmpAutocomplete}
-      includeAmpBind={Astro.props.includeAmpBind}
-      includeAmpForm={Astro.props.includeAmpForm}
-      includeAmpMustache={Astro.props.includeAmpMustache}
-      includeAmpScript={Astro.props.includeAmpScript}
-      includeAmpSidebar={Astro.props.includeAmpSidebar} />
+    <HeadCommon title={title} description={description} noindex={noindex} nofollow={nofollow} />
     {typeof jsonLd === "undefined" ? null : <Schema item={jsonLd} />}
-    <AmpStyle customStyle={customStyle} />
   </head>
-  <body class="text-color bg-color" data-prefers-dark-mode-class="dark">
-    <AmpServiceWorker />
+  <body class="bg-color-bg text-color-text">
     <!-- Base Layout -->
     <Header />
     <!-- Page Content -->

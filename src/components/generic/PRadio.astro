@@ -1,0 +1,122 @@
+---
+export interface Props {
+  id: string;
+  options: { key: string; value: string }[];
+  uncheckedClass?: string | undefined;
+  checkedClass?: string | undefined;
+  ariaLabel?: string | undefined;
+}
+
+const { id, options, uncheckedClass, checkedClass, ariaLabel }: Props = Astro.props;
+const className =
+  "py-1 px-4 justify-center items-center select-none border-color-border border rounded-md cursor-pointer hover:underline focus:underline focus:z-10 first-of-type:rounded-tr-none first-of-type:rounded-br-none last-of-type:rounded-tl-none last-of-type:rounded-bl-none [&:not(:last)]:border-r-0 [&:not(:first-of-type)]:[&:not(:last-of-type)]:rounded-none";
+
+const radioItem: string = await Astro.slots.render("radio-item");
+---
+
+<div
+  id={id}
+  class="flex flex-row"
+  role="radiogroup"
+  aria-label={ariaLabel}
+  data-p-radio-group
+  data-p-radio-group-item-class={className}
+  data-p-radio-group-item-class-unchecked={uncheckedClass}
+  data-p-radio-group-item-class-checked={checkedClass}
+>
+  {
+    options.map((option: { key: string; value: string }) => (
+      <Fragment>
+        <div
+          class={className}
+          tabindex="0"
+          role="radio"
+          aria-label={option.value}
+          aria-checked="false"
+          data-p-radio-item
+          data-key={option.key}
+          data-option={JSON.stringify(option)}
+        >
+          <Fragment set:html={radioItem.replace("{{option.value}}", option.value)} />
+        </div>
+      </Fragment>
+    ))
+  }
+</div>
+
+<script>
+  // Elements Update
+  const updateRadioItemStatus = function updateRadioItemStatus(radioGroupElement: Element): void {
+    const key = radioGroupElement.getAttribute("data-p-radio-group");
+    const className = radioGroupElement.getAttribute("data-p-radio-group-item-class");
+    const uncheckedClass = radioGroupElement.getAttribute("data-p-radio-group-item-class-unchecked");
+    const checkedClass = radioGroupElement.getAttribute("data-p-radio-group-item-class-checked");
+
+    for (const childElement of radioGroupElement.children) {
+      const elementKey = childElement.getAttribute("data-key");
+      childElement.setAttribute("aria-checked", (elementKey !== null && elementKey === key).toString());
+      childElement.className =
+        `${className} ` + `${elementKey !== null && elementKey === key ? checkedClass : uncheckedClass}`;
+    }
+  };
+
+  // Model Update
+  const notify = function notify(radioGroupElement: Element, newKey: string): void {
+    const customEvent = new CustomEvent("change", { detail: newKey });
+    radioGroupElement.dispatchEvent(customEvent);
+  };
+
+  const updateValue = function updateValue(radioGroupElement: Element, newKey: string): void {
+    const key = radioGroupElement.getAttribute("data-p-radio-group");
+    if (newKey === key) return;
+    console.log("updateValue");
+
+    radioGroupElement.setAttribute("data-p-radio-group", newKey);
+  };
+
+  // Observers
+  const onMutationRadioGroup = function onMutationRadioGroup(mutationList: MutationRecord[]): void {
+    const mutationRecord = mutationList[0];
+    if (!mutationRecord) return;
+
+    const radioGroupElement = mutationRecord.target as Element;
+    updateRadioItemStatus(radioGroupElement);
+
+    if (mutationRecord.attributeName === "data-p-radio-group") {
+      const newKey = radioGroupElement.getAttribute("data-p-radio-group");
+      if (!newKey) return;
+
+      notify(radioGroupElement, newKey);
+    }
+  };
+
+  // Events
+  const onRadioItemClick = function onRadioItemClick(event: Event): void {
+    if (!event.currentTarget) return;
+
+    const element = event.currentTarget as Element;
+    const radioGroupElement = element.parentElement;
+    if (!radioGroupElement) return;
+
+    const newKey = element.getAttribute("data-key");
+    if (!newKey) return;
+
+    updateValue(radioGroupElement, newKey);
+  };
+
+  // Init
+  const observer = new MutationObserver(onMutationRadioGroup);
+  const radioGroups = document.querySelectorAll("[data-p-radio-group]");
+  radioGroups.forEach((radioGroup): void => {
+    updateRadioItemStatus(radioGroup);
+    observer.observe(radioGroup, {
+      attributes: true,
+      attributeFilter: ["data-p-radio-group"],
+    });
+  });
+
+  const radioItems = document.querySelectorAll("[data-p-radio-item]");
+  radioItems.forEach((radioItem): void => {
+    radioItem.addEventListener("click", onRadioItemClick, { passive: true });
+  });
+</script>

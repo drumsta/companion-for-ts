@@ -1,0 +1,207 @@
+---
+import { DOMParser, XMLSerializer } from "@xmldom/xmldom";
+
+export interface Props {
+  id: string;
+  src: string;
+  filterValue?: string;
+  className?: string | undefined;
+}
+
+const { id, src, filterValue, className }: Props = Astro.props;
+const xmlns = 'xmlns="http://www.w3.org/1999/xhtml"';
+
+const resultsTemplate = await Astro.slots.render("results-item-template");
+const template = new DOMParser().parseFromString(resultsTemplate, "text/html").documentElement;
+if (!template || template.tagName !== "template") throw new Error("Menu content is not a Template tag!");
+
+template.setAttribute("id", `${id}-item-template`);
+const resultsTemplateHtml: string = new XMLSerializer().serializeToString(template).replace(xmlns, "");
+---
+
+<div id={`${id}-autocomplete`} class="block" data-p-autocomplete data-src={src} data-filter-value={filterValue}>
+  <input
+    type="search"
+    id={id}
+    class={"font-sans text-base p-2 box-border" + " " + className}
+    dir="auto"
+    aria-autocomplete="both"
+    role="textbox"
+    aria-controls="amp-autocomplete-rs-search"
+    aria-multiline="false"
+    autocomplete="off"
+    aria-expanded="false"
+  />
+  <Fragment set:html={resultsTemplateHtml} />
+  <div
+    role="listbox"
+    id={`${id}-results`}
+    class={`p-1 m-1 !absolute !opacity-0 !invisible w-full max-h-[40vh] overflow-y-auto overflow-x-hidden shadow` +
+      ` cursor-pointer open:!opacity-100 open:!visible` +
+      ` ` +
+      className}
+  >
+  </div>
+</div>
+
+<script>
+  import Mustache from "mustache";
+
+  const autoCompleteData: Record<string, Record<string, Record<string, unknown>[]>> = {};
+  let activeCompleter: Element | null = null;
+  let activeSearchInput: HTMLInputElement | null = null;
+
+  // Functions
+  const fetchCompleterData = async function fetchCompleterData(completer: Element) {
+    const request = new Request(completer.getAttribute("data-src") ?? "");
+    const response = await fetch(request);
+    if (!response.body) return;
+
+    const data = (await response.json()) as Record<string, Record<string, unknown>[]>;
+    autoCompleteData[completer.id] = data;
+  };
+
+  const prepareAutocompleteResults = async function prepareAutocompleteResults(completer: Element) {
+    const results = document.getElementById(completer.id.replace("-autocomplete", "-results")) as HTMLElement;
+
+    if (!autoCompleteData[completer.id]) await fetchCompleterData(completer);
+
+    const data = autoCompleteData[completer.id];
+    if (!data || !data.hasOwnProperty("items") || typeof data["items"] === "undefined") {
+      results.replaceChildren();
+      return;
+    }
+
+    const items = data["items"];
+    const searchInput = document.getElementById(completer.id.replace("-autocomplete", "")) as HTMLInputElement;
+    const searchValue = searchInput.value;
+    const itemTemplate = document.getElementById(
+      completer.id.replace("-autocomplete", "-item-template"),
+    ) as HTMLTemplateElement;
+    const filterValue = completer.getAttribute("data-filter-value") ?? "value";
+
+    const filteredNodes: Node[] = [];
+    items.forEach((item): void => {
+      const itemValue = item[filterValue];
+      if (typeof itemValue !== "string") return;
+      if (!itemValue.includes(searchValue) && searchValue !== "") return;
+
+      const tempTemplate = document.createElement("template");
+      tempTemplate.innerHTML = Mustache.render(itemTemplate.innerHTML, item);
+
+      const firstElementChild = tempTemplate.content.firstElementChild;
+      if (firstElementChild) {
+        const className = ["py-2", "px-4"];
+        firstElementChild.classList.add(...className);
+        firstElementChild.addEventListener("click", onClickCompleterItemClick);
+      }
+
+      filteredNodes.push(tempTemplate.content);
+    });
+    results.replaceChildren(...filteredNodes);
+  };
+
+  // Elements Update
+  const toggleCompleterState = async function toggleCompleterState(searchInput: HTMLInputElement | null) {
+    if (!searchInput) return;
+
+    const completerContent = document.getElementById(`${searchInput.id}-results`);
+    if (!completerContent) return;
+
+    const completer = document.getElementById(`${searchInput.id}-autocomplete`);
+    if (!completer) return;
+
+    if (!autoCompleteData[completer.id]) await prepareAutocompleteResults(completer);
+
+    const newState = !completerContent.hasAttribute("open");
+
+    searchInput.setAttribute("aria-expanded", `${newState}`);
+    completerContent.toggleAttribute("open", newState);
+
+    newState
+      ? setTimeout(function (): void {
+          document.addEventListener("mousedown", onClickCompleterDocument, { passive: true });
+        }, 100)
+      : document.removeEventListener("mousedown", onClickCompleterDocument);
+    activeCompleter = newState ? completer : null;
+    activeSearchInput = newState ? searchInput : null;
+  };
+
+  // Model Update
+  const notify = function notify(searchInput: HTMLInputElement): void {
+    const event = new Event("change");
+    searchInput.dispatchEvent(event);
+  };
+
+  const updateValue = function updateValue(searchInput: HTMLInputElement, newValue: string): void {
+    newValue = newValue.trim();
+    if (newValue === searchInput.value) return;
+
+    searchInput.value = newValue;
+
+    if (!activeCompleter) return;
+    const completer = activeCompleter;
+
+    setTimeout(function (): void {
+      prepareAutocompleteResults(completer);
+    }, 100);
+
+    if (!activeSearchInput) return;
+    notify(activeSearchInput);
+  };
+
+  // Observers
+  const onIntersectionCompleter = function onIntersectionCompleter(entryList: IntersectionObserverEntry[]): void {
+    const entry = entryList[0];
+    if (!entry || !entry.isIntersecting) return;
+
+    const completer = entry.target as Element;
+    if (autoCompleteData[completer.id]) return;
+    fetchCompleterData(completer).then(() => prepareAutocompleteResults(completer));
+  };
+
+  // Events
+  const onClickCompleterDocument = function onClickCompleterDocument(event: Event): void {
+    if (!event.currentTarget || !activeCompleter) return;
+
+    const element = event.target as Element;
+    if (activeCompleter.contains(element)) return;
+    toggleCompleterState(activeSearchInput);
+  };
+
+  const onFocusSearchInputClick = function onFocusSearchInputClick(event: Event): void {
+    if (!event.currentTarget) return;
+
+    const searchInput = event.currentTarget as HTMLInputElement;
+    if (activeSearchInput && activeSearchInput === searchInput) return;
+    toggleCompleterState(searchInput);
+  };
+
+  const onInputSearchInputClick = function onInputSearchInputClick(event: Event): void {
+    if (!event.currentTarget) return;
+    if (!activeCompleter) return;
+
+    prepareAutocompleteResults(activeCompleter);
+  };
+
+  const onClickCompleterItemClick = function onClickCompleterItemClick(event: Event): void {
+    if (!event.currentTarget) return;
+    if (!activeSearchInput) return;
+
+    const selectedItem = event.currentTarget as Element;
+    updateValue(activeSearchInput, selectedItem.textContent ?? "");
+    toggleCompleterState(activeSearchInput);
+  };
+
+  // Init
+  const completers = document.querySelectorAll("[data-p-autocomplete]");
+  completers.forEach((completer): void => {
+    const searchInput = document.getElementById(completer.id.replace("-autocomplete", "")) as HTMLInputElement;
+    searchInput.addEventListener("focus", onFocusSearchInputClick, { passive: true });
+    searchInput.addEventListener("input", onInputSearchInputClick, { passive: true });
+
+    const observerOptions: IntersectionObserverInit = { root: completer.parentElement, threshold: 1 };
+    const observer = new IntersectionObserver(onIntersectionCompleter, observerOptions);
+    observer.observe(completer);
+  });
+</script>

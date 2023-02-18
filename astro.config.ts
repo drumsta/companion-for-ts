@@ -1,6 +1,8 @@
 /* eslint-disable no-duplicate-imports */
 import type { SitemapOptions } from "@astrojs/sitemap";
 import sitemap from "@astrojs/sitemap";
+import tailwind from "@astrojs/tailwind";
+import critters from "astro-critters";
 import astroI18next from "astro-i18next";
 import { defineConfig } from "astro/config";
 
@@ -12,8 +14,8 @@ const sitemapOptions: SitemapOptions = {
       lt: "lt",
     },
   },
-  filter: (page) => page !== "https://www.companionforts.com/colors/" &&
-    page !== "https://www.companionforts.com/lt/colors/",
+  filter: (page: string): boolean =>
+    page !== "https://www.companionforts.com/colors/" && page !== "https://www.companionforts.com/lt/colors/",
 };
 
 export default defineConfig({
@@ -24,23 +26,25 @@ export default defineConfig({
     host: true,
   },
 
+  build: {
+    assets: "assets",
+  },
+
   vite: {
     logLevel: "info",
-    clearScreen: false,
     server: {
       hmr: {
         overlay: false,
       },
     },
     build: {
+      assetsInlineLimit: 0,
       target: "esnext",
-      minify: "esbuild",
-      reportCompressedSize: true,
       modulePreload: {
         polyfill: false,
       },
     },
   },
 
-  integrations: [astroI18next(), sitemap(sitemapOptions)],
+  integrations: [astroI18next(), tailwind(), sitemap(sitemapOptions), critters()],
 });

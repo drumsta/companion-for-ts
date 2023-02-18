@@ -1,6 +1,7 @@
 ---
-import BaseLayout from "@layouts/BaseLayout.astro";
 import SpeedLimitSelector from "@components/SpeedLimitSelector.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import TrainHelper from "@src/components/TrainHelper.astro";
 import { changeLanguage, t } from "i18next";
 
 changeLanguage("en");
@@ -9,16 +10,10 @@ const title: string = t("pages.index.title");
 const description: string = t("pages.index.description");
 ---
 
-<BaseLayout
-  title={title}
-  description={description}
-  includeAmpAutocomplete={true}
-  includeAmpMustache={true}
-  includeAmpScript={true}
-  includeAmpSidebar={true}
->
+<BaseLayout title={title} description={description}>
   <header class="flex flex-col justify-center items-center">
     <h1>{t("pages.index.header")}</h1>
   </header>
   <SpeedLimitSelector />
+  <TrainHelper />
 </BaseLayout>

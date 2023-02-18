@@ -1,0 +1,257 @@
+---
+import i18next from "i18next";
+
+export interface Props {
+  id: string;
+  min?: number;
+  max?: number;
+  currentValue?: number;
+  step?: number;
+  size?: number;
+  text2?: string | undefined;
+  text3?: string | undefined;
+  ariaLabel?: string | undefined;
+}
+
+const { id, min, max, currentValue, step, size, text2, text3, ariaLabel }: Props = Astro.props;
+const currentLanguage: string = i18next.language;
+---
+
+<svg
+  id={id}
+  width={size}
+  height={size}
+  viewBox="0 0 100 100"
+  class="cursor-grab"
+  tabindex="0"
+  role="slider"
+  aria-valuemin={min ?? 0}
+  aria-valuemax={max ?? 100}
+  aria-valuenow={currentValue ?? min ?? 0}
+  aria-label={ariaLabel}
+  data-p-knob-min={min ?? 100}
+  data-p-knob-range={max ?? 100}
+  data-p-knob-value={currentValue ?? min ?? 0}
+  data-p-knob-step={step ?? 1}
+>
+  <path
+    id={`${id}-range`}
+    class="fill-none stroke-color-negative-dark"
+    d="M 30 84.64 A 40 40 0 1 1 70 84.64"
+    stroke-width="14"></path>
+  <path
+    id={`${id}-value`}
+    class="fill-none stroke-color-positive-dark"
+    d="M 30 84.64 A 40 40 0 0 1 50 10"
+    stroke-width="14"></path>
+  <text id={`${id}-text-1`} x="50" y="47" text-anchor="middle" class="fill-color-text text-center text-xl select-none">
+    {(currentValue ?? min ?? 0).toLocaleString(currentLanguage)}
+  </text>
+  <text id={`${id}-text-2`} x="50" y="68" text-anchor="middle" class="fill-color-text text-center text-xl select-none">
+    {text2}
+  </text>
+  <text id={`${id}-text-3`} x="50" y="89" text-anchor="middle" class="fill-color-text text-center text-xxs select-none">
+    {text3}
+  </text>
+</svg>
+
+<script>
+  let min = 0;
+  let range = 0;
+  let value = 0;
+  let step = 0;
+
+  const radius = 40;
+  const midX = 50;
+  const midY = 50;
+  const minRadians = (4 * Math.PI) / 3;
+  const maxRadians = -Math.PI / 3;
+  const minX = midX + Math.cos(minRadians) * radius;
+  const minY = midY - Math.sin(minRadians) * radius;
+  const maxX = midX + Math.cos(maxRadians) * radius;
+  const maxY = midY - Math.sin(maxRadians) * radius;
+
+  // Functions
+  const mapRange = function mapRange(x: number, inMin: number, inMax: number, outMin: number, outMax: number): number {
+    return ((x - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
+  };
+
+  const zeroRadians = function zeroRadians(): number {
+    if (min > 0 && range > 0) return mapRange(min, min, range, minRadians, maxRadians);
+
+    return mapRange(0, min, range, minRadians, maxRadians);
+  };
+
+  const valueRadians = function valueRadians(): number {
+    return mapRange(value, min, range, minRadians, maxRadians);
+  };
+
+  const zeroX = function zeroX(): number {
+    return midX + Math.cos(zeroRadians()) * radius;
+  };
+
+  const zeroY = function zeroY(): number {
+    return midY - Math.sin(zeroRadians()) * radius;
+  };
+
+  const largeArc = function largeArc(): 0 | 1 {
+    return Math.abs(zeroRadians() - valueRadians()) < Math.PI ? 0 : 1;
+  };
+
+  const sweep = function sweep(): 0 | 1 {
+    return valueRadians() > zeroRadians() ? 0 : 1;
+  };
+
+  const valueX = function valueX(): number {
+    return midX + Math.cos(valueRadians()) * radius;
+  };
+
+  const valueY = function valueY(): number {
+    return midY - Math.sin(valueRadians()) * radius;
+  };
+
+  const rangePath = function rangePath(): string {
+    return `M ${minX} ${minY} A ${radius} ${radius} 0 1 1 ${maxX} ${maxY}`;
+  };
+
+  const valuePath = function valuePath(): string {
+    return `M ${zeroX()} ${zeroY()} A ${radius} ${radius} 0 ${largeArc()} ${sweep()} ${valueX()} ${valueY()}`;
+  };
+
+  const getAttributes = function getAttributes(knobElement: Element) {
+    min = Number(knobElement.getAttribute("data-p-knob-min") ?? "0");
+    range = Number(knobElement.getAttribute("data-p-knob-range") ?? "0");
+    value = Number(knobElement.getAttribute("data-p-knob-value") ?? "0");
+    step = Number(knobElement.getAttribute("data-p-knob-step") ?? "0");
+  };
+
+  const calcNewValue = function calcNewValue(knobElement: Element, offsetX: number, offsetY: number): number {
+    getAttributes(knobElement);
+    const size = Number(knobElement.getAttribute("width") ?? "0");
+    const dx = offsetX - size / 2;
+    const dy = size / 2 - offsetY;
+    const angle = Math.atan2(dy, dx);
+    const start = -Math.PI / 2 - Math.PI / 6;
+    let mappedValue = 0;
+    if (angle > maxRadians) mappedValue = mapRange(angle, minRadians, maxRadians, min, range);
+    else if (angle < start) mappedValue = mapRange(angle + 2 * Math.PI, minRadians, maxRadians, min, range);
+    else return value;
+
+    return Math.round((mappedValue - min) / step) * step + min;
+  };
+
+  // Elements Update
+  const updateKnobElement = function updateKnobElement(knobElement: Element): void {
+    const id = knobElement.id;
+    const knobRange = document.getElementById(`${id}-range`) as HTMLElement;
+    const knobValue = document.getElementById(`${id}-value`) as HTMLElement;
+
+    getAttributes(knobElement);
+
+    knobElement.setAttribute("aria-valuemax", range.toString());
+    knobElement.setAttribute("aria-valuenow", value.toString());
+    knobRange.setAttribute("d", rangePath());
+    knobValue.setAttribute("d", valuePath());
+  };
+
+  // Model Update
+  const notify = function notify(knobElement: Element, newValue: number): void {
+    const customEvent = new CustomEvent("change", { detail: newValue });
+    knobElement.dispatchEvent(customEvent);
+  };
+
+  const updateValue = function updateValue(knobElement: Element, offsetX: number, offsetY: number): void {
+    const newValue = calcNewValue(knobElement, offsetX, offsetY);
+    if (newValue === value) return;
+
+    knobElement.setAttribute("data-p-knob-value", newValue.toString());
+  };
+
+  // Observers
+  const onMutationKnob = function onMutationKnob(mutationList: MutationRecord[]): void {
+    const mutationRecord = mutationList[0];
+    if (!mutationRecord) return;
+
+    const knobElement = mutationRecord.target as Element;
+    updateKnobElement(knobElement);
+
+    if (mutationList.find((record): boolean => record.attributeName === "data-p-knob-value")) {
+      notify(knobElement, value);
+    }
+  };
+
+  // Events
+  const onClickKnob = function onClickKnob(event: Event): void {
+    if (!event.currentTarget) return;
+
+    const element = event.currentTarget as Element;
+    const mouseEvent = event as MouseEvent;
+    updateValue(element, mouseEvent.offsetX, mouseEvent.offsetY);
+  };
+
+  const onMouseMoveKnob = function onMouseMoveKnob(event: Event): void {
+    onClickKnob(event);
+  };
+
+  const onMouseUpKnob = function onMouseUpKnob(event: Event): void {
+    if (!event.currentTarget) return;
+
+    const element = event.currentTarget as Element;
+    element.removeEventListener("mousemove", onMouseMoveKnob);
+    element.removeEventListener("mouseup", onMouseUpKnob);
+  };
+
+  const onMouseDownKnob = function onMouseDownKnob(event: Event): void {
+    if (!event.currentTarget) return;
+
+    const element = event.currentTarget as Element;
+    element.addEventListener("mousemove", onMouseMoveKnob, { passive: true });
+    element.addEventListener("mouseup", onMouseUpKnob, { passive: true });
+  };
+
+  const onTouchMoveKnob = function onTouchMoveKnob(event: Event) {
+    if (!event.currentTarget) return;
+
+    const element = event.currentTarget as Element;
+    const touchEvent = event as TouchEvent;
+    if (touchEvent.touches.length !== 1) return;
+
+    const touch = touchEvent.touches.item(0);
+    if (!touch) return;
+
+    const rect: DOMRect | undefined = element.getBoundingClientRect();
+    const offsetX = touch.clientX - rect.left;
+    const offsetY = touch.clientY - rect.top;
+    updateValue(element, offsetX, offsetY);
+  };
+
+  const onTouchEndKnob = function onTouchEndKnob(event: Event) {
+    if (!event.currentTarget) return;
+
+    const element = event.currentTarget as Element;
+    element.removeEventListener("touchmove", onTouchMoveKnob);
+    element.removeEventListener("touchend", onTouchEndKnob);
+  };
+
+  const onTouchStartKnob = function onTouchStartKnob(event: Event): void {
+    if (!event.currentTarget) return;
+
+    const element = event.currentTarget as Element;
+    element.addEventListener("touchmove", onTouchMoveKnob, { passive: true });
+    element.addEventListener("touchend", onTouchEndKnob, { passive: true });
+  };
+
+  // Init
+  const observer = new MutationObserver(onMutationKnob);
+  const knobs = document.querySelectorAll("[data-p-knob-value]");
+  knobs.forEach((knob): void => {
+    updateKnobElement(knob);
+    knob.addEventListener("click", onClickKnob, { passive: true });
+    knob.addEventListener("mousedown", onMouseDownKnob, { passive: true });
+    knob.addEventListener("touchstart", onTouchStartKnob, { passive: true });
+    observer.observe(knob, {
+      attributes: true,
+      attributeFilter: ["data-p-knob-value", "data-p-knob-range"],
+    });
+  });
+</script>
