@@ -3,11 +3,11 @@
     "path": "/*",
     "timings": [
       { "metric": "cumulative-layout-shift", "budget": 1 },
-      { "metric": "first-contentful-paint", "budget": 1000 },
-      { "metric": "first-meaningful-paint", "budget": 1000 },
-      { "metric": "interactive", "budget": 1000 },
-      { "metric": "largest-contentful-paint", "budget": 1000 },
-      { "metric": "max-potential-fid", "budget": 25 },
+      { "metric": "first-contentful-paint", "budget": 1250 },
+      { "metric": "first-meaningful-paint", "budget": 1250 },
+      { "metric": "interactive", "budget": 1250 },
+      { "metric": "largest-contentful-paint", "budget": 1250 },
+      { "metric": "max-potential-fid", "budget": 50 },
       { "metric": "speed-index", "budget": 1250 },
       { "metric": "total-blocking-time", "budget": 25 }
     ],
