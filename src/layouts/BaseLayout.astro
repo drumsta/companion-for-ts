@@ -3,24 +3,24 @@ import "@assets/styles/theme.css";
 import Footer from "@components/Footer.astro";
 import HeadCommon from "@components/HeadCommon.astro";
 import Header from "@components/Header.astro";
-import { normalizeLangTag, rtlLanguages } from "@i18n/util";
+import { normalizeLangTag, rtlLanguages } from "@src/i18n";
 import { detectLocaleFromPath } from "astro-i18next";
 import { Schema } from "astro-seo-schema";
 import type { Graph, Thing, WithContext } from "schema-dts";
 
 export interface Props {
-  title?: string | undefined;
-  description?: string | undefined;
+  title?: string | null | undefined;
+  description?: string | null | undefined;
   noindex?: boolean | undefined;
   nofollow?: boolean | undefined;
-  jsonLd?: Graph | WithContext<Thing> | undefined;
+  jsonLd?: Graph | WithContext<Thing>;
 }
 
 const { title, description, noindex, nofollow, jsonLd }: Props = Astro.props;
 const { pathname } = Astro.url;
-const lang: string = detectLocaleFromPath(pathname);
-const direction: "ltr" | "rtl" = rtlLanguages.has(lang) ? "rtl" : "ltr";
-const bcpLang: string = normalizeLangTag(lang);
+const lang = detectLocaleFromPath(pathname);
+const direction = rtlLanguages.has(lang) ? "rtl" : "ltr";
+const bcpLang = normalizeLangTag(lang);
 ---
 
 <!DOCTYPE html>
@@ -34,6 +34,7 @@ const bcpLang: string = normalizeLangTag(lang);
     <Header />
     <!-- Page Content -->
     <slot />
+    <div class="h-20"></div>
     <Footer />
   </body>
 </html>

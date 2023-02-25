@@ -404,3 +404,6 @@ FodyWeavers.xsd
 # build output
 dist/
 .output/
+
+# Astro
+.astro

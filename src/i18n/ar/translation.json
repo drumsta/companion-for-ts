@@ -1,32 +1,32 @@
 {
   "app": {
-    "title": "Companion for Train Simulator",
-    "title-short": "Companion for TS",
-    "description": "Play your favourite Train Simulator with a little help and 💖 from Companion for Train Simulator."
+    "title": "رفيق محاكي القطار",
+    "title-short": "رفيق محاكي القطار",
+    "description": "العب Train Simulator المفضل لديك بقليل من المساعدة و 💖 من Companion for Train Simulator."
   },
   "components": {
     "footer": {
-      "navigation-target": "Site",
-      "drive": "Drive",
-      "more-menu": "More",
+      "navigation-target": "موقع",
+      "drive": "قاد",
+      "more-menu": "إضافي",
       "more-menu-items": {
-        "about": "About Us",
-        "privacy-policy": "Privacy Policy"
+        "about": "معلومات عنا",
+        "privacy-policy": "سياسة الخصوصية"
       }
     },
     "language-selector": {
-      "language-menu": "Language Options"
+      "language-menu": "خيارات اللغة"
     },
     "speed-limit": {
-      "title": "Speed limit selection component",
-      "max-speed": "Max Speed: {{maxSpeed}}",
-      "speed-limit": "Speed Limit",
-      "select-speed-units": "Select speed units",
-      "kph": "km/h",
-      "mph": "mph"
+      "title": "مكون اختيار حدود السرعة",
+      "max-speed": "أقصى سرعة: {{maxSpeed}}",
+      "speed-limit": "الحد الأقصى للسرعة",
+      "select-speed-units": "حدد وحدات السرعة",
+      "kph": "كم / ساعة",
+      "mph": "ميلا في الساعة"
     },
     "train-helper": {
-      "train-helper": "Train Helper"
+      "train-helper": "مساعد القطار"
     }
   },
   "layouts": {
@@ -34,15 +34,15 @@
   },
   "pages": {
     "index": {
-      "title": "Companion for Train Simulator",
-      "description": "Play your favourite Train Simulator with a little help and 💖 from Companion for Train Simulator.",
-      "header": "Drive a Train"
+      "title": "رفيق محاكي القطار",
+      "description": "العب Train Simulator المفضل لديك بقليل من المساعدة و 💖 من Companion for Train Simulator.",
+      "header": "قيادة القطار"
     },
     "404": {
-      "title": "Page not found - Error 404",
-      "description": "The requested URL was not found on this server.",
-      "header": "Page not found",
-      "1": "The requested URL was not found on this server."
+      "title": "الصفحة غير موجودة - خطأ 404",
+      "description": "لم يتم العثور على عنوان URL المطلوب على هذا الخادم.",
+      "header": "الصفحة غير موجودة",
+      "1": "لم يتم العثور على عنوان URL المطلوب على هذا الخادم."
     },
     "colors": {
       "title": "Color palette",

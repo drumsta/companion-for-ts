@@ -3,8 +3,8 @@ export {};
 const systemTheme = "system";
 const fallbackTheme = "dark";
 const knownColorSchemes = ["dark", "light"];
-let savedPreference: string = systemTheme;
-let lastTheme: string = systemTheme;
+let savedPreference = systemTheme;
+let lastTheme = systemTheme;
 
 const getSavedPreference = function getSavedPreference(): string {
   try {
@@ -27,9 +27,9 @@ const getSystemPreference = function getSystemPreference(): string {
   return fallbackTheme;
 };
 
-const initThemeMode = function initThemeMode() {
+const initThemeMode = function initThemeMode(): void {
   savedPreference = getSavedPreference();
-  const theme: string = savedPreference === systemTheme ? getSystemPreference() : savedPreference;
+  const theme = savedPreference === systemTheme ? getSystemPreference() : savedPreference;
   const de = document.documentElement;
   if (lastTheme !== systemTheme) de.classList.remove(lastTheme);
   if (lastTheme !== fallbackTheme) de.classList.remove(fallbackTheme);
@@ -37,13 +37,15 @@ const initThemeMode = function initThemeMode() {
   lastTheme = theme;
 };
 
+const onChangeMedia = function onChangeMedia(): void {
+  initThemeMode();
+};
+
 window.onload = (): void => {
   initThemeMode();
 
   if (savedPreference === systemTheme) {
-    const media: MediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
-    media.addEventListener("change", (): void => {
-      initThemeMode();
-    });
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    media.addEventListener("change", onChangeMedia, { passive: true });
   }
 };

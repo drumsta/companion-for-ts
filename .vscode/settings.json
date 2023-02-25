@@ -52,7 +52,9 @@
   "typescript.inlayHints.variableTypes.enabled": true,
   "typescript.inlayHints.variableTypes.suppressWhenTypeMatchesName": true,
 
-  "eslint.probe": ["javascript", "javascriptreact", "typescript", "typescriptreact", "html", "markdown", "astro"],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "html", "markdown", "astro"],
+  "eslint.ignoreUntitled": true,
+  "eslint.lintTask.enable": true,
 
   "editor.codeLens": true,
   "diffEditor.codeLens": true,
@@ -68,5 +70,8 @@
   "tailwindCSS.includeLanguages": {
     "astro": "html"
   },
-  "tailwindCSS.classAttributes": ["class", "className", "svgClass", "uncheckedClass", "checkedClass"]
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "tailwindCSS.classAttributes": ["class", "class:list", "className", "svgClass", "uncheckedClass", "checkedClass"]
 }

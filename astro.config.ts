@@ -12,10 +12,13 @@ const sitemapOptions: SitemapOptions = {
     locales: {
       en: "en",
       lt: "lt",
+      ar: "ar",
     },
   },
   filter: (page: string): boolean =>
-    page !== "https://www.companionforts.com/colors/" && page !== "https://www.companionforts.com/lt/colors/",
+    page !== "https://www.companionforts.com/colors/" &&
+    page !== "https://www.companionforts.com/lt/colors/" &&
+    page !== "https://www.companionforts.com/ar/colors/",
 };
 
 export default defineConfig({
@@ -46,5 +49,14 @@ export default defineConfig({
     },
   },
 
-  integrations: [astroI18next(), tailwind(), sitemap(sitemapOptions), critters()],
+  integrations: [
+    astroI18next(),
+    tailwind({
+      config: {
+        applyBaseStyles: false,
+      },
+    }),
+    sitemap(sitemapOptions),
+    critters(),
+  ],
 });

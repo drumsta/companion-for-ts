@@ -1,59 +1,67 @@
 ---
+import { rtlLanguages } from "@src/i18n";
 import { DOMParser, XMLSerializer } from "@xmldom/xmldom";
+import { detectLocaleFromPath } from "astro-i18next";
 
 export interface Props {
   id: string;
   src: string;
-  filterValue?: string;
-  className?: string | undefined;
+  filterValue?: string | null | undefined;
+  className?: string | null | undefined;
 }
 
 const { id, src, filterValue, className }: Props = Astro.props;
+const { pathname } = Astro.url;
+const lang = detectLocaleFromPath(pathname);
+const direction = rtlLanguages.has(lang) ? "rtl" : "ltr";
 const xmlns = 'xmlns="http://www.w3.org/1999/xhtml"';
 
-const resultsTemplate = await Astro.slots.render("results-item-template");
+const defaultResultsTemplate = '<template><div class="hover:underline">{{value}}</div></template>';
+let resultsTemplate = await Astro.slots.render("results-item-template");
+if (resultsTemplate.length === 0) resultsTemplate = defaultResultsTemplate;
 const template = new DOMParser().parseFromString(resultsTemplate, "text/html").documentElement;
-if (!template || template.tagName !== "template") throw new Error("Menu content is not a Template tag!");
+if (template.tagName !== "template") throw new Error("Autocomplete item template doesn't start with a Template tag!");
 
 template.setAttribute("id", `${id}-item-template`);
-const resultsTemplateHtml: string = new XMLSerializer().serializeToString(template).replace(xmlns, "");
+const resultsTemplateHtml = new XMLSerializer().serializeToString(template).replace(xmlns, "");
 ---
 
 <div id={`${id}-autocomplete`} class="block" data-p-autocomplete data-src={src} data-filter-value={filterValue}>
   <input
     type="search"
     id={id}
-    class={"font-sans text-base p-2 box-border" + " " + className}
-    dir="auto"
+    class:list={["font-sans text-base p-2 box-border", className]}
+    dir={direction}
     aria-autocomplete="both"
-    role="textbox"
-    aria-controls="amp-autocomplete-rs-search"
+    aria-controls={`${id}-results`}
     aria-multiline="false"
     autocomplete="off"
-    aria-expanded="false"
   />
   <Fragment set:html={resultsTemplateHtml} />
   <div
     role="listbox"
     id={`${id}-results`}
-    class={`p-1 m-1 !absolute !opacity-0 !invisible w-full max-h-[40vh] overflow-y-auto overflow-x-hidden shadow` +
-      ` cursor-pointer open:!opacity-100 open:!visible` +
-      ` ` +
-      className}
+    class:list={[
+      "p-1 m-1 !absolute !opacity-0 !invisible w-full max-h-[40vh] overflow-y-auto overflow-x-hidden shadow",
+      "cursor-pointer open:!opacity-100 open:!visible",
+      className,
+    ]}
+    aria-expanded="false"
   >
   </div>
 </div>
 
 <script>
-  import Mustache from "mustache";
-
   const autoCompleteData: Record<string, Record<string, Record<string, unknown>[]>> = {};
   let activeCompleter: Element | null = null;
   let activeSearchInput: HTMLInputElement | null = null;
 
   // Functions
-  const fetchCompleterData = async function fetchCompleterData(completer: Element) {
-    const request = new Request(completer.getAttribute("data-src") ?? "");
+  const fetchCompleterData = async function fetchCompleterData(completer: Element): Promise<void> {
+    const src = completer.getAttribute("data-src");
+    if (!src) return;
+
+    const request = new Request(src);
     const response = await fetch(request);
     if (!response.body) return;
 
@@ -61,8 +69,9 @@ const resultsTemplateHtml: string = new XMLSerializer().serializeToString(templa
     autoCompleteData[completer.id] = data;
   };
 
-  const prepareAutocompleteResults = async function prepareAutocompleteResults(completer: Element) {
-    const results = document.getElementById(completer.id.replace("-autocomplete", "-results")) as HTMLElement;
+  const prepareCompleterResults = async function prepareCompleterResults(completer: Element): Promise<void> {
+    const results = document.getElementById(completer.id.replace("-autocomplete", "-results"));
+    if (!results) return;
 
     if (!autoCompleteData[completer.id]) await fetchCompleterData(completer);
 
@@ -73,26 +82,42 @@ const resultsTemplateHtml: string = new XMLSerializer().serializeToString(templa
     }
 
     const items = data["items"];
+    const filterValue = completer.getAttribute("data-filter-value") ?? "value";
     const searchInput = document.getElementById(completer.id.replace("-autocomplete", "")) as HTMLInputElement;
     const searchValue = searchInput.value;
     const itemTemplate = document.getElementById(
       completer.id.replace("-autocomplete", "-item-template"),
     ) as HTMLTemplateElement;
-    const filterValue = completer.getAttribute("data-filter-value") ?? "value";
+    const matchList = itemTemplate.innerHTML.match(/\{\{\s*\w+\s*\}\}/g);
 
     const filteredNodes: Node[] = [];
     items.forEach((item): void => {
-      const itemValue = item[filterValue];
+      const itemValue = typeof item === "string" ? item : item[filterValue];
       if (typeof itemValue !== "string") return;
       if (!itemValue.includes(searchValue) && searchValue !== "") return;
 
       const tempTemplate = document.createElement("template");
-      tempTemplate.innerHTML = Mustache.render(itemTemplate.innerHTML, item);
+
+      if (matchList) {
+        let templateText = itemTemplate.innerHTML;
+        matchList.forEach((value): void => {
+          if (typeof item === "string") templateText = templateText.replace(value, item);
+          else {
+            const propertyName = value.replace("{{", "").replace("}}", "").trim();
+            const propertyValue = item[propertyName];
+            var textValue: string;
+            textValue = typeof propertyValue === "string" ? propertyValue : JSON.stringify(propertyValue);
+            templateText = templateText.replace(value, textValue);
+          }
+        });
+        tempTemplate.innerHTML = templateText;
+      }
 
       const firstElementChild = tempTemplate.content.firstElementChild;
       if (firstElementChild) {
         const className = ["py-2", "px-4"];
         firstElementChild.classList.add(...className);
+        firstElementChild.setAttribute("role", "option");
         firstElementChild.addEventListener("click", onClickCompleterItemClick);
       }
 
@@ -102,7 +127,9 @@ const resultsTemplateHtml: string = new XMLSerializer().serializeToString(templa
   };
 
   // Elements Update
-  const toggleCompleterState = async function toggleCompleterState(searchInput: HTMLInputElement | null) {
+  const toggleCompleterState = async function toggleCompleterState(
+    searchInput: HTMLInputElement | null,
+  ): Promise<void> {
     if (!searchInput) return;
 
     const completerContent = document.getElementById(`${searchInput.id}-results`);
@@ -111,17 +138,15 @@ const resultsTemplateHtml: string = new XMLSerializer().serializeToString(templa
     const completer = document.getElementById(`${searchInput.id}-autocomplete`);
     if (!completer) return;
 
-    if (!autoCompleteData[completer.id]) await prepareAutocompleteResults(completer);
+    if (!autoCompleteData[completer.id]) await prepareCompleterResults(completer);
 
     const newState = !completerContent.hasAttribute("open");
 
-    searchInput.setAttribute("aria-expanded", `${newState}`);
     completerContent.toggleAttribute("open", newState);
+    completerContent.setAttribute("aria-expanded", String(newState));
 
     newState
-      ? setTimeout(function (): void {
-          document.addEventListener("mousedown", onClickCompleterDocument, { passive: true });
-        }, 100)
+      ? setTimeout(() => document.addEventListener("mousedown", onClickCompleterDocument, { passive: true }), 100)
       : document.removeEventListener("mousedown", onClickCompleterDocument);
     activeCompleter = newState ? completer : null;
     activeSearchInput = newState ? searchInput : null;
@@ -142,9 +167,7 @@ const resultsTemplateHtml: string = new XMLSerializer().serializeToString(templa
     if (!activeCompleter) return;
     const completer = activeCompleter;
 
-    setTimeout(function (): void {
-      prepareAutocompleteResults(completer);
-    }, 100);
+    setTimeout(() => prepareCompleterResults(completer), 100);
 
     if (!activeSearchInput) return;
     notify(activeSearchInput);
@@ -157,7 +180,7 @@ const resultsTemplateHtml: string = new XMLSerializer().serializeToString(templa
 
     const completer = entry.target as Element;
     if (autoCompleteData[completer.id]) return;
-    fetchCompleterData(completer).then(() => prepareAutocompleteResults(completer));
+    fetchCompleterData(completer).then(() => prepareCompleterResults(completer));
   };
 
   // Events
@@ -181,7 +204,7 @@ const resultsTemplateHtml: string = new XMLSerializer().serializeToString(templa
     if (!event.currentTarget) return;
     if (!activeCompleter) return;
 
-    prepareAutocompleteResults(activeCompleter);
+    prepareCompleterResults(activeCompleter);
   };
 
   const onClickCompleterItemClick = function onClickCompleterItemClick(event: Event): void {
@@ -196,9 +219,9 @@ const resultsTemplateHtml: string = new XMLSerializer().serializeToString(templa
   // Init
   const completers = document.querySelectorAll("[data-p-autocomplete]");
   completers.forEach((completer): void => {
-    const searchInput = document.getElementById(completer.id.replace("-autocomplete", "")) as HTMLInputElement;
-    searchInput.addEventListener("focus", onFocusSearchInputClick, { passive: true });
-    searchInput.addEventListener("input", onInputSearchInputClick, { passive: true });
+    const searchInput = document.getElementById(completer.id.replace("-autocomplete", ""));
+    searchInput?.addEventListener("focus", onFocusSearchInputClick, { passive: true });
+    searchInput?.addEventListener("input", onInputSearchInputClick, { passive: true });
 
     const observerOptions: IntersectionObserverInit = { root: completer.parentElement, threshold: 1 };
     const observer = new IntersectionObserver(onIntersectionCompleter, observerOptions);

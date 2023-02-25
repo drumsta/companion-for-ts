@@ -11,14 +11,18 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:@typescript-eslint/strict",
-    "plugin:astro/recommended"
+    "plugin:astro/jsx-a11y-strict",
+    "plugin:astro/all"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": ["./tsconfig.json"]
+    "project": ["./tsconfig.json"],
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "extraFileExtensions": [".md"]
   },
-  "plugins": ["@typescript-eslint", "astro"],
-  "ignorePatterns": ["*/dist/*", "*/node_modules/*"],
+  "plugins": ["@typescript-eslint", "astro", "jsx-a11y"],
+  "ignorePatterns": ["*/node_modules/*", "**/*.md"],
   "reportUnusedDisableDirectives": true,
   "overrides": [
     {
@@ -27,6 +31,12 @@
       "parserOptions": {
         "parser": "@typescript-eslint/parser",
         "extraFileExtensions": [".astro"]
+      }
+    },
+    {
+      "files": ["**/*.astro/*.js", "*.astro/*.js"],
+      "parserOptions": {
+        "sourceType": "module"
       }
     }
   ],
@@ -44,10 +54,11 @@
       }
     ],
     "curly": ["error", "multi"],
+    "dot-location": ["error", "property"],
     "function-call-argument-newline": ["error", "consistent"],
     "function-paren-newline": ["error", "multiline-arguments"],
     "id-length": "off",
-    "indent": ["error", 2],
+    "indent": "off",
     "lines-around-comment": "off",
     "max-len": [
       "error",
@@ -62,12 +73,14 @@
     "max-params": "off",
     "max-statements": "off",
     "multiline-ternary": ["error", "always-multiline"],
+    "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 3 }],
     "no-extra-parens": [
       "error",
       "all",
       {
         "enforceForArrowConditionals": false,
         "enforceForFunctionPrototypeMethods": false,
+        "ignoreJSX": "all",
         "nestedBinaryExpressions": false,
         "returnAssign": false
       }
@@ -82,6 +95,7 @@
     "one-var": "off",
     "padded-blocks": ["error", { "blocks": "never", "switches": "never", "classes": "never" }],
     "quote-props": ["error", "as-needed"],
+    "quotes": ["error", "double", { "avoidEscape": true }],
     "sort-imports": "off",
     "sort-keys": "off",
     "space-before-function-paren": ["error", "never"],
@@ -89,12 +103,18 @@
 
     // plugin:@typescript-eslint
     "@typescript-eslint/no-dynamic-delete": "off",
+    // Throws an error in Output window. Try to enable after the package update.
+    "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
         "argsIgnorePattern": "^_",
         "destructuredArrayIgnorePattern": "^_"
       }
-    ]
+    ],
+
+    // plugin:astro
+    "astro/no-set-html-directive": "off",
+    "astro/jsx-a11y/prefer-tag-over-role": "off"
   }
 }

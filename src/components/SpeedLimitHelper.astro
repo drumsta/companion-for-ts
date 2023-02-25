@@ -4,8 +4,8 @@ import PRadio from "@components/generic/PRadio.astro";
 import PSlider from "@components/generic/PSlider.astro";
 import i18next, { t } from "i18next";
 
-const currentLanguage: string = i18next.language;
-const speedUnitsOptions: { key: string; value: string }[] = [
+const currentLanguage = i18next.language;
+const speedUnitsOptions = [
   { key: "km/h", value: t("components.speed-limit.kph") },
   { key: "mph", value: t("components.speed-limit.mph") },
 ];
@@ -18,10 +18,6 @@ const speedlimitStep = 5;
 const defaultSpeedLimit = 60;
 const defaultMaxSpeed = 120;
 const maxSpeedInfoTemplate = t("components.speed-limit.max-speed");
-const speedUnitsSelectorAriaLabel = t("components.speed-limit.select-speed-units");
-const speedLimitSelectorAriaLabel = t("components.speed-limit.speed-limit");
-const defaultSpeedUnits = t("components.speed-limit.kph");
-const alternateSpeedUnits = t("components.speed-limit.mph");
 ---
 
 <!-- Speed Limit Component -->
@@ -38,7 +34,7 @@ const alternateSpeedUnits = t("components.speed-limit.mph");
     <!-- Max Speed Info & Speed Units Selector -->
     <div class="flex flex-row items-center">
       <!-- Max Speed Info -->
-      <span id="max-speed-info" class="mr-2" data-text-template={maxSpeedInfoTemplate}>
+      <span id="max-speed-info" class="ltr:mr-2 rtl:ml-2" data-text-template={maxSpeedInfoTemplate}>
         {maxSpeedInfoTemplate.replace("{{maxSpeed}}", defaultMaxSpeed.toLocaleString(currentLanguage))}
       </span>
       <!-- Speed Units Selector - Radio Group -->
@@ -47,7 +43,7 @@ const alternateSpeedUnits = t("components.speed-limit.mph");
         options={speedUnitsOptions}
         uncheckedClass="bg-color-bg-subtle text-color-text"
         checkedClass="bg-color-primary-dark text-color-light"
-        ariaLabel={speedUnitsSelectorAriaLabel}
+        ariaLabel={t("components.speed-limit.select-speed-units")}
       >
         <span slot="radio-item">{"{{option.value}}"}</span>
       </PRadio>
@@ -72,9 +68,9 @@ const alternateSpeedUnits = t("components.speed-limit.mph");
         currentValue={defaultSpeedLimit}
         step={speedlimitStep}
         size={300}
-        text2={defaultSpeedUnits}
-        text3={alternateSpeedUnits}
-        ariaLabel={speedLimitSelectorAriaLabel}
+        text2={t("components.speed-limit.kph")}
+        text3={t("components.speed-limit.mph")}
+        ariaLabel={t("components.speed-limit.speed-limit")}
       />
     </div>
     <!-- Speed Limit Quick Buttons -->
@@ -91,29 +87,45 @@ const alternateSpeedUnits = t("components.speed-limit.mph");
       <button
         type="button"
         id="speed-limit-spinbutton-m-25"
-        class="bg-color-negative-dark text-color-light w-[3.125rem]">-25</button
+        class="bg-color-negative-dark text-color-light w-[3.125rem]"
       >
+        -{(25).toLocaleString(currentLanguage)}
+      </button>
       <button
         type="button"
         id="speed-limit-spinbutton-m-10"
-        class="bg-color-negative-dark text-color-light w-[3.125rem]">-10</button
+        class="bg-color-negative-dark text-color-light w-[3.125rem]"
       >
-      <button type="button" id="speed-limit-spinbutton-m-5" class="bg-color-negative-dark text-color-light w-[3.125rem]"
-        >-5</button
+        -{(10).toLocaleString(currentLanguage)}
+      </button>
+      <button
+        type="button"
+        id="speed-limit-spinbutton-m-5"
+        class="bg-color-negative-dark text-color-light w-[3.125rem]"
       >
-      <button type="button" id="speed-limit-spinbutton-p-5" class="bg-color-positive-dark text-color-light w-[3.125rem]"
-        >+5</button
+        -{(5).toLocaleString(currentLanguage)}
+      </button>
+      <button
+        type="button"
+        id="speed-limit-spinbutton-p-5"
+        class="bg-color-positive-dark text-color-light w-[3.125rem]"
       >
+        +{(5).toLocaleString(currentLanguage)}
+      </button>
       <button
         type="button"
         id="speed-limit-spinbutton-p-10"
-        class="bg-color-positive-dark text-color-light w-[3.125rem]">+10</button
+        class="bg-color-positive-dark text-color-light w-[3.125rem]"
       >
+        +{(10).toLocaleString(currentLanguage)}
+      </button>
       <button
         type="button"
         id="speed-limit-spinbutton-p-25"
-        class="bg-color-positive-dark text-color-light w-[3.125rem] mr-2">+25</button
+        class="bg-color-positive-dark text-color-light w-[3.125rem] ltr:mr-2 rtl:ml-2"
       >
+        +{(25).toLocaleString(currentLanguage)}
+      </button>
     </div>
   </div>
 </main>
@@ -122,6 +134,7 @@ const alternateSpeedUnits = t("components.speed-limit.mph");
   import { SpeedLimitStore, speedLimitStore } from "@src/stores/speedLimitStore";
   import { rollingStockClassList } from "@src/data/rollingStockClass";
 
+  const speedLimitHelper = "speedLimitHelper";
   const currentLanguage = document.documentElement.getAttribute("lang") ?? "en";
   const speedLimitComponent = document.getElementById("speed-limit-component") as HTMLElement;
   const maxSpeedInfo = document.getElementById("max-speed-info") as HTMLElement;
@@ -138,9 +151,10 @@ const alternateSpeedUnits = t("components.speed-limit.mph");
   const speedLimitSpinButtonP5 = document.getElementById("speed-limit-spinbutton-p-5") as HTMLElement;
   const speedLimitSpinButtonP10 = document.getElementById("speed-limit-spinbutton-p-10") as HTMLElement;
   const speedLimitSpinButtonP25 = document.getElementById("speed-limit-spinbutton-p-25") as HTMLElement;
-  const speedUnitsOptions: { key: string; value: string }[] = JSON.parse(
-    speedLimitComponent.getAttribute("data-speed-units") ?? "",
-  );
+  const speedUnitsOptions = JSON.parse(speedLimitComponent.getAttribute("data-speed-units") ?? "") as {
+    key: string;
+    value: string;
+  }[];
 
   // Functions
   const convertSpeedValue = function convertSpeedValue(speedUnits: string, speedValue: number): number {
@@ -159,6 +173,7 @@ const alternateSpeedUnits = t("components.speed-limit.mph");
   const updateMaxSpeedElements = function updateMaxSpeedElements(): void {
     const maxSpeed = speedLimitStore.value.maxSpeed;
 
+    speedLimitSelector.setAttribute("data-p-knob-range", maxSpeed.toString());
     maxSpeedInfo.innerHTML = (maxSpeedInfo.getAttribute("data-text-template") ?? "").replace(
       "{{maxSpeed}}",
       maxSpeed.toLocaleString(currentLanguage),
@@ -208,25 +223,21 @@ const alternateSpeedUnits = t("components.speed-limit.mph");
   };
 
   // State Update
-  const setSpeedUnitsState = function setSpeedUnitsState(key: string): void {
-    speedLimitStore.setKey("speedUnits", key);
+  const setSpeedUnitsState = function setSpeedUnitsState(newKey: string): void {
+    speedLimitStore.setKey("speedUnits", newKey, speedLimitHelper);
 
     updateSpeedLimitElements();
   };
 
-  const setMaxSpeedState = function setMaxSpeedState(value: number): void {
-    speedLimitStore.setKey("maxSpeed", value);
+  const setMaxSpeedState = function setMaxSpeedState(newValue: number): void {
+    speedLimitStore.setKey("maxSpeed", newValue, speedLimitHelper);
 
-    if (value < speedLimitStore.value.speedLimit) {
-      updateSpeedLimitView(value);
-    }
-
-    speedLimitSelector.setAttribute("data-p-knob-range", speedLimitStore.value.maxSpeed.toString());
+    if (newValue < speedLimitStore.value.speedLimit) updateSpeedLimitView(newValue);
     updateMaxSpeedElements();
   };
 
-  const setSpeedLimitState = function setSpeedLimitState(value: number): void {
-    speedLimitStore.setKey("speedLimit", value);
+  const setSpeedLimitState = function setSpeedLimitState(newValue: number): void {
+    speedLimitStore.setKey("speedLimit", newValue, speedLimitHelper);
 
     updateSpeedLimitElements();
   };
@@ -236,27 +247,27 @@ const alternateSpeedUnits = t("components.speed-limit.mph");
     if (!event.currentTarget) return;
 
     const customEvent = event as CustomEvent<string>;
-    const key = customEvent.detail;
+    const newKey = customEvent.detail;
 
-    setSpeedUnitsState(key);
+    setSpeedUnitsState(newKey);
   };
 
   const onChangeMaxSpeedSelector = function onChangeMaxSpeedSelector(event: Event): void {
     if (!event.currentTarget) return;
 
     const element = event.currentTarget as HTMLInputElement;
-    const value = Number(element.value);
+    const newValue = Number(element.value);
 
-    setMaxSpeedState(value);
+    setMaxSpeedState(newValue);
   };
 
   const onChangeSpeedLimitSelector = function onChangeSpeedLimitSelector(event: Event): void {
     if (!event.currentTarget) return;
 
     const customEvent = event as CustomEvent<number>;
-    const value = Number(customEvent.detail);
+    const newValue = Number(customEvent.detail);
 
-    setSpeedLimitState(value);
+    setSpeedLimitState(newValue);
   };
 
   const onClickSpeedLimitSpinButtonM25 = function onClickSpeedLimitSpinButtonM25(event: Event): void {
@@ -303,13 +314,34 @@ const alternateSpeedUnits = t("components.speed-limit.mph");
 
   const onChangeSpeedLimitStore = function onChangeSpeedLimitStore(
     key: keyof SpeedLimitStore,
-    value: SpeedLimitStore[keyof SpeedLimitStore],
+    value: SpeedLimitStore[keyof SpeedLimitStore] | undefined,
+    source?: string,
   ): void {
+    if (source === speedLimitHelper || typeof value === "undefined") return;
+
+    if (key === "speedUnits") {
+      const newKey = value.toString();
+      updateSpeedUnitsView(newKey);
+    }
+
+    if (key === "maxSpeed") {
+      const newValue = Number(value);
+      updateMaxSpeedView(newValue);
+    }
+
+    if (key === "speedLimit") {
+      const newValue = Number(value);
+      updateSpeedLimitView(newValue);
+    }
+
     if (key === "rollingStock" && value !== "") {
+      const newValue = value.toString();
       const rollingStock = rollingStockClassList.find(
-        (rollingStockClass) => rollingStockClass.rollingStockClass === value,
+        (rollingStockClass): boolean => rollingStockClass.rollingStockClass === newValue,
       );
+
       if (!rollingStock) return;
+
       updateSpeedUnitsView(rollingStock.speedUnits);
       updateMaxSpeedView(rollingStock.maximumSpeed);
     }

@@ -2,38 +2,47 @@
 import PAutocomplete from "@components/generic/PAutocomplete.astro";
 import PSidebar from "@components/generic/PSidebar.astro";
 import PSvg from "@components/generic/PSvg.astro";
+import { rtlLanguages } from "@src/i18n";
+import { detectLocaleFromPath } from "astro-i18next";
 import { t } from "i18next";
+
+const { pathname } = Astro.url;
+const lang = detectLocaleFromPath(pathname);
+const direction = rtlLanguages.has(lang) ? "rtl" : "ltr";
 ---
 
 <!-- Train Selection -->
 <button
   type="button"
   id="train-helper-button"
-  class="absolute border-color-border border z-50 top-48 right-0 p-0 rounded-r-none"
+  class="absolute border-color-border border top-48 p-0 ltr:right-0 ltr:rounded-r-none rtl:left-0 rtl:rounded-l-none"
   tabindex="0"
   aria-label={t("components.train-helper.train-helper")}
 >
   <PSvg name="settings" svgClass="h-12" />
 </button>
-<PSidebar id="train-helper-sidebar" side="right" className="bg-color-bg border-color-border">
+<PSidebar
+  id="train-helper-sidebar"
+  side={direction === "ltr" ? "right" : "left"}
+  className="bg-color-bg border-color-border"
+>
   <div class="flex flex-col">
     <PAutocomplete
       id="rolling-stock-class-search"
-      src="/json/rolling-stock-class.json"
-      filterValue="rollingStockClass"
+      src="/json/rolling-stock-class-search.json"
       className="text-color-text bg-color-bg-subtle"
     >
       <template slot="results-item-template" is:raw>
-        <div class="hover:bg-color-bg-accent hover:underline" data-rolling-stock-class="{{ rollingStockClass }}"> {{
-        rollingStockClass }} </div>
+        <div class="hover:bg-color-bg-accent hover:underline">{{ value }}</div>
       </template>
     </PAutocomplete>
   </div>
 </PSidebar>
 
 <script>
-  import { speedLimitStore } from "@src/stores/speedLimitStore";
+  import { SpeedLimitStore, speedLimitStore } from "@src/stores/speedLimitStore";
 
+  const trainHelper = "trainHelper";
   const trainHelperButton = document.getElementById("train-helper-button") as HTMLElement;
   const trainHelperSidebar = document.getElementById("train-helper-sidebar") as HTMLElement;
   const rollingStockSearch = document.getElementById("rolling-stock-class-search") as HTMLInputElement;
@@ -49,9 +58,13 @@ import { t } from "i18next";
     trainHelperSidebar.toggleAttribute("open");
   };
 
+  const updateRollingStockView = function updateRollingStockView(newValue: string): void {
+    rollingStockSearch.setAttribute("value", newValue);
+  };
+
   // State Update
-  const setRollingStockState = function setRollingStockState(value: string): void {
-    speedLimitStore.setKey("rollingStock", value);
+  const setRollingStockState = function setRollingStockState(newValue: string): void {
+    speedLimitStore.setKey("rollingStock", newValue, trainHelper);
   };
 
   // Events
@@ -64,9 +77,22 @@ import { t } from "i18next";
   const onChangeRollingStockSearch = function onChangeRollingStockSearch(event: Event): void {
     if (!event.currentTarget) return;
 
-    const value = rollingStockSearch.value;
+    const newValue = rollingStockSearch.value;
 
-    setRollingStockState(value);
+    setRollingStockState(newValue);
+  };
+
+  const onChangeSpeedLimitStore = function onChangeSpeedLimitStore(
+    key: keyof SpeedLimitStore,
+    value: SpeedLimitStore[keyof SpeedLimitStore] | undefined,
+    source?: string,
+  ): void {
+    if (source === trainHelper || typeof value === "undefined") return;
+
+    if (key === "rollingStock" && value !== "") {
+      const newValue = value.toString();
+      updateRollingStockView(newValue);
+    }
   };
 
   // Init
@@ -74,4 +100,6 @@ import { t } from "i18next";
 
   trainHelperButton.addEventListener("click", onClickTrainHelperButton, { passive: true });
   rollingStockSearch.addEventListener("change", onChangeRollingStockSearch, { passive: true });
+
+  speedLimitStore.listen(onChangeSpeedLimitStore);
 </script>

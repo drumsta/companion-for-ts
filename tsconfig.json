@@ -1,5 +1,14 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js",
+    "src/**/*.jsx",
+    "src/**/*.astro",
+    "astro.config.ts",
+    "d.ts"
+  ],
   "exclude": ["./dist", "./node_modules"],
   "compilerOptions": {
     "baseUrl": ".",

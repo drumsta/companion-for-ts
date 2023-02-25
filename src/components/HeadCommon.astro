@@ -1,11 +1,11 @@
 ---
-import { addTrailingSlash } from "@i18n/util";
+import { addTrailingSlash } from "@src/i18n";
 import { AstroI18next, localizeUrl } from "astro-i18next";
 import i18next, { t } from "i18next";
 
 export interface Props {
-  title?: string | undefined;
-  description?: string | undefined;
+  title?: string | null | undefined;
+  description?: string | null | undefined;
   noindex?: boolean | undefined;
   nofollow?: boolean | undefined;
 }
@@ -35,21 +35,21 @@ const { defaultLocale } = AstroI18next.config;
 <meta name="robots" content={`${noindex ? "noindex" : "index"}, ${nofollow ? "nofollow" : "follow"}`} />
 <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
 
-<title>{typeof title === "undefined" ? t("app.title") : title}</title>
-<meta name="description" content={typeof description === "undefined" ? t("app.description") : description} />
+<title>{title ?? t("app.title")}</title>
+<meta name="description" content={description ?? t("app.description")} />
 <meta name="application-name" content={t("app.title")} />
 <meta name="keywords" content="train simulator,trainsim,ts classic,tsw3,railworks,dovetails" />
 
-<meta property="og:title" content={typeof title === "undefined" ? t("app.title") : title} />
+<meta property="og:title" content={title ?? t("app.title")} />
 <meta property="og:type" content="website" />
-<meta property="og:description" content={typeof description === "undefined" ? t("app.description") : description} />
+<meta property="og:description" content={description ?? t("app.description")} />
 <meta property="og:url" content={canonicalUrl} />
 <meta property="og:image" content={ogImageUrl} />
-<meta property="og:image:alt" content={typeof description === "undefined" ? t("app.description") : description} />
+<meta property="og:image:alt" content={description ?? t("app.description")} />
 <meta property="og:site_name" content={t("app.title")} />
 <meta property="og:locale" content={language} />
 {
-  languages.map((languageItem: string): any => (
+  languages.map((languageItem) => (
     <Fragment>
       <meta property="og:locale:alternate" content={languageItem} />
     </Fragment>
@@ -57,10 +57,10 @@ const { defaultLocale } = AstroI18next.config;
 }
 
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content={typeof title === "undefined" ? t("app.title") : title} />
-<meta name="twitter:description" content={typeof description === "undefined" ? t("app.description") : description} />
+<meta name="twitter:title" content={title ?? t("app.title")} />
+<meta name="twitter:description" content={description ?? t("app.description")} />
 <meta property="twitter:image" content={twitterImageUrl} />
-<meta property="twitter:image:alt" content={typeof description === "undefined" ? t("app.description") : description} />
+<meta property="twitter:image:alt" content={description ?? t("app.description")} />
 
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#3ED0F9" />
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#3ED0F9" />
@@ -71,7 +71,7 @@ const { defaultLocale } = AstroI18next.config;
 <link rel="canonical" href={canonicalUrl} />
 <link rel="alternate" hreflang="x-default" href={addTrailingSlash(localizeUrl(canonicalUrl.href, defaultLocale))} />
 {
-  languages.map((languageItem: string) => (
+  languages.map((languageItem) => (
     <Fragment>
       <link
         rel="alternate"

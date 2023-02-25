@@ -1,16 +1,14 @@
 ---
 import PMenu from "@components/generic/PMenu.astro";
 import PSvg from "@components/generic/PSvg.astro";
-import { addTrailingSlash, capitalizeFirstLetter } from "@i18n/util";
+import { addTrailingSlash, capitalizeFirstLetter } from "@src/i18n";
 import { localizePath } from "astro-i18next";
 import i18next, { t } from "i18next";
 import ISO6391 from "iso-639-1";
 
 const { pathname } = Astro.url;
-const currentLanguage: string = i18next.language;
-const languages: string[] = i18next.languages
-  .slice()
-  .sort((a: string, b: string): number => a.toLowerCase().localeCompare(b.toLowerCase()));
+const currentLanguage = i18next.language;
+const languages = i18next.languages.slice().sort((a, b): number => a.toLowerCase().localeCompare(b.toLowerCase()));
 ---
 
 <!-- Language Selector -->
@@ -24,20 +22,30 @@ const languages: string[] = i18next.languages
   >
     <PSvg name="locales" svgClass="h-5" />
   </button>
-  <div slot="menu-content" role="dialog" class="bg-color-bg border-color-border right-0">
-    <ul aria-labelledby="language-menu">
+  <div
+    slot="menu-content"
+    role="menu"
+    class="bg-color-bg border-color-border ltr:right-0 rtl:left-0"
+    aria-labelledby="language-menu"
+  >
+    <ul>
       {
-        languages.map((language: string) => (
-          <li
-            class={
-              `py-2 px-4 focus:bg-color-bg-subtle focus:underline hover:bg-color-bg-subtle hover:underline ` +
-              `${language === currentLanguage ? "text-color-text-accent bg-color-bg-accent" : ""}`
-            }
-          >
-            <a href={addTrailingSlash(localizePath(pathname, language))}>
-              <span>{capitalizeFirstLetter(ISO6391.getNativeName(language), language)}</span>
-            </a>
-          </li>
+        languages.map((language) => (
+          <Fragment>
+            <li
+              role="presentation"
+              class:list={[
+                "py-2 px-4",
+                "focus:bg-color-bg-subtle focus:underline",
+                "hover:bg-color-bg-subtle hover:underline",
+                { "text-color-text-accent bg-color-bg-accent": language === currentLanguage },
+              ]}
+            >
+              <a role="menuitem" href={addTrailingSlash(localizePath(pathname, language))}>
+                <span>{capitalizeFirstLetter(ISO6391.getNativeName(language), language)}</span>
+              </a>
+            </li>
+          </Fragment>
         ))
       }
     </ul>

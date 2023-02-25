@@ -1,14 +1,14 @@
 ---
 export interface Props {
   name: string;
-  svgClass?: string | undefined;
+  svgClass?: string | null | undefined;
 }
 
 const { name, svgClass }: Props = Astro.props;
-let icon: string = "";
+let icon = "";
 
 const iconsImport = import.meta.glob("/src/assets/svg/**/**.svg", { as: "raw", eager: false });
-const iconFile: (() => Promise<string>) | undefined = iconsImport[`/src/assets/svg/${name}.svg`];
+const iconFile = iconsImport[`/src/assets/svg/${name}.svg`];
 
 if (typeof iconFile !== "undefined") {
   icon = await iconFile();

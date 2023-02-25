@@ -3,18 +3,18 @@ import i18next from "i18next";
 
 export interface Props {
   id: string;
-  min?: number;
-  max?: number;
-  currentValue?: number;
-  step?: number;
-  size?: number;
-  text2?: string | undefined;
-  text3?: string | undefined;
-  ariaLabel?: string | undefined;
+  min?: number | undefined;
+  max?: number | undefined;
+  currentValue?: number | undefined;
+  step?: number | undefined;
+  size?: number | undefined;
+  text2?: string | null | undefined;
+  text3?: string | null | undefined;
+  ariaLabel?: string | null | undefined;
 }
 
 const { id, min, max, currentValue, step, size, text2, text3, ariaLabel }: Props = Astro.props;
-const currentLanguage: string = i18next.language;
+const currentLanguage = i18next.language;
 ---
 
 <svg
@@ -118,7 +118,7 @@ const currentLanguage: string = i18next.language;
     return `M ${zeroX()} ${zeroY()} A ${radius} ${radius} 0 ${largeArc()} ${sweep()} ${valueX()} ${valueY()}`;
   };
 
-  const getAttributes = function getAttributes(knobElement: Element) {
+  const getAttributes = function getAttributes(knobElement: Element): void {
     min = Number(knobElement.getAttribute("data-p-knob-min") ?? "0");
     range = Number(knobElement.getAttribute("data-p-knob-range") ?? "0");
     value = Number(knobElement.getAttribute("data-p-knob-value") ?? "0");
@@ -209,7 +209,7 @@ const currentLanguage: string = i18next.language;
     element.addEventListener("mouseup", onMouseUpKnob, { passive: true });
   };
 
-  const onTouchMoveKnob = function onTouchMoveKnob(event: Event) {
+  const onTouchMoveKnob = function onTouchMoveKnob(event: Event): void {
     if (!event.currentTarget) return;
 
     const element = event.currentTarget as Element;
@@ -219,13 +219,13 @@ const currentLanguage: string = i18next.language;
     const touch = touchEvent.touches.item(0);
     if (!touch) return;
 
-    const rect: DOMRect | undefined = element.getBoundingClientRect();
+    const rect = element.getBoundingClientRect();
     const offsetX = touch.clientX - rect.left;
     const offsetY = touch.clientY - rect.top;
     updateValue(element, offsetX, offsetY);
   };
 
-  const onTouchEndKnob = function onTouchEndKnob(event: Event) {
+  const onTouchEndKnob = function onTouchEndKnob(event: Event): void {
     if (!event.currentTarget) return;
 
     const element = event.currentTarget as Element;

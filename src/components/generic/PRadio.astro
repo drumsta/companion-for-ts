@@ -2,16 +2,23 @@
 export interface Props {
   id: string;
   options: { key: string; value: string }[];
-  uncheckedClass?: string | undefined;
-  checkedClass?: string | undefined;
-  ariaLabel?: string | undefined;
+  uncheckedClass?: string | null | undefined;
+  checkedClass?: string | null | undefined;
+  ariaLabel?: string | null | undefined;
 }
 
 const { id, options, uncheckedClass, checkedClass, ariaLabel }: Props = Astro.props;
 const className =
-  "py-1 px-4 justify-center items-center select-none border-color-border border rounded-md cursor-pointer hover:underline focus:underline focus:z-10 first-of-type:rounded-tr-none first-of-type:rounded-br-none last-of-type:rounded-tl-none last-of-type:rounded-bl-none [&:not(:last)]:border-r-0 [&:not(:first-of-type)]:[&:not(:last-of-type)]:rounded-none";
+  "py-1 px-4 justify-center items-center select-none border-color-border border rounded-md cursor-pointer" +
+  " hover:underline focus:underline" +
+  " ltr:first-of-type:rounded-tr-none ltr:first-of-type:rounded-br-none" +
+  " rtl:first-of-type:rounded-tl-none rtl:first-of-type:rounded-bl-none" +
+  " ltr:last-of-type:rounded-tl-none ltr:last-of-type:rounded-bl-none" +
+  " rtl:last-of-type:rounded-tr-none rtl:last-of-type:rounded-br-none" +
+  " ltr:[&:not(:last)]:border-r-0 rtl:[&:not(:last)]:border-l-0" +
+  " [&:not(:first-of-type)]:[&:not(:last-of-type)]:rounded-none";
 
-const radioItem: string = await Astro.slots.render("radio-item");
+const radioItem = await Astro.slots.render("radio-item");
 ---
 
 <div
@@ -25,17 +32,16 @@ const radioItem: string = await Astro.slots.render("radio-item");
   data-p-radio-group-item-class-checked={checkedClass}
 >
   {
-    options.map((option: { key: string; value: string }) => (
+    options.map((option) => (
       <Fragment>
         <div
-          class={className}
+          class:list={className}
           tabindex="0"
           role="radio"
           aria-label={option.value}
           aria-checked="false"
           data-p-radio-item
           data-key={option.key}
-          data-option={JSON.stringify(option)}
         >
           <Fragment set:html={radioItem.replace("{{option.value}}", option.value)} />
         </div>
@@ -54,7 +60,7 @@ const radioItem: string = await Astro.slots.render("radio-item");
 
     for (const childElement of radioGroupElement.children) {
       const elementKey = childElement.getAttribute("data-key");
-      childElement.setAttribute("aria-checked", (elementKey !== null && elementKey === key).toString());
+      childElement.setAttribute("aria-checked", String(elementKey !== null && elementKey === key));
       childElement.className =
         `${className} ` + `${elementKey !== null && elementKey === key ? checkedClass : uncheckedClass}`;
     }

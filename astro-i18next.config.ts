@@ -1,7 +1,7 @@
 import type { AstroI18nextConfig } from "astro-i18next";
 
 export default {
-  locales: ["en", "lt"],
+  locales: ["en", "lt", "ar"],
   defaultLocale: "en",
   namespaces: ["translation"],
   defaultNamespace: "translation",

@@ -1,14 +1,14 @@
 ---
 import PMenu from "@components/generic/PMenu.astro";
 import PSvg from "@components/generic/PSvg.astro";
-import { addTrailingSlash } from "@i18n/util";
-import About from "@pages/about.astro";
-import PrivacyPolicy from "@pages/privacy-policy.astro";
+import { addTrailingSlash } from "@src/i18n";
 import { localizePath } from "astro-i18next";
+import { getCollection } from "astro:content";
 import i18next, { t } from "i18next";
 
 const { language } = i18next;
-const pathname: string = addTrailingSlash(Astro.url.pathname.replace(`/${language}`, ""));
+const pathname = addTrailingSlash(Astro.url.pathname.replace(`/${language}`, ""));
+const siteEntries = await getCollection("site");
 ---
 
 <!-- Footer -->
@@ -18,9 +18,12 @@ const pathname: string = addTrailingSlash(Astro.url.pathname.replace(`/${languag
       <!-- Drive -->
       <li>
         <a
-          class={`flex flex-col w-24 items-center hover:text-color-text-accent hover:border-color-border-accent hover:border-t-2 hover:underline focus:text-color-text-accent focus:border-color-border-accent focus:border-t-2 focus:underline ${
-            pathname === "/" ? "text-color-text-accent border-color-border-accent border-t-2" : ""
-          }`}
+          class:list={[
+            "flex flex-col w-24 items-center",
+            "hover:text-color-text-accent hover:border-color-border-accent hover:border-t-2 hover:underline",
+            "focus:text-color-text-accent focus:border-color-border-accent focus:border-t-2 focus:underline",
+            { "text-color-text-accent border-color-border-accent border-t-2": pathname === "/" },
+          ]}
           href={addTrailingSlash(localizePath("/"))}
         >
           <PSvg name="drive" svgClass="h-10" />
@@ -33,27 +36,43 @@ const pathname: string = addTrailingSlash(Astro.url.pathname.replace(`/${languag
           <button
             slot="menu-heading"
             type="button"
-            class="rounded-none flex flex-col w-24 items-center hover:text-color-text-accent hover:border-color-border-accent hover:border-t-2 hover:underline focus:text-color-text-accent focus:border-color-border-accent focus:border-t-2 focus:underline"
+            id="more-menu"
+            class:list={[
+              "rounded-none flex flex-col w-24 items-center",
+              "hover:text-color-text-accent hover:border-color-border-accent hover:border-t-2 hover:underline",
+              "focus:text-color-text-accent focus:border-color-border-accent focus:border-t-2 focus:underline",
+            ]}
             tabindex="0"
             aria-label={t("components.footer.more-menu")}
           >
             <PSvg name="menu" svgClass="h-10" />
             <span>{t("components.footer.more-menu")}</span>
           </button>
-          <div slot="menu-content" role="dialog" class="bg-color-bg border-color-border bottom-20">
-            <ul aria-label={t("components.footer.more-menu")}>
-              <!-- Privacy Policy -->
-              <li class="py-2 px-4 focus:bg-color-bg-subtle focus:underline hover:bg-color-bg-subtle hover:underline">
-                <a href={addTrailingSlash(localizePath(`/${PrivacyPolicy.name}`, language))}>
-                  <span>{t("components.footer.more-menu-items.privacy-policy")}</span>
-                </a>
-              </li>
-              <!-- About Us -->
-              <li class="py-2 px-4 focus:bg-color-bg-subtle focus:underline hover:bg-color-bg-subtle hover:underline">
-                <a href={addTrailingSlash(localizePath(`/${About.name}`, language))}>
-                  <span>{t("components.footer.more-menu-items.about")}</span>
-                </a>
-              </li>
+          <div
+            slot="menu-content"
+            role="menu"
+            class="bg-color-bg border-color-border bottom-20 ltr:right-0 rtl:left-0"
+            aria-labelledby="more-menu"
+          >
+            <ul>
+              {
+                siteEntries.map((entry) => (
+                  <Fragment>
+                    <li
+                      role="presentation"
+                      class:list={[
+                        "py-2 px-4",
+                        "focus:bg-color-bg-subtle focus:underline",
+                        "hover:bg-color-bg-subtle hover:underline",
+                      ]}
+                    >
+                      <a role="menuitem" href={addTrailingSlash(localizePath(`/${entry.slug}`, language))}>
+                        <span>{entry.data.header}</span>
+                      </a>
+                    </li>
+                  </Fragment>
+                ))
+              }
             </ul>
           </div>
         </PMenu>

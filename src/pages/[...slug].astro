@@ -1,0 +1,24 @@
+---
+import MarkdownLayout from "@layouts/MarkdownLayout.astro";
+import { CollectionEntry, getCollection } from "astro:content";
+import { changeLanguage } from "i18next";
+
+changeLanguage("en");
+
+export interface Props {
+    entry: CollectionEntry<"site">;
+}
+export const getStaticPaths = async function getStaticPaths() {
+    const siteEntries = await getCollection("site");
+    return siteEntries.map((entry) => ({
+        params: { slug: entry.slug },
+        props: { entry },
+    }));
+};
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<MarkdownLayout title={entry.data.title} header={entry.data.header} description={entry.data.description}>
+  <Content />
+</MarkdownLayout>
