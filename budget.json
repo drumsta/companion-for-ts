@@ -7,9 +7,9 @@
       { "metric": "first-meaningful-paint", "budget": 1000 },
       { "metric": "interactive", "budget": 1000 },
       { "metric": "largest-contentful-paint", "budget": 1000 },
-      { "metric": "max-potential-fid", "budget": 50 },
-      { "metric": "speed-index", "budget": 1000 },
-      { "metric": "total-blocking-time", "budget": 50 }
+      { "metric": "max-potential-fid", "budget": 25 },
+      { "metric": "speed-index", "budget": 1250 },
+      { "metric": "total-blocking-time", "budget": 25 }
     ],
     "resourceSizes": [
       { "resourceType": "document", "budget": 10000 },
