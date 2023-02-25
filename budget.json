@@ -17,10 +17,10 @@
       { "resourceType": "image", "budget": 1 },
       { "resourceType": "media", "budget": 1 },
       { "resourceType": "other", "budget": 10000 },
-      { "resourceType": "script", "budget": 30000 },
-      { "resourceType": "stylesheet", "budget": 15000 },
+      { "resourceType": "script", "budget": 10000 },
+      { "resourceType": "stylesheet", "budget": 10000 },
       { "resourceType": "third-party", "budget": 1 },
-      { "resourceType": "total", "budget": 100000 }
+      { "resourceType": "total", "budget": 25000 }
     ],
     "resourceCounts": [
       { "resourceType": "document", "budget": 1 },
