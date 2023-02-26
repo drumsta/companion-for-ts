@@ -6,7 +6,7 @@ From: Ireland
 /* THANKS */
 
 /* SITE */
-Frameworks: Astro, AMP, PWA
+Frameworks: Astro, PWA
 Software: VS Code, Paint.net, Inkscape, Notepad++
 VS Code Extensions: dbaeumer.vscode-eslint, dotjoshjohnson.xml, fabiospampinato.vscode-optimize-images, jock.svg, wakatime.vscode-wakatime
 Language: English / Lietuvių kalba
