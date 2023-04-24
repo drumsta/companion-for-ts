@@ -38,7 +38,7 @@ jobs:
           output_location: 'dist' # If your web app runs a build step, the output location is the folder where the public files are generated.
 
       - name: Audit URLs using Lighthouse
-        uses: treosh/lighthouse-ci-action@v9
+        uses: treosh/lighthouse-ci-action@v10
         with:
           urls: |
             https://www.companionforts.com/
