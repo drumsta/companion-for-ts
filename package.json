@@ -48,7 +48,7 @@
     "@astrojs/tailwind": "^3.0.1",
     "@xmldom/xmldom": "^0.8.6",
     "astro": "^2.0.15",
-    "astro-critters": "^1.1.30",
+    "astro-critters": "^1.1.38",
     "astro-i18next": "^1.0.0-beta.17",
     "astro-seo-schema": "^2.0.0",
     "chroma-js": "^2.4.2",
