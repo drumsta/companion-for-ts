@@ -5,11 +5,11 @@ name: Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - '**'
+      - "xx"
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
-      - main
+      - xx
   workflow_dispatch:
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
     name: Build and Deploy
     runs-on: ubuntu-latest
     environment:
-      name: 'Production'
+      name: "Production"
       url: https://www.companionforts.com
 
     steps:
@@ -29,13 +29,13 @@ jobs:
         id: build-deploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-          action: 'upload'
-          production_branch: 'main'
+          action: "upload"
+          production_branch: "main"
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
-          app_location: '/' # This folder contains the source code for your front-end application.
+          app_location: "/" # This folder contains the source code for your front-end application.
           # api_location: 'dist/server' # This folder that contains the source code for your API application.
-          output_location: 'dist' # If your web app runs a build step, the output location is the folder where the public files are generated.
+          output_location: "dist" # If your web app runs a build step, the output location is the folder where the public files are generated.
 
       - name: Audit URLs using Lighthouse
         uses: treosh/lighthouse-ci-action@v9
@@ -56,5 +56,5 @@ jobs:
         id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
-          action: 'close'
+          action: "close"
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}

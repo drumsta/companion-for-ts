@@ -6,14 +6,14 @@ import { changeLanguage } from "i18next";
 changeLanguage("en");
 
 export interface Props {
-    entry: CollectionEntry<"site">;
+  entry: CollectionEntry<"site">;
 }
 export const getStaticPaths = async function getStaticPaths() {
-    const siteEntries = await getCollection("site");
-    return siteEntries.map((entry) => ({
-        params: { slug: entry.slug },
-        props: { entry },
-    }));
+  const siteEntries = await getCollection("site");
+  return siteEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
 };
 const { entry } = Astro.props;
 const { Content } = await entry.render();
