@@ -1,16 +1,39 @@
 {
   "name": "companion-for-ts",
 
-  "image": "mcr.microsoft.com/devcontainers/javascript-node",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
 
   "hostRequirements": {
     "cpus": 2,
     "memory": "4gb",
-    "storage": "32gb"
+    "storage": "32gb",
+    "gpu": false
   },
 
   "features": {
-    "ghcr.io/devcontainers-contrib/features/npm-package:1": {}
+    "ghcr.io/devcontainers/features/common-utils:latest": {
+      "installZsh": false,
+      "configureZshAsDefaultShell": false,
+      "installOhMyZsh": false,
+      "installOhMyZshConfig": false,
+      "upgradePackages": true,
+      "username": "vscode",
+      "userUid": "automatic",
+      "userGid": "automatic",
+      "nonFreePackages": false
+    },
+    "ghcr.io/devcontainers/features/git:latest": {
+      "version": "latest",
+      "ppa": true
+    },
+    "ghcr.io/devcontainers/features/node:latest": {
+      "version": "lts",
+      "nodeGypDependencies": false,
+      "nvmVersion": "latest"
+    },
+    "ghcr.io/devcontainers-contrib/features/npm-package:latest": {
+      "version": "latest"
+    }
   },
 
   "customizations": {
@@ -20,18 +43,29 @@
     "vscode": {
       "extensions": [
         "astro-build.astro-vscode",
+        "bradlc.vscode-tailwindcss",
         "dbaeumer.vscode-eslint",
-        "editorconfig.editorconfig"
+        "dotjoshjohnson.xml",
+        "esbenp.prettier-vscode",
+        "fabiospampinato.vscode-optimize-images",
+        "github.vscode-github-actions",
+        "github.vscode-pull-request-github",
+        "jock.svg",
+        "ms-edgedevtools.vscode-edge-devtools",
+        "ms-vsliveshare.vsliveshare",
+        "mutantdino.resourcemonit"
       ]
     }
   },
 
-  "forwardPorts": [3000, 3330],
-  "postCreateCommand": "npm install",
+  "forwardPorts": [4321],
+  "portsAttributes": {
+    "4321": {
+      "label": "Website Port",
+      "onAutoForward": "notify"
+    }
+  },
 
-  "postAttachCommand": "npm run dev",
-
-  // Set `remoteUser` to `root` to connect as root instead.
-  // More info: https://aka.ms/vscode-remote/containers/non-root.
-  "remoteUser": "node"
+  "postCreateCommand": "npm uninstall -g pnpm && npm update -g && npm install -g npm-check-updates && npm install",
+  "postStartCommand": "npm update -g"
 }
